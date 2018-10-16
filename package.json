@@ -1,0 +1,36 @@
+{
+  "name": "customers",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node ./bin/www",
+    "dev": "DEBUG=customers:* nodemon"
+  },
+  "dependencies": {
+    "connect-flash": "^0.1.1",
+    "cookie-parser": "~1.4.3",
+    "debug": "~2.6.9",
+    "ejs": "~2.5.7",
+    "express": "~4.16.0",
+    "express-session": "^1.15.6",
+    "helmet": "^3.13.0",
+    "http-errors": "~1.6.2",
+    "joi": "^13.7.0",
+    "kickbox": "^2.0.4",
+    "method-override": "^3.0.0",
+    "moment": "^2.22.2",
+    "mongoose": "^5.3.1",
+    "morgan": "~1.9.0",
+    "nodemailer": "^4.6.8",
+    "nodemailer-juice": "^1.0.1",
+    "passport": "^0.4.0",
+    "passport-local": "^1.0.0",
+    "passport-local-mongoose": "^5.0.1",
+    "popper.js": "^1.14.4",
+    "randomstring": "^1.1.5"
+  },
+  "devDependencies": {
+    "dotenv": "^6.0.0",
+    "faker": "^4.1.0"
+  }
+}
