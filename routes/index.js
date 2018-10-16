@@ -3,9 +3,7 @@ const router = express.Router();
 
 /* GET home page. */
 router.get('/', (req, res) => {
-  res.render('index', {
-    title: 'Site Auth'
-  });
+  res.render('index');
 });
 
 router.get('*', (req, res) => {

@@ -16,6 +16,7 @@ const User = require('./models/user');
 
 const indexRouter = require('./routes/index');
 const authRouter = require('./routes/auth');
+const customerRouter = require('./routes/customers');
 const registerRouter = require('./routes/register');
 const resendRouter = require('./routes/resend');
 const validateRouter = require('./routes/validate');
@@ -23,7 +24,7 @@ const validateRouter = require('./routes/validate');
 const app = express();
 
 // Connect to db
-mongoose.connect('mongodb://localhost:27017/site-auth', {
+mongoose.connect('mongodb://localhost:27017/customers', {
   useCreateIndex: true,
   useNewUrlParser: true
 });
@@ -65,13 +66,14 @@ app.use(flash());
 app.use((req, res, next) => {
   res.locals.success = req.flash('success');
   res.locals.error = req.flash('error');
-  res.locals.title = 'Site Auth';
+  res.locals.title = 'Customer DB';
   res.locals.currentUser = req.user;
   res.locals.isAuthenticated = req.user ? true : false;
   next();
 });
 
 app.use('/auth', authRouter);
+app.use('/customers', customerRouter);
 app.use('/register', registerRouter);
 app.use('/resend', resendRouter);
 app.use('/validate', validateRouter);

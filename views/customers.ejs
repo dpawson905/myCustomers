@@ -1,0 +1,16 @@
+<% include partials/header %>
+  <div class="container white">
+    <div class="row">
+      <div class="col mt-3">
+        <h1 class="text-center"><%= title %> &mdash; Search</h1>
+        <p class="text-center">
+          Please enter the phone number for the customer that you are looking up
+        </p>
+        <form class="form-inline my-2 my-lg-0 middle pt-3" action="/customers/search" method="POST">
+          <input type="text" id="phoneNumber" name="phoneNumber" class="form-control mr-1" placeholder="Phone Number" required autofocus>
+          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
+      </div>
+    </div>
+  </div>
+<% include partials/footer %> 
