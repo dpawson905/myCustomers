@@ -1,13 +1,24 @@
 <% include partials/header %>
-  <div class="container white">
-    <div class="row">
-      <div class="col mt-3">
+  <div class="container-fluid d-flex full justify-content-center align-items-center white">
+    <div class="row w-100">
+      <div class="col">
         <h1 class="text-center"><%= title %> &mdash; Search</h1>
         <p class="text-center">
-          Please enter the phone number for the customer that you are looking up
+          Please use one of the search options below to find a customer.
         </p>
-        <form class="form-inline my-2 my-lg-0 middle pt-3" action="/customers/search" method="POST">
-          <input type="text" id="phoneNumber" name="phoneNumber" class="form-control mr-1" placeholder="Phone Number" required autofocus>
+        <form class="form-inline middle pt-3" action="/customers/search/phone" method="POST">
+          <label for="phoneNumber" class="sr-only">Phone number: </label>
+          <input type="text" id="phoneNumber" name="phoneNumber" class="form-control mr-1" placeholder="Customer phone number">
+          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
+        <form class="form-inline middle pt-3" action="/customers/search/email" method="POST">
+          <label for="email" class="sr-only">Email address: </label>
+          <input type="email" id="email" name="email" class="form-control mr-1" placeholder="Customer email address">
+          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
+        <form class="form-inline middle pt-3" action="/customers/search/name" method="POST">
+          <label for="lastName" class="sr-only">Last name: </label>
+          <input type="text" id="lastName" name="lastName" class="form-control mr-1" placeholder="Customer last name">
           <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
         </form>
       </div>

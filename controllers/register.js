@@ -154,7 +154,7 @@ module.exports = {
         req.body.firstName
       }, please verify your account. An email has been sent to ${
         req.body.email
-      }`
+      }. Make sure to check your spam folder!`
       );
       res.redirect('/');
     });

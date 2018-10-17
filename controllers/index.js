@@ -29,7 +29,7 @@ module.exports = {
       return;
     } else {
       passport.authenticate('local', {
-        successRedirect: '/',
+        successRedirect: '/customers',
         failureRedirect: '/',
         failureFlash: 'Sorry, but your username and or password is incorrect.'
       })(req, res, next);
