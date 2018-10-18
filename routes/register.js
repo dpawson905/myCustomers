@@ -10,7 +10,9 @@ const {
 
 /* GET /register */
 router.get('/', isAuthenticated, (req, res) => {
-  res.render('register');
+  res.render('register', {
+    page: 'register'
+  });
 });
 
 /* POST /register */

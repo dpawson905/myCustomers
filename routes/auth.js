@@ -9,6 +9,12 @@ const {
   isNotAuthenticated
 } = require('../middleware');
 
+router.get('/login', isAuthenticated, (req, res) => {
+  res.render('login', {
+    page: 'login'
+  })
+})
+
 /* POST /login */
 router.post('/login', isAuthenticated, postLogin);
 

@@ -1,9 +1,15 @@
 <% include partials/header %>
-  <div class="container d-flex full justify-content-center align-items-center white">
-    <div class="row w-100">
-      <div class="col-md-8 offset-md-2">
-        <h1 class="text-center">Your Customer Portal</h1>
-        <p class="lead text-center">Please login to add and search for customers.</p>
+  <div class="container valign-wrapper h-100">
+    <div class="row">
+      <div class="col m12 white-text">
+        <% if(!isAuthenticated) { %>
+          <h1 class="center">Your Customer Portal</h1>
+          <p class="center">Please login to add and search for customers.</p>
+        <% } else { %>
+          <h1 class="center">Hello <%=currentUser.firstName.charAt(0).toUpperCase() + currentUser.firstName.slice(1) %></h1>
+          <p class="center">Click on Customers to view all customers or</p>
+          <p class="center">Click on New Customer to add a new customer</p>
+        <% } %>
       </div>
     </div>
   </div>
