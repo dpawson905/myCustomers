@@ -3,8 +3,11 @@ const Schema = mongoose.Schema;
 
 const CustomerSchema = new Schema({
   tech: {
-    type: Schema.Types.ObjectId,
-    ref: "User"
+    id: {
+      type: Schema.Types.ObjectId,
+      ref: "User"
+    },
+    username: String
   },
   firstName: {
     type: String,
@@ -23,10 +26,10 @@ const CustomerSchema = new Schema({
     required: true,
     unique: true
   },
-  location: String,
+  address: String,
   coordinates: Array,
   email: {
-    type: string,
+    type: String,
     unique: true,
     lowercase: true
   },
@@ -45,6 +48,10 @@ const CustomerSchema = new Schema({
     type: Number,
     required: true,
     trim: true
+  },
+  time: {
+    type: String,
+    required: true
   }
 });
 

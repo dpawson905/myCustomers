@@ -1,0 +1,80 @@
+<% include partials/header %>
+<div class="container h-100">
+  <div class="row">
+    <div class="col m12 move-down">
+      <h3 class="center white-text">Customer Access &mdash; New Customer</h3>
+    </div>
+    <div class="row">
+      <form class="col m10 offset-m1 move-down" action="/customers/add" method="POST">
+        <div class="row">
+          <div class="input-field col m6">
+            <select id="week" name="week" required>
+              <option value="" disabled selected>Week</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+            </select>
+          </div>
+          <div class="input-field col m6">
+            <select id="day" name="day" required>
+              <option value="" disabled selected>Day</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+            </select>
+          </div>
+          <div class="input-field col m6">
+            <input id="firstName" name="firstName" type="text" class="validate">
+            <label for="firstName">First Name</label>
+          </div>
+          <div class="input-field col m6">
+            <input id="lastName" name="lastName" type="text" class="validate">
+            <label for="lastName">Last Name</label>
+          </div>
+          <div class="input-field col m6">
+            <input id="companyName" name="companyName" type="text" class="validate">
+            <label for="companyName">Company name ( optional )</label>
+          </div>
+          <div class="input-field col m6">
+            <input id="phoneNumber" name="phoneNumber" type="tel" class="tel validate" required>
+            <label for="phoneNumber">Phone number</label>
+          </div>
+          <div class="input-field col m6">
+            <input id="address" name="address" type="text" class="validate" required>
+            <label for="address">Address</label>
+          </div>
+          <div class="input-field col m6">
+            <input id="email" name="email" type="email" class="validate">
+            <label for="email">Email address</label>
+          </div>
+          <div class="input-field col m4">
+            <input id="price" name="price" type="text" class="validate">
+            <label for="email">Price</label>
+          </div>
+          <div class="input-field col m4">
+            <select id="preference" name="preference" required>
+              <option value="" disabled selected>Customer preference</option>
+              <option value="call">Call</option>
+              <option value="text">Text</option>
+              <option value="email">Email</option>
+            </select>
+          </div>
+          <div class="input-field col m4">
+            <select id="timeSelect" name="time">
+              <option value="" disabled selected>Scheduled time</option>
+            </select>
+          </div>
+          <div class="row">
+            <div class="col m12">
+              <button class="waves-effect waves-light btn center-btn move-down" type="submit">Login</button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<% include partials/footer %>

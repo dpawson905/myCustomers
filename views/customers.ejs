@@ -1,27 +1,70 @@
 <% include partials/header %>
-  <div class="container-fluid d-flex full justify-content-center align-items-center white">
-    <div class="row w-100">
-      <div class="col">
-        <h1 class="text-center"><%= title %> &mdash; Search</h1>
-        <p class="text-center">
-          Please use one of the search options below to find a customer.
-        </p>
-        <form class="form-inline middle pt-3" action="/customers/search/phone" method="POST">
-          <label for="phoneNumber" class="sr-only">Phone number: </label>
-          <input type="text" id="phoneNumber" name="phoneNumber" class="form-control mr-1" placeholder="Customer phone number">
-          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-        </form>
-        <form class="form-inline middle pt-3" action="/customers/search/email" method="POST">
-          <label for="email" class="sr-only">Email address: </label>
-          <input type="email" id="email" name="email" class="form-control mr-1" placeholder="Customer email address">
-          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-        </form>
-        <form class="form-inline middle pt-3" action="/customers/search/name" method="POST">
-          <label for="lastName" class="sr-only">Last name: </label>
-          <input type="text" id="lastName" name="lastName" class="form-control mr-1" placeholder="Customer last name">
-          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-        </form>
+
+<div class="container h-100">
+  <div class="row">
+    <div class="col m12 move-down">
+      <h3 class="center white-text">Customer Access &mdash; View Customers</h3>
+    </div>
+    <div class="row">
+      <% showCustomers.forEach(function(customer) { %>
+      <div class="col s12 m6">
+        <div class="card blue-grey darken-1">
+          <div class="card-content white-text">
+            <span class="card-title big-bold">
+              <% if(customer.companyName === "") { %>
+              <%= customer.firstName.charAt(0).toUpperCase() + customer.firstName.slice(1)%>
+              <%= customer.lastName.charAt(0).toUpperCase() + customer.lastName.slice(1) %>
+              <% } else { %>
+              <%= customer.companyName.charAt(0).toUpperCase() + customer.companyName.slice(1) %>
+              <% } %>
+            </span>
+            <div class="row">
+              <div class="col m8 s12">
+                <ul>
+                  <li class="med-bold">
+                    <span class="sm-bold">Week:</span>
+                    <%= customer.week %>
+                    <span class="sm-bold">Day:</span>
+                    <%= customer.day %>
+                  </li>
+                  <% if(customer.companyName !== "") { %>
+                  <li>
+                    <span class="sm-bold">Contact Name:</span>
+                    <%= customer.firstName.charAt(0).toUpperCase() + customer.firstName.slice(1) %>
+                    <%= customer.lastName.charAt(0).toUpperCase() + customer.lastName.slice(1) %>
+                  </li>
+                  <% } %>
+                  <li>
+                    <span class="sm-bold">Phone:</span>
+                    <%= customer.phoneNumber %>
+                  </li>
+                  <li><span class="sm-bold">Email:</span>
+                    <%= customer.email %>
+                  </li>
+                  <li><span class="sm-bold">Address:</span>
+                    <%= customer.address %>
+                  </li>
+                  <li><span class="sm-bold">Contact preference:</span>
+                    <%= customer.preference.toUpperCase() %>
+                  </li>
+                  <li><span class="sm-bold">Contact preference:</span>
+                    <%= customer.time%>
+                  </li>
+                  <li><span class="sm-bold">Price:</span>
+                    <%= customer.price %>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="card-action">
+            <a href="#">Text</a>
+            <a href="#">Email</a>
+          </div>
+        </div>
       </div>
+      <% }) %>
     </div>
   </div>
-<% include partials/footer %> 
+</div>
+<% include partials/footer %>
