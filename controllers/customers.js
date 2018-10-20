@@ -10,6 +10,15 @@ const geocodingClient = mbxGeocoding({
   accessToken: MB_API
 });
 
+const {
+  twilioSid,
+  twilioToken
+} = require('../config/twilio');
+
+const accountSid = twilioSid;
+const authToken = twilioToken;
+const client = require('twilio')(accountSid, authToken);
+
 module.exports = {
   async postCustomer(req, res) {
     let response = await geocodingClient.forwardGeocode({
@@ -43,5 +52,40 @@ module.exports = {
       req.flash('success', 'Customer added successfully');
       res.redirect('/customers')
     })
+  },
+
+  async getCustomer(req, res) {
+    let foundCustomer = await Customer.findById(req.params.id);
+    if (!foundCustomer) {
+      req.flash('error', 'No user found');
+      res.redirect('back');
+      return;
+    }
+    res.render('customer', {
+      foundCustomer
+    })
+  },
+
+  async postSMS(req, res) {
+    let customer = await Customer.findById(req.params.id);
+    console.log(customer.tech.username);
+    let user = await User.findById(req.user.id);
+    if (!user || !customer) {
+      req.flash('error', 'Something went wrong... Admin has been notified.');
+      res.redirect('back');
+      return;
+    }
+
+    let message = `Hello ${customer.firstName}, this is ${user.firstName} from Dodson Pest Control. This is a reminder of your apointment at ${customer.time} tomorrow. Have a great day!`;
+
+    await client.messages
+      .create({
+        body: message,
+        from: user.twillowNumber,
+        to: '+1' + customer.phoneNumber
+      }).then(message => debug(message.sid))
+      .done();
+    req.flash('success', 'Text message sent successfully');
+    res.redirect('back');
   }
 }

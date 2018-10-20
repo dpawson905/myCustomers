@@ -37,6 +37,22 @@ module.exports = {
 
   },
 
+  async putNexmo(req, res) {
+    let user = await User.findById(req.params.id);
+    if (!user) {
+      req.flash('error', 'No user found');
+      res.redirect('back');
+      return;
+    }
+
+
+    user.twilioNumber = req.body.twilioNumber;
+
+    await user.save()
+    req.flash('success', 'Congrats, your now able to text users!');
+    res.redirect('/customers');
+  },
+
   getLogout(req, res) {
     req.logout();
     res.redirect('/');

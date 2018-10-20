@@ -43,7 +43,8 @@ const UserSchema = new Schema({
     type: Boolean,
     required: true,
     default: false
-  }
+  },
+  twilioNumber: String
 }, {
   timestamps: true
 });

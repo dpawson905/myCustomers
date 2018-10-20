@@ -23,6 +23,12 @@
           <%= currentUser.firstName.charAt(0).toUpperCase() + currentUser.firstName.slice(1) %>
         </div>
       </li>
+      <% if(!currentUser.twilioNumber || currentUser.twilioNumber === "") { %>
+        <li class="<%= typeof page !== 'undefined' && page === 'addKey' ? 'active' : '' %>">
+          <a href="/auth/user/<%= currentUser.id %>"><i
+            class="fas fa-key"></i> Add Twillow Info</a>
+        </li>
+      <% } %>
     </ul>
     <% } else { %>
     <ul class="right hide-on-med-and-down">

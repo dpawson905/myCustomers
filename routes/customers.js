@@ -4,7 +4,9 @@ const router = express.Router();
 const Customer = require('../models/customers');
 
 const {
-  postCustomer
+  postCustomer,
+  getCustomer,
+  postSMS
 } = require('../controllers/customers');
 
 const {
@@ -13,7 +15,7 @@ const {
   asyncErrorHandler
 } = require('../middleware');
 
-/* GET home page. */
+/* GET customers page. */
 router.get('/', isNotAuthenticated, async (req, res) => {
   let showCustomers = await Customer.find({
     'tech.id': req.user._id
@@ -31,5 +33,9 @@ router.get('/add', isNotAuthenticated, (req, res) => {
 });
 
 router.post('/add', isNotAuthenticated, asyncErrorHandler(postCustomer));
+
+router.post('/sms/:id', isNotAuthenticated, asyncErrorHandler(postSMS));
+
+router.get('/:id', isNotAuthenticated, asyncErrorHandler(getCustomer));
 
 module.exports = router;

@@ -1,3 +1,5 @@
 node_modules/
-config/
+config/mailer.js
+config/mapbox.js
+config/twilio.js
 .env

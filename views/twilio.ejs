@@ -1,0 +1,25 @@
+<% include partials/header %>
+<div class="container">
+  <div class="row">
+    <div class="col m8 offset-m2">
+      <h3 class="center white-text">Customer Access &mdash; Login</h3>
+    </div>
+    <div class="row">
+      <form class="col m8 offset-m2" action="/auth/user/<%= user._id %>?_method=PUT" method="POST">
+        <div class="row">
+          <div class="input-field col m6 offset-m3">
+            <input id="twilioNumber" name="twilioNumber" type="text" class="validate" required>
+            <label for="twilioNumber">Twillow number</label>
+            <span class="helper-text" data-error="Twillow number is required"></span>
+          </div>
+          <div class="row">
+            <div class="col m12">
+              <button class="waves-effect waves-light btn center-btn" type="submit">Add Twillow</button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<% include partials/footer %>

@@ -1,5 +1,5 @@
 $(function () {
-  $('.tel').mask('(000) 000-0000');
+  $('.tel').mask('0000000000');
 
   function populate(selector) {
     var select = $(selector);
@@ -23,5 +23,8 @@ $(function () {
   }
 
   populate('#timeSelect'); // use selector for your select
+
+  $('.sidenav').sidenav();
+  $('select').formSelect();
 
 })

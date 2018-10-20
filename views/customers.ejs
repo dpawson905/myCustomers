@@ -36,7 +36,7 @@
                   <% } %>
                   <li>
                     <span class="sm-bold">Phone:</span>
-                    <%= customer.phoneNumber %>
+                    <a href="tel:+1<%= customer.phoneNumber %>"><%= customer.phoneNumber %></a>
                   </li>
                   <li><span class="sm-bold">Email:</span>
                     <%= customer.email %>
@@ -47,7 +47,7 @@
                   <li><span class="sm-bold">Contact preference:</span>
                     <%= customer.preference.toUpperCase() %>
                   </li>
-                  <li><span class="sm-bold">Contact preference:</span>
+                  <li><span class="sm-bold">Scheduled time:</span>
                     <%= customer.time%>
                   </li>
                   <li><span class="sm-bold">Price:</span>
@@ -55,16 +55,24 @@
                   </li>
                 </ul>
               </div>
+              
             </div>
           </div>
           <div class="card-action">
-            <a href="#">Text</a>
-            <a href="#">Email</a>
+            <form action="/customers/sms/<%= customer.id %>" method="POST" class="inline-btn">
+              <button class="waves-effect waves-light btn">Text customer</button>
+            </form>
+            <form action="/customers/email" method="POST" class="inline-btn">
+              <button class="waves-effect waves-light btn">Email customer</button>
+            </form>
+            <a href="/customers/<%= customer.id %>" class="waves-effect waves-light btn">View All</a>
           </div>
         </div>
       </div>
+      
       <% }) %>
     </div>
   </div>
 </div>
+  
 <% include partials/footer %>
