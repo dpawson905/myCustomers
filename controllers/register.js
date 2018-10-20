@@ -9,6 +9,16 @@ const User = require('../models/user');
 const TempUser = require('../models/tempUser');
 const Token = require('../models/token');
 
+const {
+  twilioSid,
+  twilioToken,
+  twilioNumber
+} = require('../config/twilio');
+
+const accountSid = twilioSid;
+const authToken = twilioToken;
+const client = require('twilio')(accountSid, authToken);
+
 // Validation Schema - Register
 const registerSchema = Joi.object().keys({
   email: Joi.string()
@@ -47,6 +57,11 @@ const registerSchema = Joi.object().keys({
         'Your last name must contain only letters'
       )
     ),
+  phoneNumber: Joi.string()
+    .regex(/[0-9]{10}/)
+    .required()
+    .error(new Error(
+      'Phone number must contain only numbers and be 10 digits'))
 });
 
 module.exports = {
@@ -56,6 +71,11 @@ module.exports = {
       If the email is anything other than deliverable, terminate the registration process. 
     */
     await kickbox.verify(req.body.email, async (err, response) => {
+      if (err) {
+        req.flash('err', err.message);
+        res.redirect('back');
+        return;
+      }
       if (response.body.result !== 'deliverable') {
         req.flash('error', 'This is not a valid email account. Registration terminated!')
         res.redirect('/register');
@@ -81,14 +101,14 @@ module.exports = {
         email: req.body.email
       });
       if (userEmail) {
-        req.flash('error', 'This username is already in use.');
+        req.flash('error', 'This email address is already in use.');
         res, redirect('/register');
         return;
       }
       const userName = await User.findOne({
         username: req.body.username
       });
-      if (userEmail || userName) {
+      if (userName) {
         req.flash('error', 'This username is already in use.');
         res.redirect('/register');
         return;
@@ -103,7 +123,8 @@ module.exports = {
         email: req.body.email,
         firstName: req.body.firstName,
         lastName: req.body.lastName,
-        image: req.body.image
+        image: req.body.image,
+        phoneNumber: req.body.phoneNumber
       });
       await newTempUser.save();
 
@@ -120,43 +141,64 @@ module.exports = {
       */
       const token = new Token({
         _userId: user._id,
-        token: randomstring.generate()
+        token: randomstring.generate({
+          length: 6,
+          charset: 'numeric'
+        })
       });
       await token.save();
 
-      let URL = req.headers.host;
+      let message = `Hello ${user.firstName}, here is your verification code: ${token.token}`;
 
-      // Compose email for verification
-      const html = `
-      <form action="http://${URL}/validate/token-validate?token=${token.token}" method="POST">
-        <div>
-          <h1>Hello, ${newTempUser.firstName}</h1>
-          <br>
-          <p>Thanks for singing up at ${URL}</p>
-          <p>In order to prevent spam accounts we require all users to validate their 
-            email address before they can access their account.</p>
-          <p>Please click the link below to verify your account.</p>
-          <button type="submit">Verify</button>
-        </div>
-      </form>`;
+      await client.messages
+        .create({
+          body: message,
+          from: twilioNumber,
+          to: '+1' + user.phoneNumber
+        }).then(message => debug(message.sid))
+        .catch(err => {
+          if (err) {
+            req.flash('error', `Something went wrong: ${err.code}, ${err.message}`);
+            res.redirect('back');
+            return;
+          }
+        })
+        .done();
 
-      // Send the email
-      await mailer.sendEmail(
-        '"Sender Name" <sender@server.com>',
-        req.body.email,
-        'Email Verification',
-        html
-      );
+      // let URL = req.headers.host;
 
-      req.flash(
-        'success',
-        `Welcome ${
-        req.body.firstName
-      }, please verify your account. An email has been sent to ${
-        req.body.email
-      }. Make sure to check your spam folder!`
-      );
-      res.redirect('/');
+      // // Compose email for verification
+      // const html = `
+      // <form action="http://${URL}/validate/token-validate?token=${token.token}" method="POST">
+      //   <div>
+      //     <h1>Hello, ${newTempUser.firstName}</h1>
+      //     <br>
+      //     <p>Thanks for singing up at ${URL}</p>
+      //     <p>In order to prevent spam accounts we require all users to validate their 
+      //       email address before they can access their account.</p>
+      //     <p>Please click the link below to verify your account.</p>
+      //     <button type="submit">Verify</button>
+      //   </div>
+      // </form>`;
+
+      // // Send the email
+      // await mailer.sendEmail(
+      //   '"Sender Name" <sender@server.com>',
+      //   req.body.email,
+      //   'Email Verification',
+      //   html
+      // );
+
+      // req.flash(
+      //   'success',
+      //   `Welcome ${
+      //   req.body.firstName
+      // }, please verify your account. An email has been sent to ${
+      //   req.body.email
+      // }. Make sure to check your spam folder!`
+      // );
+      req.flash('success', 'Thanks for registering, a text is being sent to your number. Please input that code into the box below,')
+      res.redirect('/validate/token-validate');
     });
   },
 }

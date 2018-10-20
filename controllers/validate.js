@@ -30,7 +30,9 @@ const passwordSchema = Joi.object().keys({
   confirmationPassword: Joi.any()
     .valid(Joi.ref('password'))
     .required()
-    .error(new Error('Passwords must match'))
+    .error(
+      new Error('Passwords must match')
+    )
 });
 
 module.exports = {
@@ -41,7 +43,7 @@ module.exports = {
       most likely expired and redirect them to the token resend page.
     */
     const tokenConfirm = await Token.findOne({
-      token: req.query.token
+      token: req.body.token
     });
     if (!tokenConfirm) {
       req.flash('error, Token not found. Any token created expires in 12 hours from registration. Click "Resend Token" to get a new one.');
@@ -59,7 +61,7 @@ module.exports = {
     });
     if (!tempUser) {
       req.flash('error', 'No user found!');
-      res.redirect('/');
+      res.redirect('back');
     }
 
     tempUser.isVerified = true;
@@ -111,7 +113,8 @@ module.exports = {
       firstName: tempUser.firstName,
       lastName: tempUser.lastName,
       image: `https://ui-avatars.com/api/?rounded=true&size=35&name=${tempUser.firstName}%20${tempUser.lastName}`,
-      isVerified: tempUser.isVerified
+      isVerified: tempUser.isVerified,
+      phoneNumber: tempUser.phoneNumber
     });
 
     const admin = await User.find({});

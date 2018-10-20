@@ -36,6 +36,12 @@ const TempUserSchema = new Schema({
     required: true,
     default: Date.now,
     expires: 604800
+  },
+  phoneNumber: {
+    type: String,
+    required: true,
+    trim: true,
+    unique: true
   }
 });
 

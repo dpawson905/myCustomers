@@ -1,0 +1,26 @@
+<% include partials/header %>
+<div class="container">
+  <div class="row">
+    <div class="col m8 offset-m2">
+      <h3 class="center white-text">Customer Access &mdash; Token</h3>
+    </div>
+    <div class="row">
+      <form class="col m8 offset-m2" action="/validate/token-validate" method="POST">
+        <div class="row">
+          <div class="input-field col m6 offset-m3">
+            <input id="token" name="token" type="text" class="validate" required>
+            <label for="token">Token</label>
+            <span class="helper-text" data-error="Token is required"></span>
+          </div>
+          <div class="row">
+            <div class="col m12">
+              <button class="waves-effect waves-light btn center-btn" type="submit">Verify token</button>
+            </div>
+          </div>
+        </div>
+
+      </form>
+    </div>
+  </div>
+</div>
+<% include partials/footer %>

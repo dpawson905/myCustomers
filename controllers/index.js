@@ -37,14 +37,13 @@ module.exports = {
 
   },
 
-  async putNexmo(req, res) {
+  async putTwilio(req, res) {
     let user = await User.findById(req.params.id);
     if (!user) {
       req.flash('error', 'No user found');
       res.redirect('back');
       return;
     }
-
 
     user.twilioNumber = req.body.twilioNumber;
 

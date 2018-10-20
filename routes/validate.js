@@ -13,6 +13,10 @@ router.get('/', (req, res) => {
   res.send('Validate')
 })
 
+router.get('/token-validate', isAuthenticated, (req, res) => {
+  res.render('token-validate');
+})
+
 /* POST validate */
 router.post('/token-validate', isAuthenticated, asyncErrorHandler(verifyUser));
 

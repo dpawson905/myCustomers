@@ -4,7 +4,7 @@ const User = require('../models/user');
 const {
   postLogin,
   getLogout,
-  putNexmo
+  putTwilio
 } = require('../controllers');
 const {
   isAuthenticated,
@@ -28,7 +28,7 @@ router.get('/user/:id', isNotAuthenticated, async (req, res) => {
   })
 })
 
-router.put('/user/:id', isNotAuthenticated, asyncErrorHandler(putNexmo));
+router.put('/user/:id', isNotAuthenticated, asyncErrorHandler(putTwilio));
 
 /* GET /logout */
 router.get('/logout', isNotAuthenticated, getLogout);
