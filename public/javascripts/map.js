@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", function () {
   var map = new mapboxgl.Map({
     container: 'map',
     style: 'mapbox://styles/mapbox/light-v9',
-    center: foundCustomer[0].coordinates,
+    center: foundCustomer.coordinates,
     zoom: 14
   });
 
@@ -13,10 +13,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // make a marker for our location and add to the map
   new mapboxgl.Marker(el)
-    .setLngLat(foundCustomer[0].coordinates)
+    .setLngLat(foundCustomer.coordinates)
     .setPopup(new mapboxgl.Popup({
         offset: 25
       }) // add popups
-      .setHTML('<h4>' + foundCustomer[0].firstName + ' ' + foundCustomer[0].lastName + '</h4><p>' + foundCustomer.address + '</p>'))
+      .setHTML('<h4>' + foundCustomer.firstName + ' ' + foundCustomer.lastName + '</h4><p>' + foundCustomer.address + '</p>'))
     .addTo(map);
 });

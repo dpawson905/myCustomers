@@ -27,6 +27,8 @@ router.get('/', isNotAuthenticated, async (req, res) => {
   });
 });
 
+
+
 router.get('/add', isNotAuthenticated, (req, res) => {
   res.render('newCustomer', {
     page: 'add'
@@ -46,5 +48,19 @@ router.get('/search/week', isNotAuthenticated, asyncErrorHandler(getFindByWeek))
 router.post('/add', isNotAuthenticated, asyncErrorHandler(postCustomer));
 
 router.post('/sms/:id', isNotAuthenticated, asyncErrorHandler(postSMS));
+
+router.get('/:id', isNotAuthenticated, async (req, res) => {
+  let foundCustomer = await Customer.findById(req.params.id);
+  if (!foundCustomer) {
+    req.flash('error', 'No customer found');
+    res.redirect('back');
+    return;
+  }
+  res.render('customer', {
+    foundCustomer
+  });
+})
+
+
 
 module.exports = router;
