@@ -6,7 +6,11 @@
     <h3 class="center move-down"><%= title %> &mdash; Customer results</h3>
     <div class="row">
       <% foundCustomer.forEach(function(customers) { %>
-      <div class="col m6 move-down">
+      <% if (foundCustomer.length < 2) { %>
+        <div class="col m6 offset-m3 s12 move-down">
+      <% } else { %>
+        <div class="col m6 s12 move-down">
+      <% } %>
         <div class="card blue-grey darken-1">
           <div class="card-content white-text">
             <% if(customers.companyName) { %>

@@ -1,33 +1,14 @@
 <% include partials/header %>
 
-<div class="container">
-  <div class="row">
-    <div class="col m12 move-down">
-      <h3 class="center">
-        <%= title %> &mdash; Search
-      </h3>
-    </div>
-  </div>
+<div class="container h-100 valign-wrapper">
   <div class="row move-down">
-    <div class="col m8 offset-m2">
-      <!-- Phone Number Search -->
-      <form action="/customers/search/phone" method="GET">
-        <div class="row">
+    <div class="col m12">
+      <h3 class="center"><%= title %> &mdash; Search</h3>
+      <form action="/customers/search/all" method="GET">
+        <div class="row move-down">
           <div class="input-field col s8 offset-s1">
-            <input type="text" id="search" name="search" placeholder="Search by customers phone number">
-            <label for="search">Phone number:</label>
-          </div>
-          <div class="input-field col s2">
-            <button class="waves-effect waves-light btn" type="submit">Search</button>
-          </div>
-        </div>
-      </form>
-      <!-- Email Search -->
-      <form action="/customers/search/email" method="GET">
-        <div class="row">
-          <div class="input-field col s8 offset-s1">
-            <input type="email" id="search" name="search" placeholder="Search by customers email address">
-            <label for="search">Email address:</label>
+            <input type="text" id="search" name="search" placeholder="Search by Name, email address or phone number">
+            <label for="search">Search:</label>
           </div>
           <div class="input-field col s2">
             <button class="waves-effect waves-light btn" type="submit">Search</button>

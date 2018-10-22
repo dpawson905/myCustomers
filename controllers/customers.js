@@ -54,54 +54,6 @@ module.exports = {
     })
   },
 
-  async getFindByNumber(req, res) {
-    const regex = new RegExp(escapeRegex(req.query.search), 'gi');
-    await Customer.find({
-      'phoneNumber': regex,
-      'tech.id': {
-        $eq: req.user.id
-      }
-    }, (err, foundCustomer) => {
-      if (req.query.search === "" || req.query.search === "undefined") {
-        req.flash('error', 'Search cannot be blank');
-        res.redirect('back');
-        return;
-      }
-      if (foundCustomer.length < 1) {
-        req.flash('error', 'No user found by that number');
-        res.redirect('back');
-        return;
-      }
-      res.render('customer', {
-        foundCustomer
-      });
-    });
-  },
-
-  async getFindByEmail(req, res) {
-    const regex = new RegExp(escapeRegex(req.query.search), 'gi');
-    await Customer.find({
-      'email': regex,
-      'tech.id': {
-        $eq: req.user.id
-      }
-    }, (err, foundCustomer) => {
-      if (req.query.search === "" || req.query.search === "undefined") {
-        req.flash('error', 'Search cannot be blank');
-        res.redirect('back');
-        return;
-      }
-      if (foundCustomer.length < 1) {
-        req.flash('error', 'No user found by that email');
-        res.redirect('back');
-        return;
-      }
-      res.render('customer', {
-        foundCustomer
-      });
-    });
-  },
-
   async getFindByWeek(req, res) {
     const week = new RegExp(escapeRegex(req.query.week), 'gi');
     const day = new RegExp(escapeRegex(req.query.day), 'gi');
@@ -122,6 +74,34 @@ module.exports = {
       }
       if (req.query.day === "" || req.query.day === "undefined") {
         req.flash('error', 'Day cannot be blank');
+        res.redirect('back');
+        return;
+      }
+      if (foundCustomer.length < 1) {
+        req.flash('error', 'No customer found');
+        res.redirect('back');
+        return;
+      }
+      res.render('customers', {
+        foundCustomer
+      });
+    });
+  },
+
+  async getFindAll(req, res) {
+    const regex = new RegExp(escapeRegex(req.query.search), 'gi');
+    await Customer.find({
+      'tech.id': {
+        $eq: req.user.id
+      },
+      $text: {
+        $search: regex
+      }
+
+    }, (err, foundCustomer) => {
+      debug(foundCustomer.length)
+      if (req.query.search === "" || req.query.search === "undefined") {
+        req.flash('error', 'Search cannot be blank');
         res.redirect('back');
         return;
       }

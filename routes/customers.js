@@ -9,7 +9,8 @@ const {
   postSMS,
   getFindByNumber,
   getFindByEmail,
-  getFindByWeek
+  getFindByWeek,
+  getFindAll
 } = require('../controllers/customers');
 
 const {
@@ -36,14 +37,14 @@ router.get('/add', isNotAuthenticated, (req, res) => {
 });
 
 router.get('/search', isNotAuthenticated, (req, res) => {
-  res.render('search');
+  res.render('search', {
+    page: 'search'
+  });
 });
 
-router.get('/search/phone', isNotAuthenticated, asyncErrorHandler(getFindByNumber));
-
-router.get('/search/email', isNotAuthenticated, asyncErrorHandler(getFindByEmail));
-
 router.get('/search/week', isNotAuthenticated, asyncErrorHandler(getFindByWeek));
+
+router.get('/search/all', isNotAuthenticated, asyncErrorHandler(getFindAll));
 
 router.post('/add', isNotAuthenticated, asyncErrorHandler(postCustomer));
 

@@ -12,6 +12,11 @@ body {
   background-color: snow;
 }
 
+.custom-hover:hover,
+.custom-hover:focus {
+  color: #fff !important;
+}
+
 h1,
 h2,
 h3,

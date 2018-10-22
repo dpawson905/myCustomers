@@ -12,16 +12,16 @@
     </ul>
     <% } else if(currentUser.isAdmin) { %>
     <ul class="right hide-on-med-and-down">
-      <li class="<%= typeof page !== 'undefined' && page === 'customers' ? 'active' : '' %>"><a href="/customers/search"><i class="fas fa-sign-in-alt"></i>
+      <li class="<%= typeof page !== 'undefined' && page === 'search' ? 'active' : '' %>"><a href="/customers/search"><i class="fas fa-sign-in-alt"></i>
           Search Customers</a></li>
       <li class="<%= typeof page !== 'undefined' && page === 'add' ? 'active' : '' %>"><a href="/customers/add"><i
             class="fas fa-user-plus"></i> New Customer</a></li>
       <li>
-        <div class="chip hoverable">
+        <a href="/auth/logout" class="chip hoverable custom-hover">
           <img src="<%= currentUser.image %>" alt="Contact Person">
-          Hello
+          Logout
           <%= currentUser.firstName.charAt(0).toUpperCase() + currentUser.firstName.slice(1) %>
-        </div>
+        </a>
       </li>
       <% if(!currentUser.twilioNumber || currentUser.twilioNumber === "") { %>
         <li class="<%= typeof page !== 'undefined' && page === 'addKey' ? 'active' : '' %>">
@@ -32,7 +32,7 @@
     </ul>
     <% } else { %>
     <ul class="right hide-on-med-and-down">
-      <li class="<%= typeof page !== 'undefined' && page === 'customers' ? 'active' : '' %>"><a href="/customers/search"><i class="fas fa-sign-in-alt"></i>
+      <li class="<%= typeof page !== 'undefined' && page === 'search' ? 'active' : '' %>"><a href="/customers/search"><i class="fas fa-sign-in-alt"></i>
           Search Customers</a></li>
       <li class="<%= typeof page !== 'undefined' && page === 'add' ? 'active' : '' %>"><a href="/customers/add"><i
             class="fas fa-user-plus"></i> New Customer</a></li>
