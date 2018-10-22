@@ -6,7 +6,10 @@ const Customer = require('../models/customers');
 const {
   postCustomer,
   getCustomer,
-  postSMS
+  postSMS,
+  getFindByNumber,
+  getFindByEmail,
+  getFindByWeek
 } = require('../controllers/customers');
 
 const {
@@ -17,9 +20,7 @@ const {
 
 /* GET customers page. */
 router.get('/', isNotAuthenticated, async (req, res) => {
-  let showCustomers = await Customer.find({
-    'tech.id': req.user._id
-  })
+
   res.render('customers', {
     page: 'customers',
     showCustomers
@@ -32,10 +33,18 @@ router.get('/add', isNotAuthenticated, (req, res) => {
   });
 });
 
+router.get('/search', isNotAuthenticated, (req, res) => {
+  res.render('search');
+});
+
+router.get('/search/phone', isNotAuthenticated, asyncErrorHandler(getFindByNumber));
+
+router.get('/search/email', isNotAuthenticated, asyncErrorHandler(getFindByEmail));
+
+router.get('/search/week', isNotAuthenticated, asyncErrorHandler(getFindByWeek));
+
 router.post('/add', isNotAuthenticated, asyncErrorHandler(postCustomer));
 
 router.post('/sms/:id', isNotAuthenticated, asyncErrorHandler(postSMS));
-
-router.get('/:id', isNotAuthenticated, asyncErrorHandler(getCustomer));
 
 module.exports = router;

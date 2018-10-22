@@ -1,0 +1,58 @@
+<% include partials/header %>
+
+<div class="container">
+  <div class="row">
+    <div class="col m12 move-down">
+      <h3 class="center">
+        <%= title %> &mdash; Search
+      </h3>
+    </div>
+  </div>
+  <div class="row move-down">
+    <div class="col m8 offset-m2">
+      <!-- Phone Number Search -->
+      <form action="/customers/search/phone" method="GET">
+        <div class="row">
+          <div class="input-field col s8 offset-s1">
+            <input type="text" id="search" name="search" placeholder="Search by customers phone number">
+            <label for="search">Phone number:</label>
+          </div>
+          <div class="input-field col s2">
+            <button class="waves-effect waves-light btn" type="submit">Search</button>
+          </div>
+        </div>
+      </form>
+      <!-- Email Search -->
+      <form action="/customers/search/email" method="GET">
+        <div class="row">
+          <div class="input-field col s8 offset-s1">
+            <input type="email" id="search" name="search" placeholder="Search by customers email address">
+            <label for="search">Email address:</label>
+          </div>
+          <div class="input-field col s2">
+            <button class="waves-effect waves-light btn" type="submit">Search</button>
+          </div>
+        </div>
+      </form>
+      <!-- Week and Day Search -->
+      <h3 class="center move-down"> Search by Week and Day</h3>
+      <form action="/customers/search/week" method="GET">
+        <div class="row move-down">
+          <div class="input-field col s4 offset-s1">
+            <input type="number" id="week" name="week" min="1" max="4" placeholder="Search by week">
+            <label for="search">Week:</label>
+          </div>
+          <div class="input-field col s4">
+            <input type="number" id="day" name="day" min="1" max="5" placeholder="Search by day">
+            <label for="search">Day:</label>
+          </div>
+          <div class="input-field col s2">
+            <button class="waves-effect waves-light btn" type="submit">Search</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<% include partials/footer %>

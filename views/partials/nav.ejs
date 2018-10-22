@@ -1,4 +1,4 @@
-<nav class="transparent z-depth-0">
+<nav class="cyan darken-3 z-depth-3">
   <div class="nav-wrapper container">
     <div class="hide-on-small-only"><a href="/" class="brand-logo">
         <%= title %></a></div>
@@ -12,8 +12,8 @@
     </ul>
     <% } else if(currentUser.isAdmin) { %>
     <ul class="right hide-on-med-and-down">
-      <li class="<%= typeof page !== 'undefined' && page === 'customers' ? 'active' : '' %>"><a href="/customers"><i class="fas fa-sign-in-alt"></i>
-          Customers</a></li>
+      <li class="<%= typeof page !== 'undefined' && page === 'customers' ? 'active' : '' %>"><a href="/customers/search"><i class="fas fa-sign-in-alt"></i>
+          Search Customers</a></li>
       <li class="<%= typeof page !== 'undefined' && page === 'add' ? 'active' : '' %>"><a href="/customers/add"><i
             class="fas fa-user-plus"></i> New Customer</a></li>
       <li>
@@ -32,8 +32,8 @@
     </ul>
     <% } else { %>
     <ul class="right hide-on-med-and-down">
-      <li class="<%= typeof page !== 'undefined' && page === 'customers' ? 'active' : '' %>"><a href="/customers"><i class="fas fa-sign-in-alt"></i>
-          Customers</a></li>
+      <li class="<%= typeof page !== 'undefined' && page === 'customers' ? 'active' : '' %>"><a href="/customers/search"><i class="fas fa-sign-in-alt"></i>
+          Search Customers</a></li>
       <li class="<%= typeof page !== 'undefined' && page === 'add' ? 'active' : '' %>"><a href="/customers/add"><i
             class="fas fa-user-plus"></i> New Customer</a></li>
       <li>

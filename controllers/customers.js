@@ -50,42 +50,93 @@ module.exports = {
         req.flash('error', err.message)
       }
       req.flash('success', 'Customer added successfully');
-      res.redirect('/customers')
+      res.redirect('/customers/search')
     })
   },
 
-  async getCustomer(req, res) {
-    let foundCustomer = await Customer.findById(req.params.id);
-    if (!foundCustomer) {
-      req.flash('error', 'No user found');
-      res.redirect('back');
-      return;
-    }
-    res.render('customer', {
-      foundCustomer
-    })
+  async getFindByNumber(req, res) {
+    const regex = new RegExp(escapeRegex(req.query.search), 'gi');
+    await Customer.find({
+      'phoneNumber': regex,
+      'tech.id': {
+        $eq: req.user.id
+      }
+    }, (err, foundCustomer) => {
+      if (req.query.search === "" || req.query.search === "undefined") {
+        req.flash('error', 'Search cannot be blank');
+        res.redirect('back');
+        return;
+      }
+      if (foundCustomer.length < 1) {
+        req.flash('error', 'No user found by that number');
+        res.redirect('back');
+        return;
+      }
+      res.render('customer', {
+        foundCustomer
+      });
+    });
   },
 
-  async postSMS(req, res) {
-    let customer = await Customer.findById(req.params.id);
-    console.log(customer.tech.username);
-    let user = await User.findById(req.user.id);
-    if (!user || !customer) {
-      req.flash('error', 'Something went wrong... Admin has been notified.');
-      res.redirect('back');
-      return;
-    }
+  async getFindByEmail(req, res) {
+    const regex = new RegExp(escapeRegex(req.query.search), 'gi');
+    await Customer.find({
+      'email': regex,
+      'tech.id': {
+        $eq: req.user.id
+      }
+    }, (err, foundCustomer) => {
+      if (req.query.search === "" || req.query.search === "undefined") {
+        req.flash('error', 'Search cannot be blank');
+        res.redirect('back');
+        return;
+      }
+      if (foundCustomer.length < 1) {
+        req.flash('error', 'No user found by that email');
+        res.redirect('back');
+        return;
+      }
+      res.render('customer', {
+        foundCustomer
+      });
+    });
+  },
 
-    let message = `Hello ${customer.firstName}, this is ${user.firstName} from Dodson Pest Control. This is a reminder of your apointment at ${customer.time} tomorrow. Have a great day!`;
-
-    await client.messages
-      .create({
-        body: message,
-        from: user.twillowNumber,
-        to: '+1' + customer.phoneNumber
-      }).then(message => debug(message.sid))
-      .done();
-    req.flash('success', 'Text message sent successfully');
-    res.redirect('back');
+  async getFindByWeek(req, res) {
+    const week = new RegExp(escapeRegex(req.query.week), 'gi');
+    const day = new RegExp(escapeRegex(req.query.day), 'gi');
+    await Customer.find({
+      $and: [{
+        'week': week
+      }, {
+        'day': day
+      }],
+      'tech.id': {
+        $eq: req.user.id
+      }
+    }, (err, foundCustomer) => {
+      if (req.query.week === "" || req.query.week === "undefined") {
+        req.flash('error', 'Week cannot be blank');
+        res.redirect('back');
+        return;
+      }
+      if (req.query.day === "" || req.query.day === "undefined") {
+        req.flash('error', 'Day cannot be blank');
+        res.redirect('back');
+        return;
+      }
+      if (foundCustomer.length < 1) {
+        req.flash('error', 'No customer found');
+        res.redirect('back');
+        return;
+      }
+      res.render('customers', {
+        foundCustomer
+      });
+    });
   }
+}
+
+function escapeRegex(text) {
+  return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
 }

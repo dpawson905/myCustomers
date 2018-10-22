@@ -40,12 +40,12 @@ const CustomerSchema = new Schema({
   },
   price: String,
   week: {
-    type: Number,
+    type: String,
     required: true,
     trim: true
   },
   day: {
-    type: Number,
+    type: String,
     required: true,
     trim: true
   },

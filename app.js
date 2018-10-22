@@ -66,7 +66,7 @@ app.use(flash());
 app.use((req, res, next) => {
   res.locals.success = req.flash('success');
   res.locals.error = req.flash('error');
-  res.locals.title = 'Customer DB';
+  res.locals.title = 'Tech Access';
   res.locals.currentUser = req.user;
   res.locals.isAuthenticated = req.user ? true : false;
   next();

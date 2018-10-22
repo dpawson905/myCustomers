@@ -1,78 +1,73 @@
-<% include partials/header %>
+<!DOCTYPE html>
+<html>
 
-<div class="container h-100">
-  <div class="row">
-    <div class="col m12 move-down">
-      <h3 class="center white-text">Customer Access &mdash; View Customers</h3>
-    </div>
+<% include partials/header %>
+  <div class="container">
+    <h3 class="center move-down"><%= title %> &mdash; Customer results</h3>
     <div class="row">
-      <% showCustomers.forEach(function(customer) { %>
-      <div class="col s12 m6">
+      <% foundCustomer.forEach(function(customers) { %>
+      <div class="col m6 move-down">
         <div class="card blue-grey darken-1">
           <div class="card-content white-text">
-            <span class="card-title big-bold">
-              <% if(customer.companyName === "") { %>
-              <%= customer.firstName.charAt(0).toUpperCase() + customer.firstName.slice(1)%>
-              <%= customer.lastName.charAt(0).toUpperCase() + customer.lastName.slice(1) %>
-              <% } else { %>
-              <%= customer.companyName.charAt(0).toUpperCase() + customer.companyName.slice(1) %>
-              <% } %>
-            </span>
-            <div class="row">
-              <div class="col m8 s12">
-                <ul>
-                  <li class="med-bold">
-                    <span class="sm-bold">Week:</span>
-                    <%= customer.week %>
-                    <span class="sm-bold">Day:</span>
-                    <%= customer.day %>
-                  </li>
-                  <% if(customer.companyName !== "") { %>
-                  <li>
-                    <span class="sm-bold">Contact Name:</span>
-                    <%= customer.firstName.charAt(0).toUpperCase() + customer.firstName.slice(1) %>
-                    <%= customer.lastName.charAt(0).toUpperCase() + customer.lastName.slice(1) %>
-                  </li>
-                  <% } %>
-                  <li>
-                    <span class="sm-bold">Phone:</span>
-                    <a href="tel:+1<%= customer.phoneNumber %>"><%= customer.phoneNumber %></a>
-                  </li>
-                  <li><span class="sm-bold">Email:</span>
-                    <%= customer.email %>
-                  </li>
-                  <li><span class="sm-bold">Address:</span>
-                    <%= customer.address %>
-                  </li>
-                  <li><span class="sm-bold">Contact preference:</span>
-                    <%= customer.preference.toUpperCase() %>
-                  </li>
-                  <li><span class="sm-bold">Scheduled time:</span>
-                    <%= customer.time%>
-                  </li>
-                  <li><span class="sm-bold">Price:</span>
-                    <%= customer.price %>
-                  </li>
-                </ul>
-              </div>
-              
-            </div>
+            <% if(customers.companyName) { %>
+              <span class="card-title"><span class="title">Week:</span> <%= customers.week %> <span class="title">Day:</span> <%= customers.day %> </span>
+              <ul>
+                <li>
+                  <div class="chip">
+                    <img class="fas fa-signature">
+                    Company Name: 
+                  </div>
+                  <span class="med-bold"><%= customers.companyName %> </span>
+                </li>
+                <li>
+                  <div class="chip">
+                    <img class="fas fa-signature">
+                    Contact Name: 
+                  </div>
+                  <span class="med-bold"><%= customers.firstName.charAt(0).toUpperCase() + customers.firstName.slice(1) %> <%= customers.lastName.charAt(0).toUpperCase() + customers.lastName.slice(1) %></span>
+                </li>
+                <li>
+                  <div class="chip">
+                    <img class="fas fa-phone">
+                    Contact Phone: 
+                  </div>
+                 <span class="med-bold"><a href="tel:<%= customers.phoneNumber %>"><%= customers.phoneNumber %></a></span>
+                </li>
+              </ul>
+            <% } else { %>
+              <span class="card-title"><span class="title">Week:</span> <%= customers.week %> <span class="title">Day:</span> <%= customers.day %> </span>
+              <ul>
+                <li>
+                  <div class="chip">
+                    <img class="fas fa-signature">
+                    Customer Name: 
+                  </div>
+                 <span class="med-bold"><%= customers.firstName.charAt(0).toUpperCase() + customers.firstName.slice(1) %> <%= customers.lastName.charAt(0).toUpperCase() + customers.lastName.slice(1) %></span>
+                </li>
+                <li>
+                  <div class="chip">
+                    <img class="fas fa-phone">
+                    Customer Phone: 
+                  </div>
+                 <span class="med-bold"><a href="tel:<%= customers.phoneNumber %>"><%= customers.phoneNumber %></a></span>
+                </li>
+                <li>
+                  <div class="chip">
+                    <img class="fas fa-envelope-open">
+                    Customer Phone: 
+                  </div>
+                 <span class="med-bold"><a href="mailto:<%= customers.email %>"><%= customers.email %></a></span>
+                </li>
+              </ul>
+            <% } %>
           </div>
           <div class="card-action">
-            <form action="/customers/sms/<%= customer.id %>" method="POST" class="inline-btn">
-              <button class="waves-effect waves-light btn">Text customer</button>
-            </form>
-            <form action="/customers/email" method="POST" class="inline-btn">
-              <button class="waves-effect waves-light btn">Email customer</button>
-            </form>
-            <a href="/customers/<%= customer.id %>" class="waves-effect waves-light btn">View All</a>
+            <a href="#">This is a link</a>
+            <a href="#">This is a link</a>
           </div>
         </div>
       </div>
-      
-      <% }) %>
+      <%}) %>
     </div>
   </div>
-</div>
-  
-<% include partials/footer %>
+  <% include partials/footer %>
