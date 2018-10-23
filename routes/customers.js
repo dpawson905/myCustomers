@@ -19,14 +19,14 @@ const {
   asyncErrorHandler
 } = require('../middleware');
 
-/* GET customers page. */
-router.get('/', isNotAuthenticated, async (req, res) => {
+// /* GET customers page. */
+// router.get('/', isNotAuthenticated, async (req, res) => {
 
-  res.render('customers', {
-    page: 'customers',
-    showCustomers
-  });
-});
+//   res.render('customers', {
+//     page: 'customers',
+//     showCustomers
+//   });
+// });
 
 
 

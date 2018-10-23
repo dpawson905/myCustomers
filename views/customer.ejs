@@ -1,10 +1,27 @@
 <% include partials/header %>
-<div class="container ">
+<div class="container">
   <div class="row">
-    <h3 class="center">Tech Access &mdash; Customer</h3>
-    <div class="col m6">
-      <div id="map"></div>
-      <p class=""><%= foundCustomer.firstName %></p>
+    <div class="col s12 m8 offset-m2">
+      <h3 class="center">
+        <%=title %>
+      </h3>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col s12 m6 offset-m3">
+      <div class="card">
+       <div class="card-image">
+          <img id="map">
+        </div>
+        <div class="card-content">
+          <p>I am a very simple card. I am good at containing small bits of information. I am convenient because I require little markup to use effectively.</p>
+        </div>
+        <div class="card-action">
+          <a href="#">This is a link</a>
+          <a href="#">This is a link</a>
+        </div>
+      </div>
+      </div>
     </div>
   </div>
 </div>
@@ -12,11 +29,7 @@
   var foundCustomer = <%-JSON.stringify(foundCustomer) %>
 </script>
 <script src="/javascripts/map.js"></script>
-<script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js" 
-  integrity="sha384-kW+oWsYx3YpxvjtZjFXqazFpA7UP/MbiY4jvs+RWZo2+N94PFZ36T6TFkc9O3qoB" 
-  crossorigin="anonymous">
-</script>
+
 <script>
-  
-</body>
+  </body>
 </html>

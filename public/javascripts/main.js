@@ -26,5 +26,6 @@ $(function () {
 
   $('.sidenav').sidenav();
   $('select').formSelect();
+  $('.fixed-action-btn').floatingActionButton();
 
 })

@@ -1,4 +1,5 @@
 const debug = require('debug')('customers:newCustomer');
+const mailer = require('../misc/mailer');
 const User = require('../models/user');
 const Customer = require('../models/customers');
 const {
@@ -114,6 +115,57 @@ module.exports = {
         foundCustomer
       });
     });
+  },
+
+  async postSMS(req, res) {
+    let customer = await Customer.findById(req.params.id);
+    console.log(customer.tech.username);
+    let user = await User.findById(req.user.id);
+    if (!user || !customer) {
+      req.flash('error', 'Something went wrong... Admin has been notified.');
+      res.redirect('back');
+      return;
+    }
+
+    let message = `Hello ${customer.firstName}, this is ${user.firstName} from Dodson Pest Control. This is a reminder of your apointment at ${customer.time} tomorrow. Have a great day!`;
+
+    await client.messages
+      .create({
+        body: message,
+        from: user.twillowNumber,
+        to: '+1' + customer.phoneNumber
+      }).then(message => debug(message.sid))
+      .done();
+    req.flash('success', 'Text message sent successfully');
+    res.redirect('back');
+  },
+
+  async postEmail(req, res) {
+    let customer = await Customer.findById(req.params.id);
+    let user = await User.findById(req.user.id);
+    if (!user || !customer) {
+      req.flash('error', 'Something went wrong... Admin has been notified.');
+      res.redirect('back');
+      return;
+    }
+
+    let html = `
+    <div>
+      <h1  Hello ${customer.firstName}, </h1> 
+      <p>This is ${user.firstName} with Dodson Brothers Pest Control.This is a reminder of your apointment tomorrow at 9: 15 AM. </p> 
+      <p> If you have any questions please contact me at ${user.phoneNumber}. </p> 
+      <p> Have a great day! </p> 
+    </div>`;
+
+    // Send the email
+    await mailer.sendEmail(
+      `"${user.FirstName} ${user.lastName} <${req.headers.host}>`,
+      customer.email,
+      'Dodson Brothers Pest Control Reminder',
+      html
+    );
+
+
   }
 }
 

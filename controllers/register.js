@@ -1,7 +1,7 @@
 const debug = require('debug')('customers:register');
 const Joi = require('joi');
 const randomstring = require('randomstring');
-const mailer = require('../misc/mailer');
+
 const kickbox = require('kickbox').client(process.env.KB_API).kickbox();
 
 // DB Model Files
@@ -165,38 +165,6 @@ module.exports = {
         })
         .done();
 
-      // let URL = req.headers.host;
-
-      // // Compose email for verification
-      // const html = `
-      // <form action="http://${URL}/validate/token-validate?token=${token.token}" method="POST">
-      //   <div>
-      //     <h1>Hello, ${newTempUser.firstName}</h1>
-      //     <br>
-      //     <p>Thanks for singing up at ${URL}</p>
-      //     <p>In order to prevent spam accounts we require all users to validate their 
-      //       email address before they can access their account.</p>
-      //     <p>Please click the link below to verify your account.</p>
-      //     <button type="submit">Verify</button>
-      //   </div>
-      // </form>`;
-
-      // // Send the email
-      // await mailer.sendEmail(
-      //   '"Sender Name" <sender@server.com>',
-      //   req.body.email,
-      //   'Email Verification',
-      //   html
-      // );
-
-      // req.flash(
-      //   'success',
-      //   `Welcome ${
-      //   req.body.firstName
-      // }, please verify your account. An email has been sent to ${
-      //   req.body.email
-      // }. Make sure to check your spam folder!`
-      // );
       req.flash('success', 'Thanks for registering, a text is being sent to your number. Please input that code into the box below,')
       res.redirect('/validate/token-validate');
     });

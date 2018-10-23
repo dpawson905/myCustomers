@@ -17,6 +17,6 @@ document.addEventListener("DOMContentLoaded", function () {
     .setPopup(new mapboxgl.Popup({
         offset: 25
       }) // add popups
-      .setHTML('<h4>' + foundCustomer.firstName + ' ' + foundCustomer.lastName + '</h4><p>' + foundCustomer.address + '</p>'))
+      .setHTML('<p>' + foundCustomer.firstName + ' ' + foundCustomer.lastName + '</p><p>' + foundCustomer.address + '</p>'))
     .addTo(map);
 });
