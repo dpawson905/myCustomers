@@ -25,11 +25,11 @@
               <i class="fas fa-clock"></i> Time Preference: <%= foundCustomer.time %>
             </li>
           </ul>
-          <form class="inline" action="/customers/<%= foundCustomer.id %>/sms" method="POST">
+          <form class="inline" action="/customers/sms/<%= foundCustomer.id %>" method="POST">
             <button class="btn btn-primary mt-2" type="submit">Send Text</button>
           </form>
-          <form class="inline" action="/customers/<%= foundCustomer.id %>/sms" method="POST">
-            <button class="btn btn-primary mt-2" type="submit">Send Text</button>
+          <form class="inline" action="/customers/email/<%= foundCustomer.id %>" method="POST">
+            <button class="btn btn-primary mt-2" type="submit">Send Email</button>
           </form>
         </div>
       </div>
