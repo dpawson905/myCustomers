@@ -25,7 +25,7 @@ const validateRouter = require('./routes/validate');
 const app = express();
 
 // Connect to db
-mongoose.connect(db_url, {
+mongoose.connect(db_url || process.env.DB_URL, {
   useCreateIndex: true,
   useNewUrlParser: true
 });
@@ -52,7 +52,8 @@ app.use(methodOverride('_method'));
 app.use(session({
   secret: 'its a secret',
   resave: false,
-  saveUninitialized: true
+  saveUninitialized: true,
+  cookie: { httpOnly: true}
 }));
 
 app.use(passport.initialize());

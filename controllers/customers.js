@@ -6,13 +6,13 @@ const { MB_API } = require("../config/mapbox");
 
 const mbxGeocoding = require("@mapbox/mapbox-sdk/services/geocoding");
 const geocodingClient = mbxGeocoding({
-  accessToken: MB_API
+  accessToken: MB_API || process.env.MB_API
 });
 
 const { twilioSid, twilioToken } = require("../config/twilio");
 
-const accountSid = twilioSid;
-const authToken = twilioToken;
+const accountSid = twilioSid || process.env.TWILIO_SID;
+const authToken = twilioToken || process.env.TWILIO_TOKEN;
 const client = require("twilio")(accountSid, authToken);
 
 module.exports = {
