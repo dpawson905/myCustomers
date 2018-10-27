@@ -9,10 +9,11 @@ const geocodingClient = mbxGeocoding({
   accessToken: MB_API || process.env.MB_API
 });
 
-const { twilioSid, twilioToken } = require("../config/twilio");
+const { twilioSid, twilioToken, twilioNumber } = require("../config/twilio");
 
 const accountSid = twilioSid || process.env.TWILIO_SID;
 const authToken = twilioToken || process.env.TWILIO_TOKEN;
+const twilioNumber = twilioNumber || process.env.TWILIO_NUMBER;
 const client = require("twilio")(accountSid, authToken);
 
 module.exports = {
@@ -134,14 +135,14 @@ module.exports = {
 
     let message = `Hello ${customer.firstName}, this is ${
       user.firstName
-    } from Dodson Pest Control. This is a reminder of your apointment at ${
+    } from Dodson Pest Control. This is a reminder of your appointment at ${
       customer.time
     } tomorrow. Have a great day!`;
 
     await client.messages
       .create({
         body: message,
-        from: user.twillowNumber,
+        from: twilioNumber,
         to: "+1" + customer.phoneNumber
       })
       .then(message => debug(message.sid))
