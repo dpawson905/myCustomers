@@ -13,7 +13,7 @@ const { twilioSid, twilioToken, twilioNumber } = require("../config/twilio");
 
 const accountSid = twilioSid || process.env.TWILIO_SID;
 const authToken = twilioToken || process.env.TWILIO_TOKEN;
-const twilioNumber = twilioNumber || process.env.TWILIO_NUMBER;
+const twilioNumberVar = twilioNumber || process.env.TWILIO_NUMBER;
 const client = require("twilio")(accountSid, authToken);
 
 module.exports = {
@@ -142,7 +142,7 @@ module.exports = {
     await client.messages
       .create({
         body: message,
-        from: twilioNumber,
+        from: twilioNumberVar,
         to: "+1" + customer.phoneNumber
       })
       .then(message => debug(message.sid))
