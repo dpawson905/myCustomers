@@ -1,10 +1,10 @@
 <% include partials/header %>
 <div class="container">
-  <h1 class="text-center white mb-3 mt-5">
-    <%= title %>
-  </h1>
   <div class="row">
-    <div class="col-md-4 offset-md-4">
+    <div class="col-md-4">
+    <h1 class="text-center white mb-3 mt-3">
+      <%= title %>
+    </h1>
       <div class="card">
         <div class="card-img-top" id="map"></div>
         <div class="card-body">
@@ -34,7 +34,48 @@
         </div>
       </div>
     </div>
+    <div class="col-md-8">
+      <h1 class="text-center white  mb-3 mt-3">Notes</h1>
+      <div class="card">
+        <img class="card-img-top customer-image p-4" src="<%= foundCustomer.image %>">
+        <div class="card-body">
+          
+            <% if(foundCustomer.notes.length < 1) { %>
+            <h5 class="card-title">
+              There are no notes for this customer.
+            </h5>
+            <% } else { %>
+            <h5 class="card-title">
+              Customer notes:
+            </h5>
+            <% } %>
+          <ul class="list-group">
+            <li class="list-group-item">
+              <i class="far fa-calendar-alt"></i> Week
+              <%= foundCustomer.week %> | Day
+              <%= foundCustomer.day %>
+            </li>
+            <li class="list-group-item">
+              <i class="fas fa-phone"></i> Phone: <a href="tel<%= foundCustomer.phoneNumber %>"><%= foundCustomer.phoneNumber %></a>
+            </li>
+            <li class="list-group-item">
+              <i class="fas fa-clock"></i> Time Preference: <%= foundCustomer.time %>
+            </li>
+          </ul>
+          <form class="inline" action="/customers/<%= foundCustomer.id %>/sms" method="POST">
+            <button class="btn btn-primary mt-2" type="submit">Send Text</button>
+          </form>
+          <form class="inline" action="/customers/<%= foundCustomer.id %>/sms" method="POST">
+            <button class="btn btn-primary mt-2" type="submit">Send Text</button>
+          </form>
+        </div>
+      </div>
+    </div>
   </div>
+</div>
+<footer class="navbar fixed-bottom navbar-dark bg-dark">
+  <a class="navbar-brand" href="#">Fixed bottom</a>
+</footer>
 </div>
 <script defer>
   var foundCustomer = <%-JSON.stringify(foundCustomer) %>

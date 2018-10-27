@@ -53,7 +53,8 @@ const CustomerSchema = new Schema({
     type: String,
     required: true
   },
-  image: String
+  image: String,
+  notes: [String]
 });
 
 CustomerSchema.index({

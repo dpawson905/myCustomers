@@ -15,6 +15,10 @@ body {
   background-attachment: fixed;
 }
 
+.wrapper {
+  padding-bottom: 80px;
+}
+
 .custom-hover:hover,
 .custom-hover:focus {
   color: #fff !important;
@@ -72,7 +76,7 @@ h6 {
 
 #map {
   width: 100%;
-  height: calc(50vh - 65px);
+  height: 250px;
 }
 
 .marker {
