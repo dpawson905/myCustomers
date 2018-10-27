@@ -1,36 +1,26 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const User = require('../models/user');
-const {
-  postLogin,
-  getLogout,
-  putTwilio
-} = require('../controllers');
+const User = require("../models/user");
+const { postLogin, getLogout, putTwilio } = require("../controllers");
 const {
   isAuthenticated,
   isNotAuthenticated,
   asyncErrorHandler
-} = require('../middleware');
-
-router.get('/login', isAuthenticated, (req, res) => {
-  res.render('login', {
-    page: 'login'
-  })
-})
+} = require("../middleware");
 
 /* POST /login */
-router.post('/login', isAuthenticated, postLogin);
+router.post("/login", isAuthenticated, postLogin);
 
-router.get('/user/:id', isNotAuthenticated, async (req, res) => {
+router.get("/user/:id", isNotAuthenticated, async (req, res) => {
   let user = await User.findById(req.params.id);
-  res.render('twilio', {
+  res.render("twilio", {
     user
-  })
-})
+  });
+});
 
-router.put('/user/:id', isNotAuthenticated, asyncErrorHandler(putTwilio));
+router.put("/user/:id", isNotAuthenticated, asyncErrorHandler(putTwilio));
 
 /* GET /logout */
-router.get('/logout', isNotAuthenticated, getLogout);
+router.get("/logout", isNotAuthenticated, getLogout);
 
 module.exports = router;

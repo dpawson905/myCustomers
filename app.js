@@ -13,6 +13,7 @@ const mongoose = require('mongoose');
 const methodOverride = require('method-override');
 const helmet = require('helmet');
 const User = require('./models/user');
+const {db_url} = require('./config/db')
 
 const indexRouter = require('./routes/index');
 const authRouter = require('./routes/auth');
@@ -24,7 +25,7 @@ const validateRouter = require('./routes/validate');
 const app = express();
 
 // Connect to db
-mongoose.connect('mongodb://localhost:27017/customers', {
+mongoose.connect(db_url, {
   useCreateIndex: true,
   useNewUrlParser: true
 });

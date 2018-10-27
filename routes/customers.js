@@ -1,7 +1,7 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
 
-const Customer = require('../models/customers');
+const Customer = require("../models/customers");
 
 const {
   postCustomer,
@@ -11,57 +11,59 @@ const {
   getFindByEmail,
   getFindByWeek,
   getFindAll
-} = require('../controllers/customers');
+} = require("../controllers/customers");
 
 const {
   isAuthenticated,
   isNotAuthenticated,
   asyncErrorHandler
-} = require('../middleware');
+} = require("../middleware");
 
-// /* GET customers page. */
-// router.get('/', isNotAuthenticated, async (req, res) => {
-
-//   res.render('customers', {
-//     page: 'customers',
-//     showCustomers
+/* GET customers page. */
+// router.get("/", isNotAuthenticated, async (req, res) => {
+//   let foundCustomer = await Customer.find({
+//     "tech.id": req.user.id
+//   });
+//   res.render("customers/customers", {
+//     page: "customers",
+//     foundCustomer
 //   });
 // });
 
-
-
-router.get('/add', isNotAuthenticated, (req, res) => {
-  res.render('newCustomer', {
-    page: 'add'
+router.get("/add", isNotAuthenticated, (req, res) => {
+  res.render("newCustomer", {
+    page: "add"
   });
 });
 
-router.get('/search', isNotAuthenticated, (req, res) => {
-  res.render('search', {
-    page: 'search'
+router.get("/search", isNotAuthenticated, (req, res) => {
+  res.render("search", {
+    page: "search"
   });
 });
 
-router.get('/search/week', isNotAuthenticated, asyncErrorHandler(getFindByWeek));
+router.get(
+  "/search/week",
+  isNotAuthenticated,
+  asyncErrorHandler(getFindByWeek)
+);
 
-router.get('/search/all', isNotAuthenticated, asyncErrorHandler(getFindAll));
+router.get("/search/all", isNotAuthenticated, asyncErrorHandler(getFindAll));
 
-router.post('/add', isNotAuthenticated, asyncErrorHandler(postCustomer));
+router.post("/add", isNotAuthenticated, asyncErrorHandler(postCustomer));
 
-router.post('/sms/:id', isNotAuthenticated, asyncErrorHandler(postSMS));
+router.post("/sms/:id", isNotAuthenticated, asyncErrorHandler(postSMS));
 
-router.get('/:id', isNotAuthenticated, async (req, res) => {
+router.get("/:id", isNotAuthenticated, async (req, res) => {
   let foundCustomer = await Customer.findById(req.params.id);
   if (!foundCustomer) {
-    req.flash('error', 'No customer found');
-    res.redirect('back');
+    req.flash("error", "No customer found");
+    res.redirect("back");
     return;
   }
-  res.render('customer', {
-    foundCustomer
+  res.render("customer", {
+    foundCustomer: foundCustomer
   });
-})
-
-
+});
 
 module.exports = router;

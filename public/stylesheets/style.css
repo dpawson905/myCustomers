@@ -5,11 +5,14 @@ body {
 }
 
 body {
-  font-family: 'Lato',
-    sans-serif;
-
-  max-height: calc(100vh - 64px);
+  font-family: "Lato", sans-serif;
   background-color: snow;
+  max-height: calc(100vh - 135px);
+  background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+    url(/images/fly.jpeg);
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
 }
 
 .custom-hover:hover,
@@ -23,50 +26,48 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: 'Merriweather',
-    serif;
+  font-family: "Merriweather", serif;
 }
 
-.h-100 {
-  height: 100%;
+.white {
+  color: #fff !important;
 }
 
-.h-50 {
-  height: calc(50rem - 75px);
+.small-nav-image {
+  height: 20px;
+  width: auto;
+  overflow: hidden;
 }
 
-.w-100 {
-  width: 100%;
+.inline {
+  display: inline;
 }
 
-.title {
-  font-size: 2.2rem;
+.customer-image {
+  height: 200px;
+  width: 200px;
+  margin: 0 auto;
 }
 
-.center-btn {
-  position: absolute;
-  width: 50%;
-  left: 25%;
-  margin-top: 5px;
+.jumbotron {
+  margin-top: 50px;
+  background-color: rgba(0, 0, 0, 0);
+  color: #fff;
 }
 
-.move-down {
-  margin-top: 60px;
+.block span {
+  display: block;
+  font-size: 0.75em;
 }
 
-.med-bold {
-  font-weight: bold;
-  font-size: 1.5em;
+.jumbotron-form {
+  background-color: steelblue;
+  color: #fff;
+  max-width: 15vw;
 }
 
-.big-bold {
-  font-weight: bold !important;
-  font-size: 2.5rem !important;
-}
-
-.sm-bold {
-  font-weight: bold;
-  font-size: 1.15rem;
+.form-group label {
+  color: #fff;
 }
 
 #map {
@@ -75,7 +76,7 @@ h6 {
 }
 
 .marker {
-  background-image: url('/images/mapbox-icon.png');
+  background-image: url("/images/mapbox-icon.png");
   background-size: cover;
   width: 50px;
   height: 50px;
@@ -89,7 +90,7 @@ h6 {
 
 .mapboxgl-popup-content {
   text-align: center;
-  font-family: 'Open Sans', sans-serif;
+  font-family: "Open Sans", sans-serif;
 }
 
 .inline-btn {
@@ -99,6 +100,6 @@ h6 {
 
 @media only screen and (max-width: 600px) {
   .center-btn {
-    width: 100%
+    width: 100%;
   }
 }

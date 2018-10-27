@@ -1,77 +1,30 @@
-<!DOCTYPE html>
-<html>
-
 <% include partials/header %>
-  <div class="container">
-    <h3 class="center move-down"><%= title %> &mdash; Customer results</h3>
-    <div class="row  ">
-      <% foundCustomer.forEach(function(customers) { %>
-      <% if (foundCustomer.length < 2) { %>
-        <div class="col m6 offset-m3 s12 move-down">
+<div class="container">
+  <h1 class="text-center white mb-3 mt-5">
+    <%= title %>
+  </h1>
+  <div class="row">
+    <% foundCustomers.forEach(function(customers) { %>
+    <% if(foundCustomers.length < 2) { %>
+    <div class="col-md-4 offset-md-4">
       <% } else { %>
-        <div class="col m6 s12 move-down">
-      <% } %>
-        <div class="card blue-grey darken-1">
-          <div class="card-content white-text">
-            <% if(customers.companyName) { %>
-              <span class="card-title"><span class="title">Week:</span> <%= customers.week %> <span class="title">Day:</span> <%= customers.day %> </span>
-              <ul>
-                <li>
-                  <div class="chip">
-                    <img class="fas fa-signature">
-                    Company Name: 
-                  </div>
-                  <span class="med-bold"><%= customers.companyName %> </span>
-                </li>
-                <li>
-                  <div class="chip">
-                    <img class="fas fa-signature">
-                    Contact Name: 
-                  </div>
-                  <span class="med-bold"><%= customers.firstName.charAt(0).toUpperCase() + customers.firstName.slice(1) %> <%= customers.lastName.charAt(0).toUpperCase() + customers.lastName.slice(1) %></span>
-                </li>
-                <li>
-                  <div class="chip">
-                    <img class="fas fa-phone">
-                    Contact Phone: 
-                  </div>
-                 <span class="med-bold"><a href="tel:<%= customers.phoneNumber %>"><%= customers.phoneNumber %></a></span>
-                </li>
-              </ul>
-            <% } else { %>
-              <span class="card-title"><span class="title">Week:</span> <%= customers.week %> <span class="title">Day:</span> <%= customers.day %> </span>
-              <ul>
-                <li>
-                  <div class="chip">
-                    <img class="fas fa-signature">
-                    Customer Name: 
-                  </div>
-                 <span class="med-bold"><%= customers.firstName.charAt(0).toUpperCase() + customers.firstName.slice(1) %> <%= customers.lastName.charAt(0).toUpperCase() + customers.lastName.slice(1) %></span>
-                </li>
-                <li>
-                  <div class="chip">
-                    <img class="fas fa-phone">
-                    Customer Phone: 
-                  </div>
-                 <span class="med-bold"><a href="tel:<%= customers.phoneNumber %>"><%= customers.phoneNumber %></a></span>
-                </li>
-                <li>
-                  <div class="chip">
-                    <img class="fas fa-envelope-open">
-                    Customer Phone: 
-                  </div>
-                 <span class="med-bold"><a href="mailto:<%= customers.email %>"><%= customers.email %></a></span>
-                </li>
-              </ul>
-            <% } %>
-          </div>
-          <div class="card-action">
-            <a href="/customers/<%= customers.id %>">View More</a>
-            <a href="#">This is a link</a>
+      <div class="col-md-4">
+        <% } %>
+        <div class="card">
+          <img class="card-img-top customer-image p-4" src="<%= customers.image %>" alt="<%= customers.firstName %>">
+          <div class="card-body">
+            <h5 class="card-title">
+              <%= customers.firstName.charAt(0).toUpperCase() + customers.firstName.slice(1) %>
+              <%= customers.lastName.charAt(0).toUpperCase() + customers.lastName.slice(1) %>
+            </h5>
+            <p class="card-text">
+              <%= customers.address %>
+            </p>
+            <a href="/customers/<%= customers.id %>" class="btn btn-primary">View More</a>
           </div>
         </div>
       </div>
-      <%}) %>
+      <% }) %>
     </div>
   </div>
   <% include partials/footer %>

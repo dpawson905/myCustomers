@@ -1,26 +1,21 @@
 <% include partials/header %>
-<div class="container">
-  <div class="row">
-    <div class="col m8 offset-m2">
-      <h3 class="center white-text">Customer Access &mdash; Token</h3>
+<div class="container h-100">
+  <div class="row h-100 d-flex align-items-center">
+    <div class="jumbotron jumbotron-form">
+      <h1 class="block"><i class="fas fa-user-check fa-3x"></i><span>Validate</span></h1>
     </div>
-    <div class="row">
-      <form class="col m8 offset-m2" action="/validate/token-validate" method="POST">
-        <div class="row">
-          <div class="input-field col m6 offset-m3">
-            <input id="token" name="token" type="text" class="validate" required>
+    <div class="col">
+      <form action="/validate/token-validate" method="POST">
+        <div class="form-row">
+          <div class="form-group col-md-6">
             <label for="token">Token</label>
-            <span class="helper-text" data-error="Token is required"></span>
-          </div>
-          <div class="row">
-            <div class="col m12">
-              <button class="waves-effect waves-light btn center-btn" type="submit">Verify token</button>
-              <a class="waves-effect waves-light btn center-btn" href="/resend">Resend Token</a>
-            </div>
+            <input type="text" class="form-control" id="token" name="token" placeholder="Token">
           </div>
         </div>
+        <button type="submit" class="btn btn-primary">Register</button>
       </form>
     </div>
   </div>
 </div>
+
 <% include partials/footer %>

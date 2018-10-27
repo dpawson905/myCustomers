@@ -1,44 +1,32 @@
 <% include partials/header %>
-<div class="container">
-  <div class="row">
-    <div class="col m8 offset-m2">
-      <h3 class="center white-text">Customer Access &mdash; Register</h3>
-    </div>
-    <div class="row">
-      <form class="col m8 offset-m2" action="/register" method="POST">
-        <div class="row">
-          <div class="input-field col m6">
-            <input id="firstName" name="firstName" type="text" class="validate" required>
+<div class="container h-100">
+  <div class="row h-100 d-flex align-items-center">
+    <div class="col-md-8 offset-md-2">
+    <h1 class="text-center white p-4"><%= title %></h1>
+      <form action="/register" method="POST">
+        <div class="form-row">
+          <div class="form-group col-md-6">
             <label for="firstName">First Name</label>
-            <span class="helper-text" data-error="First name is required"></span>
+            <input type="text" class="form-control" id="firstName" name="firstName" placeholder="First Name">
           </div>
-          <div class="input-field col m6">
-            <input id="lastName" name="lastName" type="text" class="validate" required>
+          <div class="form-group col-md-6">
             <label for="lastName">Last Name</label>
-            <span class="helper-text" data-error="Last name is required"></span>
+            <input type="text" class="form-control" id="lastName" name="lastName" placeholder="Last Name">
           </div>
-          <div class="input-field col m4">
-            <input id="username" name="username" type="text" class="validate" required>
+          <div class="form-group col-md-4">
             <label for="username">Username</label>
-            <span class="helper-text" data-error="Username is required"></span>
+            <input type="text" class="form-control" id="username" name="username" placeholder="Username">
           </div>
-          <div class="input-field col m4">
-            <input id="email" name="email" type="email" class="validate" required>
-            <label for="email">Email</label>
-            <span class="helper-text" data-error="Email address is required"></span>
+          <div class="form-group col-md-4">
+            <label for="email">Email Address</label>
+            <input type="email" class="form-control" id="email" name="email" placeholder="Email Address">
           </div>
-          <div class="input-field col m4">
-            <input id="phoneNumber" name="phoneNumber" type="text" class="validate" required>
+          <div class="form-group col-md-4">
             <label for="phoneNumber">Phone Number</label>
-            <span class="helper-text" data-error="Phome number is required"></span>
-          </div>
-          <div class="row">
-            <div class="col m12">
-              <button class="waves-effect waves-light btn center-btn" type="submit">Register</button>
-            </div>
+            <input type="text" class="form-control" id="phoneNumber" name="phoneNumber" placeholder="Phone Number">
           </div>
         </div>
-
+        <button type="submit" class="btn btn-primary">Register</button>
       </form>
     </div>
   </div>

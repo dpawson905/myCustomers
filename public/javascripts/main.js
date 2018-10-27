@@ -1,6 +1,7 @@
-$(function () {
-  $('.tel').mask('0000000000');
+"global $";
+"use strict";
 
+$(document).ready(function() {
   function populate(selector) {
     var select = $(selector);
     var hours, minutes, ampm;
@@ -8,24 +9,29 @@ $(function () {
       hours = Math.floor(i / 60);
       minutes = i % 60;
       if (minutes < 10) {
-        minutes = '0' + minutes; // adding leading zero
+        minutes = "0" + minutes; // adding leading zero
       }
-      ampm = hours % 24 < 12 ? 'AM' : 'PM';
+      ampm = hours % 24 < 12 ? "AM" : "PM";
       hours = hours % 12;
       if (hours === 0) {
         hours = 12;
       }
-      let selectTime = hours + ':' + minutes + ' ' + ampm;
-      select.append($('<option></option>')
-        .attr('value', selectTime)
-        .text(selectTime));
+      let selectTime = hours + ":" + minutes + " " + ampm;
+      select.append(
+        $("<option></option>")
+          .attr("value", selectTime)
+          .text(selectTime)
+      );
     }
   }
 
-  populate('#timeSelect'); // use selector for your select
+  populate("#timeSelect"); // use selector for your select
 
-  $('.sidenav').sidenav();
-  $('select').formSelect();
-  $('.fixed-action-btn').floatingActionButton();
-
-})
+  window.setTimeout(function() {
+    $(".alert")
+      .fadeTo(100, 0)
+      .slideUp(500, function() {
+        $(this).remove();
+      });
+  }, 4000);
+});

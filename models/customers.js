@@ -52,14 +52,15 @@ const CustomerSchema = new Schema({
   time: {
     type: String,
     required: true
-  }
+  },
+  image: String
 });
 
 CustomerSchema.index({
-  firstName: 'text',
-  lastName: 'text',
-  email: 'text',
-  phoneNumber: 'text'
-})
+  firstName: "text",
+  lastName: "text",
+  email: "text",
+  phoneNumber: "text"
+});
 
 module.exports = mongoose.model("Customer", CustomerSchema);
