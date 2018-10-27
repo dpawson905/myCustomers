@@ -49,25 +49,7 @@
               Customer notes:
             </h5>
             <% } %>
-          <ul class="list-group">
-            <li class="list-group-item">
-              <i class="far fa-calendar-alt"></i> Week
-              <%= foundCustomer.week %> | Day
-              <%= foundCustomer.day %>
-            </li>
-            <li class="list-group-item">
-              <i class="fas fa-phone"></i> Phone: <a href="tel<%= foundCustomer.phoneNumber %>"><%= foundCustomer.phoneNumber %></a>
-            </li>
-            <li class="list-group-item">
-              <i class="fas fa-clock"></i> Time Preference: <%= foundCustomer.time %>
-            </li>
-          </ul>
-          <form class="inline" action="/customers/<%= foundCustomer.id %>/sms" method="POST">
-            <button class="btn btn-primary mt-2" type="submit">Send Text</button>
-          </form>
-          <form class="inline" action="/customers/<%= foundCustomer.id %>/sms" method="POST">
-            <button class="btn btn-primary mt-2" type="submit">Send Text</button>
-          </form>
+          
         </div>
       </div>
     </div>

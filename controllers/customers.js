@@ -137,7 +137,9 @@ module.exports = {
       user.firstName
     } from Dodson Pest Control. This is a reminder of your appointment at ${
       customer.time
-    } tomorrow. Have a great day!`;
+    } tomorrow. If you have any questions please contact me at ${
+      user.phoneNumber
+    } Have a great day!`;
 
     await client.messages
       .create({
