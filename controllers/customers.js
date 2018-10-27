@@ -11,9 +11,9 @@ const geocodingClient = mbxGeocoding({
 
 const { twilioSid, twilioToken, twilioNumber } = require("../config/twilio");
 
-const accountSid = twilioSid || process.env.TWILIO_SID;
-const authToken = twilioToken || process.env.TWILIO_TOKEN;
-const twilioNumberVar = twilioNumber || process.env.TWILIO_NUMBER;
+const accountSid = process.env.TWILIO_SID || twilioSid;
+const authToken = process.env.TWILIO_TOKEN || twilioToken;
+const twilioNumberVar = process.env.TWILIO_NUMBER || twilioNumber;
 const client = require("twilio")(accountSid, authToken);
 
 module.exports = {
