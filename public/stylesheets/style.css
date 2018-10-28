@@ -22,8 +22,8 @@ body {
 .custom-alert {
   position: fixed;
   top: 10%;
-  left: 70%;
-  width: 30%;
+  left: 65%;
+  width: 35%;
   z-index: 999;
   overflow: hidden;
 }
@@ -126,5 +126,12 @@ hr.style-two {
 @media only screen and (max-width: 600px) {
   .center-btn {
     width: 100%;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .custom-alert {
+    width: 100%;
+    left: 0;
   }
 }
