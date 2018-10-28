@@ -67,6 +67,38 @@ const registerSchema = Joi.object().keys({
 module.exports = {
   async postRegister(req, res) {
     /* 
+        Use Joi to validate user inputs for First Name, Username and Email
+        If any of the inputs fail redirect to the registration page and display
+        the error to the user
+    */
+    const result = await Joi.validate(req.body, registerSchema);
+      if (result.error) {
+        req.flash('error', result.error.message);
+        res.redirect('/register');
+        return;
+      }
+
+      /* 
+        Check if email and or username is already taken
+        If so, redirect back to the registration page and inform the user
+      */
+     const userEmail = await User.findOne({
+      email: req.body.email
+    });
+    if (userEmail) {
+      req.flash('error', 'This email address is already in use.');
+      res, redirect('/register');
+      return;
+    }
+    const userName = await User.findOne({
+      username: req.body.username
+    });
+    if (userName) {
+      req.flash('error', 'This username is already in use.');
+      res.redirect('/register');
+      return;
+    }
+    /* 
       Validate email address using kickbox to make sure it's deliverable before continuing.
       If the email is anything other than deliverable, terminate the registration process. 
     */
@@ -81,38 +113,9 @@ module.exports = {
         res.redirect('/register');
         return;
       }
-      /* 
-        Use Joi to validate user inputs for First Name, Username and Email
-        If any of the inputs fail redirect to the registration page and display
-        the error to the user
-      */
-      const result = await Joi.validate(req.body, registerSchema);
-      if (result.error) {
-        req.flash('error', result.error.message);
-        res.redirect('/register');
-        return;
-      }
+          
 
-      /* 
-        Check if email and or username is already taken
-        If so, redirect back to the registration page and inform the user
-      */
-      const userEmail = await User.findOne({
-        email: req.body.email
-      });
-      if (userEmail) {
-        req.flash('error', 'This email address is already in use.');
-        res, redirect('/register');
-        return;
-      }
-      const userName = await User.findOne({
-        username: req.body.username
-      });
-      if (userName) {
-        req.flash('error', 'This username is already in use.');
-        res.redirect('/register');
-        return;
-      }
+      
 
       /* 
         Save user to temp user collection 
