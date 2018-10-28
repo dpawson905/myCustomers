@@ -74,7 +74,7 @@ module.exports = {
     const result = await Joi.validate(req.body, registerSchema);
       if (result.error) {
         req.flash('error', result.error.message);
-        res.redirect('/register');
+        res.redirect("/register");
         return;
       }
 
@@ -85,19 +85,23 @@ module.exports = {
      const userEmail = await User.findOne({
       email: req.body.email
     });
+
     if (userEmail) {
       req.flash('error', 'This email address is already in use.');
       res, redirect('/register');
       return;
     }
+
     const userName = await User.findOne({
       username: req.body.username
     });
+
     if (userName) {
       req.flash('error', 'This username is already in use.');
       res.redirect('/register');
       return;
     }
+
     /* 
       Validate email address using kickbox to make sure it's deliverable before continuing.
       If the email is anything other than deliverable, terminate the registration process. 
@@ -105,18 +109,16 @@ module.exports = {
     await kickbox.verify(req.body.email, async (err, response) => {
       if (err) {
         req.flash('err', err.message);
-        res.redirect('back');
+        res.redirect('/register');
         return;
       }
+
       if (response.body.result !== 'deliverable') {
         req.flash('error', 'This is not a valid email account. Registration terminated!')
         res.redirect('/register');
         return;
       }
           
-
-      
-
       /* 
         Save user to temp user collection 
       */
