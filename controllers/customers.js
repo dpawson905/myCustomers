@@ -125,7 +125,7 @@ module.exports = {
 
   async postSMS(req, res) {
     let customer = await Customer.findById(req.params.id);
-    let user = await User.findById(customer.tech.id);
+    let user = await User.findById(req.user.id);
     console.log(user.phoneNumber)
     if (!user || !customer) {
       req.flash("error", "Something went wrong... Admin has been notified.");
