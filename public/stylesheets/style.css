@@ -37,6 +37,18 @@ h6 {
   color: #fff !important;
 }
 
+.create-time {
+  font-size: .75em;
+  font-style: italic;
+}
+
+hr.style-two {
+   border: 0; 
+   height: 1px;
+   width: 80%;
+   background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0)); 
+}
+
 .small-nav-image {
   height: 20px;
   width: auto;

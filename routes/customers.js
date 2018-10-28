@@ -56,7 +56,14 @@ router.post("/sms/:id", isNotAuthenticated, asyncErrorHandler(postSMS));
 router.post("/email/:id", isNotAuthenticated, asyncErrorHandler(postEmail));
 
 router.get("/:id", isNotAuthenticated, async (req, res) => {
-  let foundCustomer = await Customer.findById(req.params.id);
+  let foundCustomer = await Customer.findById(req.params.id).populate({
+    path: "notes",
+    options: {
+      sort: {
+        'createdAt': -1
+      }
+    }
+  });
   if (!foundCustomer) {
     req.flash("error", "No customer found");
     res.redirect("back");

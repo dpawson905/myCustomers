@@ -21,6 +21,7 @@ const customerRouter = require('./routes/customers');
 const registerRouter = require('./routes/register');
 const resendRouter = require('./routes/resend');
 const validateRouter = require('./routes/validate');
+const noteRouter = require('./routes/notes');
 
 const app = express();
 
@@ -46,6 +47,7 @@ app.use(express.urlencoded({
   extended: true
 }));
 app.use(cookieParser());
+app.locals.moment = require('moment');
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(methodOverride('_method'));
 app.use(helmet());
@@ -77,6 +79,7 @@ app.use((req, res, next) => {
 
 app.use('/auth', authRouter);
 app.use('/customers', customerRouter);
+app.use('/customers/:id/notes', noteRouter);
 app.use('/register', registerRouter);
 app.use('/resend', resendRouter);
 app.use('/validate', validateRouter);

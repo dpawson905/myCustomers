@@ -44,7 +44,12 @@ const UserSchema = new Schema({
     required: true,
     default: false
   },
-  twilioNumber: String
+  twilioNumber: String,
+  phoneNumber: {
+    type: String,
+    required: true,
+    trim: true
+  }
 }, {
   timestamps: true
 });

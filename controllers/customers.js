@@ -125,8 +125,8 @@ module.exports = {
 
   async postSMS(req, res) {
     let customer = await Customer.findById(req.params.id);
-    console.log(customer.tech.username);
-    let user = await User.findById(req.user.id);
+    let user = await User.findById(customer.tech.id);
+    console.log(user.phoneNumber)
     if (!user || !customer) {
       req.flash("error", "Something went wrong... Admin has been notified.");
       res.redirect("back");
@@ -164,23 +164,24 @@ module.exports = {
 
     let html = `
     <div>
-      <h1  Hello ${customer.firstName}, </h1> 
+      <h1> Hello ${customer.firstName}, </h1> 
       <p>This is ${
         user.firstName
-      } with Dodson Brothers Pest Control.This is a reminder of your apointment tomorrow at 9: 15 AM. </p> 
-      <p> If you have any questions please contact me at ${
-        user.phoneNumber
-      }. </p> 
+      } with Dodson Brothers Pest Control.This is a reminder of your appointment tomorrow at 9: 15 AM. </p> 
+      <p> If you have any questions please contact me at <a href="tel:${user.phoneNumber}">${user.phoneNumber}</a>. </p> 
       <p> Have a great day! </p> 
     </div>`;
 
     // Send the email
+    
     await mailer.sendEmail(
-      `"${user.FirstName} ${user.lastName} <${req.headers.host}>`,
+      `"${user.firstName} ${user.lastName}" <${user.email}>`,
       customer.email,
       "Dodson Brothers Pest Control Reminder",
       html
     );
+    req.flash('success', 'Email sent');
+    res.redirect('back');
   }
 };
 

@@ -54,7 +54,12 @@ const CustomerSchema = new Schema({
     required: true
   },
   image: String,
-  notes: [String]
+  notes: [
+    {
+    type: Schema.Types.ObjectId,
+    ref: "Note"
+    }
+  ]
 });
 
 CustomerSchema.index({
