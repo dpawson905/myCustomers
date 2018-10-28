@@ -1,6 +1,6 @@
-<div class="container mt-2">
+
   <% if(error && error.length > 0){ %>
-    <div id="alert-danger" class="alert alert-danger alert-dismissable fade show animated fadeInDown" role="alert">
+    <div id="alert-danger" class="alert alert-danger alert-dismissable fade show animated bounceInRight custom-alert" role="alert">
       <%= error %>
       <button type="button" class="close" data-dismiss="alert" aria-label="Close">
         <span aria-hidden="true">&times;</span>
@@ -9,12 +9,12 @@
   <% } %>
   
   <% if(success && success.length > 0){ %>
-    <div id="alert-success" class="alert alert-success alert-dismissable fade show animated fadeInDown" role="alert">
+    <div id="alert-success" class="alert alert-success alert-dismissable fade show animated bounceInRight custom-alert" role="alert">
       <%= success %>
     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
       <span aria-hidden="true">&times;</span>
     </button>
     </div>
   <% } %>
-</div>
+
     

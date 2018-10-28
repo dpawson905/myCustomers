@@ -19,6 +19,15 @@ body {
   padding-bottom: 80px;
 }
 
+.custom-alert {
+  position: fixed;
+  top: 10%;
+  left: 70%;
+  width: 30%;
+  z-index: 999;
+  overflow: hidden;
+}
+
 .custom-hover:hover,
 .custom-hover:focus {
   color: #fff !important;
