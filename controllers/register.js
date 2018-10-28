@@ -88,7 +88,7 @@ module.exports = {
       */
       const result = await Joi.validate(req.body, registerSchema);
       if (result.error) {
-        debug('error', result.error.message);
+        req.flash('error', result.error.message);
         res.redirect('/register');
         return;
       }
