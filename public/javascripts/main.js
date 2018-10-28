@@ -34,4 +34,7 @@ $(document).ready(function() {
         $(this).remove();
       });
   }, 4000);
+
+  const footerYear = new Date().getFullYear();
+  $("#year").html(footerYear);
 });

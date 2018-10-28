@@ -1,22 +1,8 @@
-html,
 body {
-  height: 100%;
-  color: #000;
-}
-
-body {
-  font-family: "Lato", sans-serif;
   background-color: snow;
-  max-height: calc(100vh - 135px);
-  background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
-    url(/images/fly.jpeg);
-  background-size: cover;
-  background-position: center;
-  background-attachment: fixed;
-}
-
-.wrapper {
-  padding-bottom: 80px;
+  font-family: 'Raleway',
+  sans-serif;
+  height: calc(100vh - 80px);
 }
 
 .custom-alert {
@@ -26,20 +12,6 @@ body {
   width: 35%;
   z-index: 999;
   overflow: hidden;
-}
-
-.custom-hover:hover,
-.custom-hover:focus {
-  color: #fff !important;
-}
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  font-family: "Merriweather", serif;
 }
 
 .white {
@@ -64,35 +36,21 @@ hr.style-two {
   overflow: hidden;
 }
 
-.inline {
-  display: inline;
-}
-
 .customer-image {
   height: 200px;
   width: 200px;
   margin: 0 auto;
 }
 
-.jumbotron {
-  margin-top: 50px;
-  background-color: rgba(0, 0, 0, 0);
-  color: #fff;
+.footer {
+  height: 60px;
 }
 
-.block span {
-  display: block;
-  font-size: 0.75em;
-}
-
-.jumbotron-form {
-  background-color: steelblue;
-  color: #fff;
-  max-width: 15vw;
-}
-
-.form-group label {
-  color: #fff;
+.footer-text {
+ position: absolute;
+ top: 50%;
+ left: 50%;
+ transform: translateX(-50%) translateY(-50%);
 }
 
 #map {
