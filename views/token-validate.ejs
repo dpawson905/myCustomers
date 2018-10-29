@@ -1,21 +1,29 @@
 <% include partials/header %>
-<div class="container h-100">
-  <div class="row h-100 d-flex align-items-center">
-    <div class="jumbotron jumbotron-form">
-      <h1 class="block"><i class="fas fa-user-check fa-3x"></i><span>Validate</span></h1>
-    </div>
-    <div class="col">
-      <form action="/validate/token-validate" method="POST">
-        <div class="form-row">
-          <div class="form-group col-md-6">
-            <label for="token">Token</label>
-            <input type="text" class="form-control form-control-sm" id="token" name="token" placeholder="Token">
+<!-- Reg form -->
+  <div class="container">
+    <div class="wrapper">
+      <div class="row">
+        <div class="col">
+          <div class="jumbotron">
+            <h1 class="text-center">Validate your account</h1>
           </div>
         </div>
-        <button type="submit" class="btn btn-primary">Register</button>
-      </form>
+      </div>
+      <div class="row">
+        <div class="col">
+          <form action="/validate/token-validate" method="POST">
+            <div class="form-row">
+              <div class="col-md-6 offset-md-3 mt-1">
+                <label class="float-left" for="firstName">Token</label>
+                <input type="text" id="token" name="token" class="form-control" placeholder="Token">
+                <button type="submit" class="btn btn-primary mt-3 btn-block">Validate</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
     </div>
   </div>
-</div>
+  <!-- End Reg form -->
 
 <% include partials/footer %>

@@ -1,91 +1,97 @@
 <% include partials/header %>
-<div class="container">
-  <div class="row">
-    <div class="col-md-4">
-    <h1 class="text-center white mb-3 mt-3">
-      <%= title %>
-    </h1>
-      <div class="card">
-        <div class="card-img-top" id="map"></div>
-        <div class="card-body">
-          <h5 class="card-title">
-            <%= foundCustomer.firstName.charAt(0).toUpperCase() + foundCustomer.firstName.slice(1) %>
-            <%= foundCustomer.lastName.charAt(0).toUpperCase() + foundCustomer.lastName.slice(1) %>
-          </h5>
-          <ul class="list-group">
-            <li class="list-group-item">
-              <i class="far fa-calendar-alt"></i> Week
-              <%= foundCustomer.week %> | Day
-              <%= foundCustomer.day %>
-            </li>
-            <li class="list-group-item">
-              <i class="fas fa-phone"></i> Phone: <a href="tel<%= foundCustomer.phoneNumber %>"><%= foundCustomer.phoneNumber %></a>
-            </li>
-            <li class="list-group-item">
-              <i class="fas fa-clock"></i> Time Preference: <%= foundCustomer.time %>
-            </li>
-          </ul>
-          <form class="inline" action="/customers/sms/<%= foundCustomer.id %>" method="POST">
-            <button class="btn btn-primary mt-2" type="submit">Send Text</button>
-          </form>
-          <form class="inline" action="/customers/email/<%= foundCustomer.id %>" method="POST">
-            <button class="btn btn-primary mt-2" type="submit">Send Email</button>
-          </form>
+<div class="page-fix">
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <h1 class="text-center py-3">Customer View</h1>
+        <div id="map"></div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-10 offset-md-1">
+        <div class="card text-white bg-secondary my-4 text-center shadow">
+          <div class="card-body">
+            <p class="text-white m-0">Customer Information</p>
+          </div>
         </div>
       </div>
     </div>
-    <div class="col-md-8">
-      <h1 class="text-center white  mb-3 mt-3">Notes</h1>
-      <div class="card">
-        <img class="card-img-top customer-image p-4" src="<%= foundCustomer.image %>">
+    <div class="row">
+      <div class="col-md-10 offset-md-1">
+        <div class="card">
           <div class="card-body">
-            <div class="card">
-              <div class="card-header text-right">
-                <a class="btn btn-primary pull-right" role="button" data-toggle="collapse" href="#collapseComment" aria-expanded="false" aria-controls="collapseComment">
-                <span aria-hidden="true"></span><i class="fas fa-plus"></i> Add new note for <%=foundCustomer.firstName%></a>
-              </div>
-              <div class="card-body">
-                <h4><i class="fas fa-sticky-note"></i> <strong>Notes <span aria-hidden="true"></span></strong></h4>
-                <hr class="style-two">
-                <!--Collapse Add a comment form START-->
-                <div class="collapse" id="collapseComment">
-                  <div class="well" style="border-left: 2px solid steelblue;">
-                    <!--If the user is logged in, show the new comment form-->
-                    <h4><i class="fas fa-pencil-alt"></i> Write your comment <span aria-hidden="true"></span></h4>
-                    <form id="add-comment-form" action="/customers/<%= foundCustomer.id %>/notes" method="POST">
-                      <div class="form-group">
-                        <input class="form-control" type="text" disabled value="<%= currentUser.username %>">
-                      </div>
-                      <div class="form-group">
-                        <textarea class="form-control" name="text" placeholder="Write your comment..." form="add-comment-form" rows="3" cols="50"></textarea>
-                      </div>
-                      <div class="form-group">
-                        <button class="btn btn-primary btn-sm"><i class="fas fa-sticky-note"></i> Submit <span aria-hidden="true"></span></button>
-                      </div>
-                    </form>
-                  </div>
-                </div>
-                <% foundCustomer.notes.forEach(function(note) { %>
-                  <div class="row pb-2">
-                    <div class="col-md-12">
-                      <span class="float-right create-time">Created: <%= moment(note.createdAt).calendar() %></span>
-                      <p class="card-text"><i class="fas fa-cog fa-spin"></i> <%= note.text %></p>
-                    </div>
-                  </div>
-                <% }) %>
-              </div>
-              <!--Collapse Add a comment form END-->
+            <% if(foundCustomer.companyName === "") { %>
+              <h5 class="card-title text-center">
+                <%= foundCustomer.firstName.charAt(0).toUpperCase() + foundCustomer.firstName.slice(1) %> 
+                <%= foundCustomer.lastName.charAt(0).toUpperCase() + foundCustomer.lastName.slice(1) %>
+              </h5>
+            <% } else { %>
+              <h5 class="card-title text-center">
+                <%= foundCustomer.companyName.charAt(0).toUpperCase() + foundCustomer.companyName.slice(1) %>
+              </h5>
+            <% } %>
+            <hr>
+            <div class="table-responsive">
+              <table class="table table-bordered">
+                <thead class="text-center">
+                  <tr>
+                    <th scope="col">Time</th>
+                    <% if(foundCustomer.companyName === "") { %>
+                      <th scope="col">Name</th>
+                    <% } else { %>
+                      <th scope="col">Contact Name</th>
+                    <% } %>
+                    <th scope="col">Phone Number</th>
+                    <% if(foundCustomer.email) { %>
+                      <th scope="col">Email</th>
+                    <% } %>
+                    <th scope="col">Address</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><%= foundCustomer.time %></td>
+                    <td>
+                      <%= foundCustomer.firstName.charAt(0).toUpperCase() + foundCustomer.firstName.slice(1) %>
+                      <%= foundCustomer.lastName.charAt(0).toUpperCase() + foundCustomer.lastName.slice(1) %>
+                    </td>
+                    <td><a href="tel:+1<%=foundCustomer.phoneNumber%>"><%=foundCustomer.phoneNumber%></a></td>
+                    <% if(foundCustomer.email) { %>
+                      <td><a href="mailto:<%=foundCustomer.email %>"><%=foundCustomer.email %></a></td>
+                    <% } %>
+                    <td><a href="http://maps.google.com/maps?q=<%= foundCustomer.address %>"><%= foundCustomer.address %></a></td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
-          
+            <div class="row text-center">
+              <div class="col">
+                <a href="" class="btn btn-warning mb-2 btn-block">Edit Customer</a>
+              </div>
+              <div class="col">
+                <button type="button" class="btn btn-danger mb-2 btn-block" data-toggle="modal" data-target="#deleteModal">
+                  Delete Customer
+                </button>
+              </div>
+              <div class="col">
+                <button type="button" class="btn btn-primary mb-2 btn-block" data-toggle="modal" data-target="#noteModal">
+                  Add Note
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </div>
-<footer class="navbar fixed-bottom navbar-dark bg-dark">
-  <a class="navbar-brand" href="#">Fixed bottom</a>
+<% include partials/noteModal %>
+<% include partials/deleteModal %>
+<footer class="navbar fixed-bottom navbar-dark bg-dark footer">
+  <p class="text-center white footer-text">Copyright &copy;
+    <span id="year"></span> by Darrell Pawson. All rights reserved.
+  </p>
 </footer>
-</div>
 <script defer>
   var foundCustomer = <%-JSON.stringify(foundCustomer) %>
 </script>

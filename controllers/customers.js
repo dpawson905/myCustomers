@@ -167,7 +167,7 @@ module.exports = {
       <h1> Hello ${customer.firstName}, </h1> 
       <p>This is ${
         user.firstName
-      } with Dodson Brothers Pest Control.This is a reminder of your appointment tomorrow at 9: 15 AM. </p> 
+      } with Dodson Brothers Pest Control.This is a reminder of your appointment tomorrow at ${customer.time}. </p> 
       <p> If you have any questions please contact me at <a href="tel:${user.phoneNumber}">${user.phoneNumber}</a>. </p> 
       <p> Have a great day! </p> 
     </div>`;
