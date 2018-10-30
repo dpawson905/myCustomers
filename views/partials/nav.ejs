@@ -12,12 +12,12 @@
           <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
         </li>
       </ul>
-      <form class="form-inline my-2 my-lg-0 mr-2" action="/auth/login" method="POST">
-        <input type="text" id="username" name="username" class="form-control mr-1" placeholder="Username" required autofocus>
+      <form class="form-inline my-auto mr-1" action="/auth/login" method="POST">
+        <input type="text" id="username" name="username" class="form-control mr-1 mobile" placeholder="Username" required autofocus>
         <input type="password" id="password" name="password" class="form-control mr-1 mobile" placeholder="Password" required>
-        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Login</button>
+        <button class="btn btn-outline-success my-sm-0 auth-btn-fix" type="submit">Login</button>
       </form>
-      <a href="/register" class="btn btn-outline-success">Register</a>
+      <a href="/register" class="btn btn-outline-success my-sm-0 auth-btn-fix">Register</a>
     <% } else { %>
       <ul class="navbar-nav mr-auto">
         <li class="nav-item <%= typeof page !== 'undefined' && page === 'home' ? 'active' : '' %>">

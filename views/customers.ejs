@@ -13,6 +13,9 @@
           <img class="card-img-top customer-image p-4" src="<%= customers.image %>" alt="<%= customers.firstName %>">
           <div class="card-body">
             <h5 class="card-title">
+              <% if(customers.companyName) { %>
+                <%= customers.companyName.charAt(0).toUpperCase() + customers.companyName.slice(1) %> /
+              <% } %>
               <%= customers.firstName.charAt(0).toUpperCase() + customers.firstName.slice(1) %>
               <%= customers.lastName.charAt(0).toUpperCase() + customers.lastName.slice(1) %>
               | <%= customers.time %>
