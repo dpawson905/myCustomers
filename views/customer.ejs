@@ -2,7 +2,7 @@
 <div class="page-fix">
   <div class="container">
     <div class="row">
-      <div class="col">
+      <div class="col-md-10 offset-md-1">
         <h1 class="text-center py-3">Customer View</h1>
         <div class="border shadow rounded" id="map"></div>
       </div>
@@ -90,6 +90,11 @@
                   <button class="btn btn-info btn-block mb-2" type="submit">Send Email</button>
                 </form>
               </div>
+              <div class="col">
+                <button type="button" class="btn btn-outline-info mb-2 btn-block" data-toggle="modal" data-target="#viewModal">
+                  View Notes
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -98,6 +103,7 @@
   </div>
 </div>
 <% include partials/noteModal %>
+<% include partials/viewNote %>
 <% include partials/deleteModal %>
 <footer class="navbar fixed-bottom navbar-dark bg-dark footer">
   <p class="text-center white footer-text">Copyright &copy;

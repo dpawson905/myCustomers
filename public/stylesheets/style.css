@@ -47,6 +47,11 @@ hr.style-two {
   margin-bottom: 80px;
 }
 
+.full {
+  font-size: .85rem;
+  font-style: normal;
+}
+
 .footer {
   height: 50px;
 }
