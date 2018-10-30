@@ -36,7 +36,7 @@ module.exports = {
       address: req.body.address,
       email: req.body.email,
       preference: req.body.preference,
-      price: req.body.price,
+      frequency: req.body.frequency,
       coordinates: coordinates,
       time: req.body.time,
       image: `https://ui-avatars.com/api/?rounded=true&size=200&name=${

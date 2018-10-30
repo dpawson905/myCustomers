@@ -38,7 +38,7 @@ const CustomerSchema = new Schema({
     lowercase: true,
     required: true
   },
-  price: String,
+  frequency: String,
   week: {
     type: String,
     required: true,
