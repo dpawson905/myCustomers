@@ -5,16 +5,6 @@ const Note = require('../models/notes');
 
 const {asyncErrorHandler, isNotAuthenticated} = require('../middleware/index');
 
-router.get("/new", isNotAuthenticated, async (req, res) => {
-    let customer = await Customer.findById(req.params.id);
-    if (!customer) {
-        req.flash('error', 'No customer found');
-        res.redirect('back');
-        return;
-    }
-    res.render("notes/new", {customer})
-})
-
 router.post("/", isNotAuthenticated, async(req, res) => {
     let customer = await Customer.findById(req.params.id);
     if(!customer) {

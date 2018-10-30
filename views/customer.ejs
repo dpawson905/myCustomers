@@ -4,7 +4,7 @@
     <div class="row">
       <div class="col">
         <h1 class="text-center py-3">Customer View</h1>
-        <div id="map"></div>
+        <div class="border shadow rounded" id="map"></div>
       </div>
     </div>
     <div class="row">
@@ -59,7 +59,7 @@
                     <% if(foundCustomer.email) { %>
                       <td><a href="mailto:<%=foundCustomer.email %>"><%=foundCustomer.email %></a></td>
                     <% } %>
-                    <td><a href="http://maps.google.com/maps?q=<%= foundCustomer.address %>"><%= foundCustomer.address %></a></td>
+                    <td><a href="http://maps.google.com/maps?q=<%= foundCustomer.address %>" target="_blank"><%= foundCustomer.address %></a></td>
                   </tr>
                 </tbody>
               </table>
@@ -77,6 +77,18 @@
                 <button type="button" class="btn btn-primary mb-2 btn-block" data-toggle="modal" data-target="#noteModal">
                   Add Note
                 </button>
+              </div>
+            </div>
+            <div class="row text-center">
+              <div class="col">
+                <form action="/customers/sms/<%= foundCustomer.id %>" method="POST">
+                  <button class="btn btn-success btn-block mb-2" type="submit">Send Text</button>
+                </form>
+              </div>
+              <div class="col">
+                <form action="/customers/email/<%= foundCustomer.id %>" method="POST">
+                  <button class="btn btn-info btn-block mb-2" type="submit">Send Email</button>
+                </form>
               </div>
             </div>
           </div>
