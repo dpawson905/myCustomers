@@ -9,14 +9,25 @@
           </button>
         </div>
         <div class="modal-body">
+          <% if (foundCustomer.notes.length === 0) { %>
+            <div class="card mb-1">
+              <div class="card-body">
+                <div class="card-text">
+                  <p>No notes yet!</p>
+                </div>
+              </div>
+            </div>
+          <% } %>
           <% foundCustomer.notes.forEach(function(customer) { %>
             <div class="card mb-1">
               <div class="card-body">
                 <div class="card-text">
-                  <button type="button" class="btn btn-danger btn-sm float-right" data-toggle="tooltip" data-placement="top" title="Delete Note">
-                    <i class="fas fa-times"></i>
-                  </button> 
-                  <p class="d-block"><span class="create-time d-block"><span class="full">Created On:</span> <%= moment(customer.createdAt).format("dddd, MMMM Do YYYY, h:mm:ss A") %></span><%= customer.text %></p>
+                  <form action="/customers/<%=foundCustomer._id%>/notes/<%=customer.id%>?_method=DELETE" method="post">
+                    <button type="submit" class="btn btn-danger btn-sm float-right" data-toggle="tooltip" data-placement="top" title="Tooltip on top">
+                      <i class="fas fa-times"></i>
+                    </button>
+                  </form>
+                  <p class="d-block"><span class="create-time d-block"><span class="full">Created On:</span> <%= moment(customer.createdAt).format("dddd, MMMM Do YYYY, h:mm:ss A") %></span><i class="fas fa-spider fa-spin"></i> <%= customer.text %></p>
                 </div>
               </div>
             </div>   
