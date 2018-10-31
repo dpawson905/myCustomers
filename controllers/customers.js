@@ -53,6 +53,20 @@ module.exports = {
     });
   },
 
+  async getEditCustomer(req, res) {
+    Customer.findById(req.params.id, (err, editedCustomer) => {
+      if(err) {
+        req.flash('error', err);
+        res.redirect("back");
+        return;
+      }
+      console.log(editedCustomer)
+      res.render('customers/editCustomer', {
+        editedCustomer: editedCustomer
+      })
+    });
+  },
+
   async getFindByWeek(req, res) {
     const week = new RegExp(escapeRegex(req.query.week), "gi");
     const day = new RegExp(escapeRegex(req.query.day), "gi");

@@ -1,14 +1,15 @@
-<% include partials/header %>
+<% include ../partials/header %>
 <div class="container">
   <div class="row mt-5">
     <div class="col-md-8 offset-md-2">
       <h1 class="text-center"><%= title %></h1>
-      <h3 class="text-center">New Customer</h3>
-      <form action="/customers/add" method="POST">
+      <h3 class="text-center">Edit Customer</h3>
+      <form action="/customers/<%= editedCustomer.id %>?method=PUT" method="POST">
         <div class="form-row">
           <div class="form-group col-md-6">
-            <label for="week">Week</label>
+            <label for="week">Week </label>
             <select class="form-control form-control-sm" id="week" name="week" required>
+              <option value="<%= editedCustomer.week %>" selected><%= editedCustomer.week %></option>
               <option value="1">1</option>
               <option value="2">2</option>
               <option value="3">3</option>
@@ -18,6 +19,7 @@
           <div class="form-group col-md-6">
             <label for="day">Day</label>
             <select class="form-control form-control-sm" id="day" name="day" required>
+              <option value="<%= editedCustomer.day %>" selected><%= editedCustomer.day %></option>
               <option value="1">1</option>
               <option value="2">2</option>
               <option value="3">3</option>
@@ -27,31 +29,32 @@
           </div>
           <div class="form-group col-md-6">
             <label for="firstName">First Name</label>
-            <input type="text" name="firstName" id="firstName" class="form-control form-control-sm">
+            <input type="text" name="firstName" id="firstName" class="form-control form-control-sm" value="<%=editedCustomer.firstName %>">
           </div>
           <div class="form-group col-md-6">
             <label for="lastName">Last Name</label>
-            <input type="text" name="lastName" id="lastName" class="form-control form-control-sm">
+            <input type="text" name="lastName" id="lastName" class="form-control form-control-sm" value="<%=editedCustomer.lastName %>">
           </div>
           <div class="form-group col-md-6">
             <label for="companyName">Company Name(optional)</label>
-            <input type="text" name="companyName" id="companyName" class="form-control form-control-sm">
+            <input type="text" name="companyName" id="companyName" class="form-control form-control-sm" value="<%=editedCustomer.companyName %>">
           </div>
           <div class="form-group col-md-6">
             <label for="phoneNumber">Phone Number</label>
-            <input type="tel" name="phoneNumber" id="phoneNumber" class="form-control form-control-sm" required>
+            <input type="tel" name="phoneNumber" id="phoneNumber" class="form-control form-control-sm" value="<%=editedCustomer.phoneNumber %>" required>
           </div>
           <div class="form-group col-md-6">
             <label for="address">Address</label>
-            <input type="text" name="address" id="address" class="form-control form-control-sm" required>
+            <input type="text" name="address" id="address" class="form-control form-control-sm" value="<%=editedCustomer.address %>" required>
           </div>
           <div class="form-group col-md-6">
             <label for="email">Email Address</label>
-            <input type="email" name="email" id="email" class="form-control form-control-sm">
+            <input type="email" name="email" id="email" class="form-control form-control-sm" value="<%=editedCustomer.email %>">
           </div>
           <div class="form-group col-md-4">
             <label for="frequency">Frequency</label>
             <select class="form-control form-control-sm" id="frequency" name="frequency" required>
+              <option value="<%= editedCustomer.frequency %>"><%= editedCustomer.frequency %></option>
               <option value="Monthly">Monthly</option>
               <option value="Bi-Monthly">Bi-Monthly</option>
               <option value="Quarterly">Quarterly</option>
@@ -60,6 +63,7 @@
           <div class="form-group col-md-4">
             <label for="preference">Contact Preference</label>
             <select class="form-control form-control-sm" id="preference" name="preference" required>
+              <option value="<%= editedCustomer.preference %>"><%= editedCustomer.preference %></option>
               <option value="Call">Call</option>
               <option value="Text">Text</option>
               <option value="Email">Email</option>
@@ -68,13 +72,14 @@
           <div class="form-group col-md-4">
             <label for="timeSelect">Contact Preference</label>
             <select class="form-control form-control-sm" id="timeSelect" name="time" required>
-              <option selected>Select Time</option>
+              <option value="<%= editedCustomer.time %>" selected><%= editedCustomer.time %></option>
+              <option >Select Time</option>
             </select>
           </div>
         </div>
-        <button type="submit" class="btn btn-primary">Add new Customer</button>
+        <button type="submit" class="btn btn-primary">Edit Customer</button>
       </form>
     </div>
   </div>
 </div>
-<% include partials/footer %>
+<% include ../partials/footer %>

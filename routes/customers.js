@@ -9,7 +9,8 @@ const {
   postSMS,
   postEmail,
   getFindByWeek,
-  getFindAll
+  getFindAll,
+  getEditCustomer
 } = require("../controllers/customers");
 
 const {
@@ -73,5 +74,7 @@ router.get("/:id", isNotAuthenticated, async (req, res) => {
     foundCustomer: foundCustomer
   });
 });
+
+router.get("/:id/edit", isNotAuthenticated, asyncErrorHandler(getEditCustomer))
 
 module.exports = router;
