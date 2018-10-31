@@ -54,7 +54,7 @@ module.exports = {
   },
 
   async getEditCustomer(req, res) {
-    Customer.findById(req.params.id, (err, editedCustomer) => {
+    await Customer.findById(req.params.id, (err, editedCustomer) => {
       if(err) {
         req.flash('error', err);
         res.redirect("back");
@@ -65,6 +65,37 @@ module.exports = {
         editedCustomer: editedCustomer
       })
     });
+  },
+
+  async putEditCustomer(req, res) {
+    let updateCustomer = await Customer.findByIdAndUpdate(req.params.id);
+    updateCustomer.week = req.body.week;
+    updateCustomer.day = req.body.day;
+    updateCustomer.firstName = req.body.firstName;
+    updateCustomer.lastName = req.body.lastName;
+    updateCustomer.companyName = req.body.companyName;
+    updateCustomer.phoneNumber = req.body.phoneNumber;
+    updateCustomer.address = req.body.address;
+    updateCustomer.email = req.body.email;
+    updateCustomer.frequency = req.body.frequency;
+    updateCustomer.preference = req.body.preference;
+    updateCustomer.time = req.body.time;
+    await updateCustomer.save()
+    req.flash('success', 'Customer updated');
+    res.redirect(`/customers/${updateCustomer.id}`)
+  },
+
+  async deleteCustomer(req, res) {
+    await Customer.findByIdAndRemove(req.params.id, (err, removeCustomer) => {
+      if (err) {
+        req.flash('error', 'No customer to delete.')
+        res.redirect('back');
+        return;
+      }
+      req.flash('success', 'Customer deleted.');
+      res.redirect('/customers/search');
+    });
+    
   },
 
   async getFindByWeek(req, res) {

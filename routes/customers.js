@@ -10,7 +10,9 @@ const {
   postEmail,
   getFindByWeek,
   getFindAll,
-  getEditCustomer
+  getEditCustomer,
+  putEditCustomer,
+  deleteCustomer
 } = require("../controllers/customers");
 
 const {
@@ -74,6 +76,10 @@ router.get("/:id", isNotAuthenticated, async (req, res) => {
     foundCustomer: foundCustomer
   });
 });
+
+router.put("/:id", isNotAuthenticated, asyncErrorHandler(putEditCustomer));
+
+router.delete('/:id', isNotAuthenticated, asyncErrorHandler(deleteCustomer));
 
 router.get("/:id/edit", isNotAuthenticated, asyncErrorHandler(getEditCustomer))
 
