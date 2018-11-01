@@ -82,7 +82,7 @@ module.exports = {
         Check if email and or username is already taken
         If so, redirect back to the registration page and inform the user
       */
-     const userEmail = await User.findOne({
+    const userEmail = await User.findOne({
       email: req.body.email
     });
 

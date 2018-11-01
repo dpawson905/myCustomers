@@ -69,6 +69,13 @@ module.exports = {
 
   async putEditCustomer(req, res) {
     let updateCustomer = await Customer.findByIdAndUpdate(req.params.id);
+    let response = await geocodingClient
+      .forwardGeocode({
+        query: req.body.address,
+        limit: 1
+      })
+      .send();
+    let coordinates = response.body.features[0].geometry.coordinates;
     updateCustomer.week = req.body.week;
     updateCustomer.day = req.body.day;
     updateCustomer.firstName = req.body.firstName;
@@ -80,6 +87,7 @@ module.exports = {
     updateCustomer.frequency = req.body.frequency;
     updateCustomer.preference = req.body.preference;
     updateCustomer.time = req.body.time;
+    updateCustomer.coordinates = coordinates;
     await updateCustomer.save()
     req.flash('success', 'Customer updated');
     res.redirect(`/customers/${updateCustomer.id}`)
