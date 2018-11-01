@@ -30,7 +30,6 @@ const CustomerSchema = new Schema({
   coordinates: Array,
   email: {
     type: String,
-    unique: true,
     lowercase: true
   },
   preference: {

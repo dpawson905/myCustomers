@@ -35,6 +35,7 @@ module.exports = {
       companyName: req.body.companyName,
       phoneNumber: req.body.phoneNumber,
       address: req.body.address,
+      email: req.body.email,
       preference: req.body.preference,
       frequency: req.body.frequency,
       coordinates: coordinates,
@@ -43,15 +44,12 @@ module.exports = {
         req.body.firstName
       }%20${req.body.lastName}`
     };
-    if(req.body.email !== "") {
-      email = req.body.email;
-    }
     debug(req.user._id);
     await Customer.create(newCustomer, err => {
       if (err) {
         req.flash("error", err.message);
       }
-      req.flash("success", "Customer added successfully");
+      // req.flash("success", "Customer added successfully");
       res.redirect("/customers/search");
     });
   },
