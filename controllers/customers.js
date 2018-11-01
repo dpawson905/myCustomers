@@ -18,6 +18,30 @@ const client = require("twilio")(accountSid, authToken);
 
 module.exports = {
   async postCustomer(req, res) {
+    let checkCustTime = await Customer.find({
+      $and: [
+          {
+            week: req.body.week
+          },
+          {
+            day: req.body.day
+          },
+          {
+            time: req.body.time
+          }
+        ],
+        "tech.id": {
+          $eq: req.user.id
+        }
+    });
+    
+    for(var i = 0; i < checkCustTime.length; i++) {
+      if (checkCustTime[i].time === req.body.time) {
+        req.flash('error', 'You already have a customer with that scheduled time.');
+        res.redirect('back');
+        return;
+      }
+    }
     let response = await geocodingClient
       .forwardGeocode({
         query: req.body.address,
@@ -69,6 +93,29 @@ module.exports = {
   },
 
   async putEditCustomer(req, res) {
+    let checkCustTime = await Customer.find({
+      $and: [{
+          week: req.body.week
+        },
+        {
+          day: req.body.day
+        },
+        {
+          time: req.body.time
+        }
+      ],
+      "tech.id": {
+        $eq: req.user.id
+      }
+    });
+
+    for (var i = 0; i < checkCustTime.length; i++) {
+      if (checkCustTime[i].time === req.body.time && checkCustTime[i].phoneNumber !== req.body.phoneNumber) {
+        req.flash('error', 'You already have a customer with that scheduled time.');
+        res.redirect('back');
+        return;
+      }
+    }
     let updateCustomer = await Customer.findByIdAndUpdate(req.params.id);
     let response = await geocodingClient
       .forwardGeocode({

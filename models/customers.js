@@ -23,8 +23,7 @@ const CustomerSchema = new Schema({
   },
   phoneNumber: {
     type: String,
-    required: true,
-    unique: true
+    required: true
   },
   address: String,
   coordinates: Array,
