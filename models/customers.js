@@ -27,10 +27,6 @@ const CustomerSchema = new Schema({
   },
   address: String,
   coordinates: Array,
-  email: {
-    type: String,
-    lowercase: true
-  },
   preference: {
     type: String,
     lowercase: true,
@@ -47,7 +43,11 @@ const CustomerSchema = new Schema({
     required: true,
     trim: true
   },
-  time: {
+  fromTime: {
+    type: String,
+    required: true
+  },
+  toTime: {
     type: String,
     required: true
   },

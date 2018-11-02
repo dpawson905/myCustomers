@@ -46,10 +46,6 @@
             <input type="text" name="address" id="address" class="form-control form-control-sm" required>
           </div>
           <div class="form-group col-md-6">
-            <label for="email">Email Address</label>
-            <input type="email" name="email" id="email" class="form-control form-control-sm">
-          </div>
-          <div class="form-group col-md-4">
             <label for="frequency">Frequency</label>
             <select class="form-control form-control-sm" id="frequency" name="frequency" required>
               <option value="Monthly">Monthly</option>
@@ -66,9 +62,15 @@
             </select>
           </div>
           <div class="form-group col-md-4">
-            <label for="timeSelect">Time Preference</label>
-            <select class="form-control form-control-sm" id="timeSelect" name="time" required>
-              <option selected>Select Time</option>
+            <label for="timeSelect">From Time</label>
+            <select class="form-control form-control-sm" id="timeSelect" name="fromTime" required>
+              <option selected>From Time</option>
+            </select>
+          </div>
+          <div class="form-group col-md-4">
+            <label for="timeSelect1">To Time</label>
+            <select class="form-control form-control-sm" id="timeSelect1" name="toTime" required>
+              <option selected>To Time</option>
             </select>
           </div>
         </div>

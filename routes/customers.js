@@ -7,7 +7,6 @@ const {
   postCustomer,
   getCustomer,
   postSMS,
-  postEmail,
   getFindByWeek,
   getFindAll,
   getEditCustomer,
@@ -55,8 +54,6 @@ router.get("/search/all", isNotAuthenticated, asyncErrorHandler(getFindAll));
 router.post("/add", isNotAuthenticated, asyncErrorHandler(postCustomer));
 
 router.post("/sms/:id", isNotAuthenticated, asyncErrorHandler(postSMS));
-
-router.post("/email/:id", isNotAuthenticated, asyncErrorHandler(postEmail));
 
 router.get("/:id", isNotAuthenticated, async (req, res) => {
   let foundCustomer = await Customer.findById(req.params.id).populate({

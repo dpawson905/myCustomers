@@ -42,42 +42,21 @@
                       <th scope="col">Contact Name</th>
                     <% } %>
                     <th scope="col">Phone Number</th>
-                    <% if(foundCustomer.email) { %>
-                      <th scope="col">Email</th>
-                    <% } %>
                     <th scope="col">Address</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
-                    <td><%= foundCustomer.time %></td>
+                    <td><%= foundCustomer.fromTime %> - <%= foundCustomer.toTime %></td>
                     <td>
                       <%= foundCustomer.firstName.charAt(0).toUpperCase() + foundCustomer.firstName.slice(1) %>
                       <%= foundCustomer.lastName.charAt(0).toUpperCase() + foundCustomer.lastName.slice(1) %>
                     </td>
                     <td><a href="tel:+1<%=foundCustomer.phoneNumber%>"><%=foundCustomer.phoneNumber%></a></td>
-                    <% if(foundCustomer.email) { %>
-                      <td><a href="mailto:<%=foundCustomer.email %>"><%=foundCustomer.email %></a></td>
-                    <% } %>
                     <td><a href="http://maps.google.com/maps?q=<%= foundCustomer.address %>" target="_blank"><%= foundCustomer.address %></a></td>
                   </tr>
                 </tbody>
               </table>
-            </div>
-            <div class="row text-center">
-              <div class="col">
-                <a href="/customers/<%= foundCustomer.id %>/edit" class="btn btn-warning mb-2 btn-block">Edit Customer</a>
-              </div>
-              <div class="col">
-                <button type="button" class="btn btn-danger mb-2 btn-block" data-toggle="modal" data-target="#deleteModal">
-                  Delete Customer
-                </button>
-              </div>
-              <div class="col">
-                <button type="button" class="btn btn-primary mb-2 btn-block" data-toggle="modal" data-target="#noteModal">
-                  Add Note
-                </button>
-              </div>
             </div>
             <div class="row text-center">
               <div class="col">
@@ -86,13 +65,23 @@
                 </form>
               </div>
               <div class="col">
-                <form action="/customers/email/<%= foundCustomer.id %>" method="POST">
-                  <button class="btn btn-info btn-block mb-2" type="submit">Send Email</button>
-                </form>
+                <button type="button" class="btn btn-primary mb-2 btn-block" data-toggle="modal" data-target="#noteModal">
+                  Add Note
+                </button>
               </div>
               <div class="col">
                 <button type="button" class="btn btn-outline-info mb-2 btn-block" data-toggle="modal" data-target="#viewModal">
                   View Notes
+                </button>
+              </div>
+            </div>
+            <div class="row text-center">
+              <div class="col">
+                <a href="/customers/<%= foundCustomer.id %>/edit" class="btn btn-warning mb-2 btn-block">Edit Customer</a>
+              </div>
+              <div class="col">
+                <button type="button" class="btn btn-danger mb-2 btn-block" data-toggle="modal" data-target="#deleteModal">
+                  Delete Customer
                 </button>
               </div>
             </div>
@@ -113,8 +102,8 @@
 <script defer>
   var foundCustomer = <%-JSON.stringify(foundCustomer) %>
 </script>
-<script src="/javascripts/map.js"></script>
 <script src="/javascripts/jquery.min.js"></script>
+<script src="/javascripts/map.js"></script>
 <script src="/javascripts/bootstrap.bundle.min.js"></script>
 <script src="/javascripts/main.js"></script>
 <script defer src="https://use.fontawesome.com/releases/v5.4.2/js/all.js" integrity="sha384-wp96dIgDl5BLlOXb4VMinXPNiB32VYBSoXOoiARzSTXY+tsK8yDTYfvdTyqzdGGN" crossorigin="anonymous"></script>

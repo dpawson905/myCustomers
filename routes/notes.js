@@ -23,7 +23,7 @@ router.post("/", isNotAuthenticated, async(req, res) => {
     await note.save();
     await customer.notes.push(note);
     await customer.save();
-    req.flash('success', 'Comment created');
+    req.flash('success', 'Note created');
     res.redirect('/customers/' + customer.id);
   })
 })

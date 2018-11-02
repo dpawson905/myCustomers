@@ -25,9 +25,6 @@ module.exports = {
           },
           {
             day: req.body.day
-          },
-          {
-            time: req.body.time
           }
         ],
         "tech.id": {
@@ -36,7 +33,7 @@ module.exports = {
     });
     
     for(var i = 0; i < checkCustTime.length; i++) {
-      if (checkCustTime[i].time === req.body.time) {
+      if (checkCustTime[i].fromTime === req.body.fromTime && checkCustTime[i].toTime === req.body.toTime) {
         req.flash('error', 'You already have a customer with that scheduled time.');
         res.redirect('back');
         return;
@@ -59,11 +56,11 @@ module.exports = {
       companyName: req.body.companyName,
       phoneNumber: req.body.phoneNumber,
       address: req.body.address,
-      email: req.body.email,
       preference: req.body.preference,
       frequency: req.body.frequency,
       coordinates: coordinates,
-      time: req.body.time,
+      fromTime: req.body.fromTime,
+      toTime: req.body.toTime,
       image: `https://ui-avatars.com/api/?rounded=true&size=200&name=${
         req.body.firstName
       }%20${req.body.lastName}`
@@ -131,10 +128,10 @@ module.exports = {
     updateCustomer.companyName = req.body.companyName;
     updateCustomer.phoneNumber = req.body.phoneNumber;
     updateCustomer.address = req.body.address;
-    updateCustomer.email = req.body.email;
     updateCustomer.frequency = req.body.frequency;
     updateCustomer.preference = req.body.preference;
-    updateCustomer.time = req.body.time;
+    updateCustomer.fromTime = req.body.fromTime;
+    updateCustomer.toTime = req.body.toTime;
     updateCustomer.coordinates = coordinates;
     await updateCustomer.save()
     req.flash('success', 'Customer updated');
@@ -170,6 +167,7 @@ module.exports = {
         "tech.id": {
           $eq: req.user.id
         }
+        
       },
       (err, foundCustomers) => {
         if (req.query.week === "" || req.query.week === "undefined") {
@@ -191,7 +189,7 @@ module.exports = {
           foundCustomers
         });
       }
-    );
+    ).sort({lastName: 1});
   },
 
   async getFindAll(req, res) {
@@ -206,7 +204,6 @@ module.exports = {
         }
       },
       (err, foundCustomers) => {
-        debug(foundCustomers.length);
         if (req.query.search === "" || req.query.search === "undefined") {
           req.flash("error", "Search cannot be blank");
           res.redirect("back");
@@ -221,7 +218,9 @@ module.exports = {
           foundCustomers
         });
       }
-    );
+    ).sort({
+      lastName: 1
+    });
   },
 
   async postSMS(req, res) {
@@ -253,37 +252,6 @@ module.exports = {
     req.flash("success", "Text message sent successfully");
     res.redirect("back");
   },
-
-  async postEmail(req, res) {
-    let customer = await Customer.findById(req.params.id);
-    let user = await User.findById(req.user.id);
-    if (!user || !customer) {
-      req.flash("error", "Something went wrong... Admin has been notified.");
-      res.redirect("back");
-      return;
-    }
-
-    let html = `
-    <div>
-      <h1> Hello ${customer.firstName}, </h1> 
-      <p>This is ${
-        user.firstName
-      } with Dodson Brothers Pest Control.This is a reminder of your appointment tomorrow at ${customer.time}. </p> 
-      <p> If you have any questions please contact me at <a href="tel:${user.phoneNumber}">${user.phoneNumber}</a>. </p> 
-      <p> Have a great day! </p> 
-    </div>`;
-
-    // Send the email
-    
-    await mailer.sendEmail(
-      `"${user.firstName} ${user.lastName}" <${user.email}>`,
-      customer.email,
-      "Dodson Brothers Pest Control Reminder",
-      html
-    );
-    req.flash('success', 'Email sent');
-    res.redirect('back');
-  }
 };
 
 function escapeRegex(text) {
