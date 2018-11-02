@@ -33,7 +33,7 @@ module.exports = {
     });
     
     for(var i = 0; i < checkCustTime.length; i++) {
-      if (checkCustTime[i].fromTime === req.body.fromTime && checkCustTime[i].toTime === req.body.toTime) {
+      if (checkCustTime[i].fromTime === req.body.fromTime && checkCustTime[i].toTime === req.body.toTime && checkCustTime[i].fromTime !== "anytime") {
         req.flash('error', 'You already have a customer with that scheduled time.');
         res.redirect('back');
         return;
@@ -107,7 +107,7 @@ module.exports = {
     });
 
     for (var i = 0; i < checkCustTime.length; i++) {
-      if (checkCustTime[i].time === req.body.time && checkCustTime[i].phoneNumber !== req.body.phoneNumber) {
+      if (checkCustTime[i].fromTime === req.body.fromTime && checkCustTime[i].toTime === req.body.toTime && req.body.fromTime !== "anytime" && checkCustTime[i].phoneNumber !== req.body.phoneNumber) {
         req.flash('error', 'You already have a customer with that scheduled time.');
         res.redirect('back');
         return;

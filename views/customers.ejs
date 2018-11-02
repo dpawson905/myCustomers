@@ -20,7 +20,11 @@
             <% } %>
             </h5>
             <address>
-              <p class="card-text">Time: <%= customers.fromTime %> - <%= customers.toTime %></p>
+              <% if(customers.fromTime && customers.toTime === "anytime") { %>
+                <p class="card-text">Time: <%= customers.fromTime.charAt(0).toUpperCase() + customers.fromTime.slice(1) %></p>
+              <% } else { %>
+                <p class="card-text">Time: <%= customers.fromTime %> - <%= customers.toTime %></p>
+              <% } %>
               <p class="card-text small"><%= customers.address %></p>
               <p class="card-text">Phone: <%= customers.phoneNumber %></p>
             </address>
