@@ -3,6 +3,8 @@ body {
   font-family: 'Raleway',
   sans-serif;
   height: calc(100vh - 80px);
+  letter-spacing: 1.3px;
+  line-height: 1.2rem;
 }
 
 
@@ -53,7 +55,14 @@ hr.style-two {
 }
 
 .footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  /* Set the fixed height of the footer here */
   height: 50px;
+  line-height: 50px;
+  /* Vertically center the text there */
+  background-color: #f5f5f5;
 }
 
 .footer-text {
