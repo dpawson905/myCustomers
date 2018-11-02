@@ -29,12 +29,13 @@
               <p class="card-text">Phone: <%= customers.phoneNumber %></p>
             </address>
             <div class="row">
-              <div class="col move-to-bottom">
-                <form action="/customers/sms/<%= customers.id %>" method="POST">
-                  <button class="btn btn-success btn-block mb-2" type="submit">Send Text</button>
-                </form>
-              </div>
-              
+              <% if (customers.preference !== "call") { %>
+                <div class="col move-to-bottom">
+                  <form action="/customers/sms/<%= customers.id %>" method="POST">
+                    <button class="btn btn-success btn-block mb-2" type="submit">Send Text</button>
+                  </form>
+                </div>
+              <% } %>
               <div class="col move-to-bottom">
                 <a href="/customers/<%= customers.id %>" class="btn btn-primary btn-block mb-2">View More</a>
               </div>
