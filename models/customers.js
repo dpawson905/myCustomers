@@ -25,23 +25,27 @@ const CustomerSchema = new Schema({
     type: String,
     required: true
   },
-  address: String,
+  address: {
+    type: String,
+    required: true
+  },
   coordinates: Array,
   preference: {
     type: String,
     lowercase: true,
     required: true
   },
-  frequency: String,
+  frequency: {
+    type: Number,
+    required: true
+  },
   week: {
-    type: String,
+    type: Number,
     required: true,
-    trim: true
   },
   day: {
-    type: String,
+    type: Number,
     required: true,
-    trim: true
   },
   fromTime: {
     type: String,
@@ -52,13 +56,16 @@ const CustomerSchema = new Schema({
     required: true
   },
   image: String,
+  serviceDates: {
+    type: [Date]
+  },
   notes: [
     {
     type: Schema.Types.ObjectId,
     ref: "Note"
     }
   ]
-});
+}, {timestamps: true});
 
 CustomerSchema.index({
   firstName: "text",

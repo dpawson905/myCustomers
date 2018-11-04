@@ -3,6 +3,7 @@ const mailer = require("../misc/mailer");
 const User = require("../models/user");
 const Customer = require("../models/customers");
 const { MB_API } = require("../config/mapbox");
+const moment = require('moment');
 
 const mbxGeocoding = require("@mapbox/mapbox-sdk/services/geocoding");
 const geocodingClient = mbxGeocoding({
@@ -46,7 +47,42 @@ module.exports = {
       })
       .send();
     let coordinates = response.body.features[0].geometry.coordinates;
-    
+
+    function getServiceDate(startDate) {
+      var startOfMonth = moment(startDate)
+        .utc()
+        .startOf("month")
+        .startOf("isoweek");
+      var svcDate = moment(startDate)
+        .utc()
+        .startOf("month")
+        .startOf("isoweek")
+        .add(req.body.week, "w")
+        .add(req.body.day - 1, "d");
+
+      if (svcDate.month() == startOfMonth.month()) {
+        svcDate = svcDate.subtract(1, "w");
+      }
+      return svcDate;
+    }
+
+    let freq = req.body.frequency;
+    let dates = [];
+    let month = 0;
+    if(freq === 1) {
+      month = 48
+    } else if (freq === 2) {
+      month = 24
+    } else {
+      month = 12
+    }
+    for (var i = 0; i < month; i += freq) {
+      var startOfMonth = moment()
+        .utc()
+        .add(i, "M");
+      await dates.push(getServiceDate(startOfMonth).toISOString());
+    };
+
     let newCustomer = {
       week: req.body.week,
       day: req.body.day,
@@ -58,6 +94,7 @@ module.exports = {
       address: req.body.address,
       preference: req.body.preference,
       frequency: req.body.frequency,
+      serviceDates: dates,
       coordinates: coordinates,
       fromTime: req.body.fromTime,
       toTime: req.body.toTime,
@@ -70,7 +107,7 @@ module.exports = {
       if (err) {
         req.flash("error", err.message);
       }
-      // req.flash("success", "Customer added successfully");
+      req.flash("success", "Customer added successfully");
       res.redirect("/customers/search");
     });
   },
