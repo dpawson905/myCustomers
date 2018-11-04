@@ -69,14 +69,8 @@ module.exports = {
     let freq = req.body.frequency;
     let dates = [];
     let month = 0;
-    if(freq === 1) {
-      month = 48
-    } else if (freq === 2) {
-      month = 24
-    } else {
-      month = 12
-    }
-    for (var i = 0; i < month; i += freq) {
+    
+    for (var i = 0; i < 48; i += freq) {
       var startOfMonth = moment()
         .utc()
         .add(i, "M");
