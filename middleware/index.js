@@ -1,3 +1,5 @@
+const moment = require('moment');
+
 module.exports = {
   asyncErrorHandler: (fn) =>
     (req, res, next) => {
@@ -21,5 +23,5 @@ module.exports = {
       req.flash("error", "You must be logged in to view this page");
       res.redirect("/");
     }
-  }
+  },
 };

@@ -17,7 +17,8 @@ const {
 const {
   isAuthenticated,
   isNotAuthenticated,
-  asyncErrorHandler
+  asyncErrorHandler,
+  getServiceDate
 } = require("../middleware");
 
 /* GET customers page. */
@@ -51,7 +52,7 @@ router.get(
 
 router.get("/search/all", isNotAuthenticated, asyncErrorHandler(getFindAll));
 
-router.post("/add", isNotAuthenticated, asyncErrorHandler(postCustomer));
+router.post("/add", isNotAuthenticated,  asyncErrorHandler(postCustomer));
 
 router.post("/sms/:id", isNotAuthenticated, asyncErrorHandler(postSMS));
 

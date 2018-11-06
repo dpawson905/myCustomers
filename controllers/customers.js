@@ -19,6 +19,25 @@ const client = require("twilio")(accountSid, authToken);
 
 module.exports = {
   async postCustomer(req, res) {
+    function getServiceDate(startDate) {
+      var startOfMonth = moment(startDate)
+        .utc()
+        .startOf("month")
+        .startOf("isoweek")
+        .startOf('hour');
+      var svcDate = moment(startDate)
+        .utc()
+        .startOf("month")
+        .startOf("isoweek")
+        .add(parseInt(req.body.week), "w")
+        .add(parseInt(req.body.day -1), "d")
+        .startOf('hour')
+
+      if (svcDate.month() == startOfMonth.month()) {
+        svcDate = svcDate.subtract(1, "w");
+      }
+      return svcDate;
+    }
     let checkCustTime = await Customer.find({
       $and: [
           {
@@ -47,36 +66,15 @@ module.exports = {
       })
       .send();
     let coordinates = response.body.features[0].geometry.coordinates;
-
-    function getServiceDate(startDate) {
-      var startOfMonth = moment(startDate)
-        .utc()
-        .startOf("month")
-        .startOf("isoweek");
-      var svcDate = moment(startDate)
-        .utc()
-        .startOf("month")
-        .startOf("isoweek")
-        .add(req.body.week, "w")
-        .add(req.body.day - 1, "d");
-
-      if (svcDate.month() == startOfMonth.month()) {
-        svcDate = svcDate.subtract(1, "w");
-      }
-      return svcDate;
-    }
-
-    let freq = req.body.frequency;
     let dates = [];
-    let month = 0;
-    
-    for (var i = 0; i < 48; i += freq) {
+    let freq = req.body.frequency;
+    for (var i = 0; i < 48; i += parseInt(freq)) {
       var startOfMonth = moment()
         .utc()
         .add(i, "M");
-      await dates.push(getServiceDate(startOfMonth).toISOString());
+    await dates.push(getServiceDate(startOfMonth).toISOString());
     };
-
+    
     let newCustomer = {
       week: req.body.week,
       day: req.body.day,
@@ -88,14 +86,15 @@ module.exports = {
       address: req.body.address,
       preference: req.body.preference,
       frequency: req.body.frequency,
-      serviceDates: dates,
       coordinates: coordinates,
       fromTime: req.body.fromTime,
+      serviceDates: dates,
       toTime: req.body.toTime,
       image: `https://ui-avatars.com/api/?rounded=true&size=200&name=${
         req.body.firstName
       }%20${req.body.lastName}`
     };
+    
     debug(req.user._id);
     await Customer.create(newCustomer, err => {
       if (err) {
@@ -122,7 +121,8 @@ module.exports = {
 
   async putEditCustomer(req, res) {
     let checkCustTime = await Customer.find({
-      $and: [{
+      $and: [
+        {
           week: req.body.week
         },
         {
@@ -130,7 +130,7 @@ module.exports = {
         },
         {
           time: req.body.time
-        }
+        },
       ],
       "tech.id": {
         $eq: req.user.id
@@ -187,6 +187,15 @@ module.exports = {
     const day = new RegExp(escapeRegex(req.query.day), "gi");
     await Customer.find(
       {
+        serviceDates: {
+          $eq: moment()
+            .utc()
+            .startOf("month")
+            .startOf("isoweek")
+            .add(parseInt(req.query.week), "w")
+            .add(parseInt(req.query.day - 1), "d")
+            .toISOString()
+        },
         $and: [
           {
             week: week
@@ -197,16 +206,19 @@ module.exports = {
         ],
         "tech.id": {
           $eq: req.user.id
-        }
-        
+        },
       },
       (err, foundCustomers) => {
-        if (req.query.week === "" || req.query.week === "undefined") {
+        if(err) {
+          console.log(err);
+          return;
+        }
+        if (!req.query.week) {
           req.flash("error", "Week cannot be blank");
           res.redirect("back");
           return;
         }
-        if (req.query.day === "" || req.query.day === "undefined") {
+        if (!req.query.day) {
           req.flash("error", "Day cannot be blank");
           res.redirect("back");
           return;
@@ -220,7 +232,9 @@ module.exports = {
           foundCustomers
         });
       }
-    ).sort({lastName: 1});
+    ).sort({
+      lastName: 1
+    });
   },
 
   async getFindAll(req, res) {

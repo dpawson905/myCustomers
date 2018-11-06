@@ -40,11 +40,11 @@ const CustomerSchema = new Schema({
     required: true
   },
   week: {
-    type: Number,
+    type: String,
     required: true,
   },
   day: {
-    type: Number,
+    type: String,
     required: true,
   },
   fromTime: {
@@ -57,7 +57,7 @@ const CustomerSchema = new Schema({
   },
   image: String,
   serviceDates: {
-    type: [Date]
+    type: [String]
   },
   notes: [
     {
