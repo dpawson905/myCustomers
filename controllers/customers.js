@@ -41,11 +41,10 @@ module.exports = {
     let checkCustTime = await Customer.find({
       $and: [
           {
-            week: req.body.week
-          },
-          {
+            week: req.body.week,
             day: req.body.day
-          }
+          },
+          
         ],
         "tech.id": {
           $eq: req.user.id
@@ -198,9 +197,7 @@ module.exports = {
         },
         $and: [
           {
-            week: week
-          },
-          {
+            week: week,
             day: day
           }
         ],

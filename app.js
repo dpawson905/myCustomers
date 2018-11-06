@@ -36,6 +36,9 @@ db.once('open', () => {
   debug('Connected to MongoDB');
 });
 
+// Only use this for debugging purposes
+// mongoose.set('debug', true);
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
