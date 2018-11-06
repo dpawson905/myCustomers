@@ -67,7 +67,7 @@ module.exports = {
     let coordinates = response.body.features[0].geometry.coordinates;
     let dates = [];
     let freq = req.body.frequency;
-    for (var i = 0; i < 48; i += parseInt(freq)) {
+    for (var i = 0; i < 96; i += parseInt(freq)) {
       var startOfMonth = moment()
         .utc()
         .add(i, "M");
@@ -95,6 +95,16 @@ module.exports = {
     };
     
     debug(req.user._id);
+    if(req.body.fromTime === req.body.toTime && req.body.toTime !== 'anytime') {
+      req.flash('error', 'To and from times cannot be the same.')
+      res.redirect('back');
+      return;
+    }
+    if (req.body.toTime.substring(req.body.toTime.length - 2 === 'PM') && req.body.fromTime.substring(req.body.fromTime.length - 2 === 'AM')) {
+      req.flash('error', 'To time cannot be greater than from time.');
+      res.redirect('back');
+      return;
+    }
     await Customer.create(newCustomer, err => {
       if (err) {
         req.flash("error", err.message);
