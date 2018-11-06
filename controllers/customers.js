@@ -206,7 +206,7 @@ module.exports = {
         ],
         "tech.id": {
           $eq: req.user.id
-        },
+        }
       },
       (err, foundCustomers) => {
         if(err) {
@@ -228,6 +228,7 @@ module.exports = {
           res.redirect("back");
           return;
         }
+
         res.render("customers", {
           foundCustomers
         });
