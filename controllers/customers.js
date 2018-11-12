@@ -286,14 +286,14 @@ module.exports = {
       return;
     }
 
-    if(customer.fromTime && customer.toTime === 'anytime') {
+    if(customer.toTime && customer.fromTime === 'anytime') {
         let message = `Hello ${customer.firstName}, this is ${user.firstName} 
         from Dodson Pest Control. This is a reminder of your appointment tomorrow. 
         If you have any questions please contact me at ${user.phoneNumber} Have a great day!`;
-    } else if (customer.fromTime === 'anytime' && customer.toTime !== 'anytime') {
+    } else if (customer.toTime === 'anytime' && customer.fromTime !== 'anytime') {
         let message = `Hello ${customer.firstName}, this is ${user.firstName} 
         from Dodson Pest Control. This is a reminder of your appointment. I will be there no later than 
-        ${customer.fromTime} tomorrow. If you have any questions please contact me at 
+        ${customer.toTime} tomorrow. If you have any questions please contact me at 
         ${user.phoneNumber} Have a great day!`;
     } else {
         let message = `Hello ${customer.firstName}, this is ${user.firstName} 
