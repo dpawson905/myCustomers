@@ -1,92 +1,70 @@
 <% include partials/header %>
-<div class="page-fix">
+<div class="py-4">
+  <h1 class="text-center"><i class="fas fa-address-card fa-sm"></i> <a href="http://maps.google.com/maps?q=<%= foundCustomer.address %>" target="_blank"><%= foundCustomer.address %></a></h1>
   <div class="container">
     <div class="row">
-      <div class="col-md-10 offset-md-1">
-        <h1 class="text-center py-3">Customer View</h1>
+      <div class="col-md-8 mt-2">
         <div class="border shadow rounded" id="map"></div>
       </div>
-    </div>
-    <div class="row">
-      <div class="col-md-10 offset-md-1">
-        <div class="card text-white bg-secondary my-4 text-center shadow">
+      <div class="col-md-4 mt-2">
+        <div class="card text-white bg-secondary text-center shadow mb-2">
           <div class="card-body">
             <p class="text-white m-0">Customer Information</p>
           </div>
         </div>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-10 offset-md-1">
-        <div class="card">
-          <div class="card-body">
-            <% if(foundCustomer.companyName === "") { %>
-              <h5 class="card-title text-center">
-                <%= foundCustomer.firstName.charAt(0).toUpperCase() + foundCustomer.firstName.slice(1) %> 
-                <%= foundCustomer.lastName.charAt(0).toUpperCase() + foundCustomer.lastName.slice(1) %>
-              </h5>
+        <ul class="list-group">
+          <li class="list-group-item"><i class="fas fa-user"></i>
+            <% if(!foundCustomer.companyName) { %>
+              <%= foundCustomer.firstName.charAt(0).toUpperCase() + foundCustomer.firstName.slice(1) %> 
+              <%= foundCustomer.lastName.charAt(0).toUpperCase() + foundCustomer.lastName.slice(1) %>
             <% } else { %>
-              <h5 class="card-title text-center">
-                <%= foundCustomer.companyName.charAt(0).toUpperCase() + foundCustomer.companyName.slice(1) %>
-              </h5>
+              <%= foundCustomer.companyName %>
             <% } %>
-            <hr>
-            <div class="table-responsive">
-              <table class="table table-bordered">
-                <thead class="text-center">
-                  <tr>
-                    <th scope="col">Time</th>
-                    <% if(foundCustomer.companyName === "") { %>
-                      <th scope="col">Name</th>
-                    <% } else { %>
-                      <th scope="col">Contact Name</th>
-                    <% } %>
-                    <th scope="col">Phone Number</th>
-                    <th scope="col">Address</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td><%= foundCustomer.fromTime %> - <%= foundCustomer.toTime %></td>
-                    <td>
-                      <%= foundCustomer.firstName.charAt(0).toUpperCase() + foundCustomer.firstName.slice(1) %>
-                      <%= foundCustomer.lastName.charAt(0).toUpperCase() + foundCustomer.lastName.slice(1) %>
-                    </td>
-                    <td><a href="tel:+1<%=foundCustomer.phoneNumber%>"><%=foundCustomer.phoneNumber%></a></td>
-                    <td><a href="http://maps.google.com/maps?q=<%= foundCustomer.address %>" target="_blank"><%= foundCustomer.address %></a></td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-            <div class="row text-center">
-              <div class="col">
-                <form action="/customers/sms/<%= foundCustomer.id %>" method="POST">
-                  <button class="btn btn-success btn-block mb-2" type="submit">Send Text</button>
-                </form>
-              </div>
-              <div class="col">
-                <button type="button" class="btn btn-primary mb-2 btn-block" data-toggle="modal" data-target="#noteModal">
-                  Add Note
-                </button>
-              </div>
-              <div class="col">
-                <button type="button" class="btn btn-outline-info mb-2 btn-block" data-toggle="modal" data-target="#viewModal">
-                  View Notes
-                </button>
-              </div>
-            </div>
-            <div class="row text-center">
-              <div class="col">
-                <a href="/customers/<%= foundCustomer.id %>/edit" class="btn btn-warning mb-2 btn-block">Edit Customer</a>
-              </div>
-              <div class="col">
-                <button type="button" class="btn btn-danger mb-2 btn-block" data-toggle="modal" data-target="#deleteModal">
-                  Delete Customer
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
+          </li>
+          <% if(foundCustomer.companyName) { %>
+            <%= foundCustomer.firstName.charAt(0).toUpperCase() + foundCustomer.firstName.slice(1) %> 
+            <%= foundCustomer.lastName.charAt(0).toUpperCase() + foundCustomer.lastName.slice(1) %>
+          <% } %>
+          <li class="list-group-item"><i class="fas fa-clock"></i> <%= foundCustomer.fromTime %> - <%= foundCustomer.toTime %></li>
+          <li class="list-group-item"><i class="fas fa-phone"></i> <a href="tel:+1<%=foundCustomer.phoneNumber%>"><%=foundCustomer.phoneNumber%></a></li>
+          <li class="list-group-item"><i class="fas fa-calendar-alt"></i>
+            Week: <%= foundCustomer.week %> Day: <%= foundCustomer.day %> /
+            <% if(foundCustomer.frequency === 1) { %>
+              Monthly
+            <% } else if(foundCustomer.frequency === 2) { %>
+              Bimonthly
+            <% } else { %>
+              Quarterly
+            <% } %>
+          </li>
+        </ul>
+        <ul class="list-group mt-2">
+          <li class="list-group-item">
+            <button type="button" class="btn btn-outline-info btn-block shadow" data-toggle="modal"   data-target="#viewModal">
+              View Notes <span class="badge badge-info ml-2"><%= foundCustomer.notes.length %></span>
+            </button>
+          </li>
+          <li class="list-group-item">
+            <button type="button" class="btn btn-primary btn-block shadow" data-toggle="modal" data-target="#noteModal">
+              Add Note
+            </button>
+          </li>
+          <% if(foundCustomer.preference === 'text') { %>
+            <li class="list-group-item">
+              <form action="/customers/sms/<%= foundCustomer.id %>" method="POST">
+                <button class="btn btn-success btn-block shadow" type="submit">Send Text</button>
+              </form>
+            </li>
+          <% } %>
+          <li class="list-group-item">
+            <a href="/customers/<%= foundCustomer.id %>/edit" class="btn btn-warning btn-block shadow">Edit Customer</a>
+          </li>
+          <li class="list-group-item">
+            <button type="button" class="btn btn-danger btn-block shadow" data-toggle="modal" data-target="#deleteModal">
+              Delete Customer
+            </button>
+          </li>
+        </ul>
       </div>
     </div>
   </div>
@@ -94,11 +72,11 @@
 <% include partials/noteModal %>
 <% include partials/viewNote %>
 <% include partials/deleteModal %>
-<footer class="navbar fixed-bottom navbar-dark bg-dark footer">
+<!--<footer class="navbar fixed-bottom navbar-dark bg-dark footer">
   <p class="text-center white footer-text">Copyright &copy;
     <span id="year"></span> by Darrell Pawson. All rights reserved.
   </p>
-</footer>
+</footer>-->
 <script defer>
   var foundCustomer = <%-JSON.stringify(foundCustomer) %>
 </script>

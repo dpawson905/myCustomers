@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", function() {
     "pk.eyJ1IjoiZHBhd3NvbjkwNSIsImEiOiJjam5mYXNlMWIwMTBoM3dwanc3YXBjcHNiIn0.8j9k2iEJpirCV6EgrUZ4Vg";
   var map = new mapboxgl.Map({
     container: "map",
-    style: "mapbox://styles/mapbox/light-v9",
+    style: "mapbox://styles/mapbox/streets-v9",
     center: foundCustomer.coordinates,
     zoom: 14
   });

@@ -18,6 +18,10 @@ router.post("/", isNotAuthenticated, async(req, res) => {
       res.redirect('back');
       return;
     }
+    if(req.body.text === '' || req.body.text.length < 10) {
+      req.flash('error', 'Note cannot be blank or must be more than 10 characters long.');
+      return res.redirect('back');
+    }
     note.author.id = req.user.id;
     note.author.username = req.user.username;
     await note.save();

@@ -3,13 +3,13 @@
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="notesLabel"><strong>Create A note for CUSTOMER</strong></h5>
+        <h5 class="modal-title" id="notesLabel"><strong>Create A note for <%= foundCustomer.firstName.charAt(0).toUpperCase() + foundCustomer.firstName.slice(1) %> 
+            </strong></h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body text-center">
-        <p class="lead">Leave a note for CUSTOMER</p>
         <form action="/customers/<%=foundCustomer._id%>/notes" method="post">
           <textarea class="shadow form-control" name="text" id="text" placeholder="Enter note here..."></textarea>
           <div class="modal-footer">
