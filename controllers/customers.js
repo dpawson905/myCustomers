@@ -86,8 +86,8 @@ module.exports = {
       preference: req.body.preference,
       frequency: req.body.frequency,
       coordinates: coordinates,
-      fromTime: req.body.fromTime,
       serviceDates: dates,
+      fromTime: req.body.fromTime,
       toTime: req.body.toTime,
       image: `https://ui-avatars.com/api/?rounded=true&size=200&name=${
         req.body.firstName
@@ -100,7 +100,7 @@ module.exports = {
       res.redirect('back');
       return;
     }
-    if (req.body.toTime.substring(req.body.toTime.length - 2 === 'PM') && req.body.fromTime.substring(req.body.fromTime.length - 2 === 'AM')) {
+    if (req.body.toTime.substring(req.body.toTime.length - 2 === 'PM') && req.body.fromTime.substring(req.body.fromTime.length - 2 === 'AM') && req.body.toTime !== 'anytime') {
       req.flash('error', 'To time cannot be greater than from time.');
       res.redirect('back');
       return;
