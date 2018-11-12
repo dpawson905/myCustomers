@@ -52,11 +52,22 @@ module.exports = {
     });
     
     for(var i = 0; i < checkCustTime.length; i++) {
-      if (checkCustTime[i].fromTime === req.body.fromTime && checkCustTime[i].toTime === req.body.toTime && checkCustTime[i].fromTime !== "anytime") {
+      if (checkCustTime[i].fromTime === req.body.fromTime && checkCustTime[i].toTime === req.body.toTime && req.body.toTime !== 'anytime' && req.body.fromTime !== 'anytime') {
         req.flash('error', 'You already have a customer with that scheduled time.');
         res.redirect('back');
         return;
       }
+    }
+    if (req.body.fromTime === req.body.toTime && req.body.toTime !== 'anytime') {
+      req.flash('error', 'To and from times cannot be the same.')
+      res.redirect('back');
+      return;
+    }
+    if (req.body.toTime.substring(req.body.toTime.length - 2 === 'PM') &&
+      req.body.fromTime.substring(req.body.fromTime.length - 2 === 'AM') && req.body.toTime !== 'anytime' && req.body.fromTime !== 'anytime') {
+      req.flash('error', 'To time cannot be greater than from time.');
+      res.redirect('back');
+      return;
     }
     let response = await geocodingClient
       .forwardGeocode({
@@ -95,16 +106,6 @@ module.exports = {
     };
     
     debug(req.user._id);
-    if(req.body.fromTime === req.body.toTime && req.body.toTime !== 'anytime') {
-      req.flash('error', 'To and from times cannot be the same.')
-      res.redirect('back');
-      return;
-    }
-    if (req.body.toTime.substring(req.body.toTime.length - 2 === 'PM') && req.body.fromTime.substring(req.body.fromTime.length - 2 === 'AM') && req.body.toTime !== 'anytime') {
-      req.flash('error', 'To time cannot be greater than from time.');
-      res.redirect('back');
-      return;
-    }
     await Customer.create(newCustomer, err => {
       if (err) {
         req.flash("error", err.message);
@@ -280,16 +281,18 @@ module.exports = {
     let customer = await Customer.findById(req.params.id);
     let user = await User.findById(req.user.id);
     console.log(user.phoneNumber)
+    console.log(customer.fromTime + " " + customer.toTime)
     if (!user || !customer) {
       req.flash("error", "Something went wrong... Admin has been notified.");
       res.redirect("back");
       return;
     }
 
-    if (customer.fromTime !== 'anytime') {
+    if(customer.fromTime === customer.toTime) {
       let message =
-       `Hello ${customer.firstName}, this is ${user.firstName} from Dodson Pest Control. This is a reminder of your appointment. I will be there no later than ${customer.toTime} tomorrow. If you have any questions please contact me at ${user.phoneNumber} Have a great day!
+        `Hello ${customer.firstName}, this is ${user.firstName} from Dodson Pest Control. This is a reminder of your appointment tomorrow. If you have any questions please contact me at ${user.phoneNumber} Have a great day!
       `;
+
       await client.messages
         .create({
           body: message,
@@ -298,12 +301,11 @@ module.exports = {
         })
         .then(message => debug(message.sid))
         .done();
-      req.flash("success", "Text message sent successfully");
-      return res.redirect("back");
-    } else if (customer.toTime && customer.fromTime === 'anytime') {
+    } else if(customer.fromTime === 'anytime' && customer.toTime !== 'anytime') {
       let message =
-      `Hello ${customer.firstName}, this is ${user.firstName} from Dodson Pest Control. This is a reminder of your appointment tomorrow. If you have any questions please contact me at ${user.phoneNumber} Have a great day!
+        `Hello ${customer.firstName}, this is ${user.firstName} from Dodson Pest Control. This is a reminder of your appointment tomorrow I will be there no later than ${customer.toTime}. If you have any questions please contact me at ${user.phoneNumber} Have a great day!
       `;
+
       await client.messages
         .create({
           body: message,
@@ -312,13 +314,11 @@ module.exports = {
         })
         .then(message => debug(message.sid))
         .done();
-      req.flash("success", "Text message sent successfully");
-      return res.redirect("back");
     } else {
       let message =
-      `Hello ${customer.firstName}, this is ${user.firstName} from Dodson Pest Control. This is a reminder of your appointment at ${customer.fromTime} - ${customer.toTime} tomorrow. If you have any questions please contact me at
-      ${user.phoneNumber} Have a great day!
+        `Hello ${customer.firstName}, this is ${user.firstName} from Dodson Pest Control. This is a reminder of your appointment from ${customer.fromTime} - ${customer.toTime} tomorrow. If you have any questions please contact me at ${user.phoneNumber} Have a great day!
       `;
+
       await client.messages
         .create({
           body: message,
@@ -327,9 +327,9 @@ module.exports = {
         })
         .then(message => debug(message.sid))
         .done();
-      req.flash("success", "Text message sent successfully");
-      return res.redirect("back");
     }
+    req.flash("success", "Text message sent successfully");
+    res.redirect("back");
   },
 };
 
