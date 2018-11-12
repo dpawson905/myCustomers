@@ -287,9 +287,9 @@ module.exports = {
     }
 
     if(customer.toTime && customer.fromTime === 'anytime') {
-      let message = `Hello ${customer.firstName}, this is ${user.firstName}
-      from Dodson Pest Control. This is a reminder of your appointment tomorrow.
-      If you have any questions please contact me at ${user.phoneNumber} Have a great day!`;
+      let message =
+      `Hello ${customer.firstName}, this is ${user.firstName} from Dodson Pest Control. This is a reminder of your appointment tomorrow. If you have any questions please contact me at ${user.phoneNumber} Have a great day!
+      `;
       await client.messages
         .create({
           body: message,
@@ -301,10 +301,9 @@ module.exports = {
       req.flash("success", "Text message sent successfully");
       return res.redirect("back");
     } else if (customer.toTime === 'anytime' && customer.fromTime !== 'anytime') {
-      let message = `Hello ${customer.firstName}, this is ${user.firstName}
-      from Dodson Pest Control. This is a reminder of your appointment. I will be there no later than
-      ${customer.toTime} tomorrow. If you have any questions please contact me at
-      ${user.phoneNumber} Have a great day!`;
+      let message =
+      `Hello ${customer.firstName}, this is ${user.firstName} from Dodson Pest Control. This is a reminder of your appointment. I will be there no later than ${customer.toTime} tomorrow. If you have any questions please contact me at ${user.phoneNumber} Have a great day!
+      `;
       await client.messages
         .create({
           body: message,
@@ -316,10 +315,10 @@ module.exports = {
       req.flash("success", "Text message sent successfully");
       return res.redirect("back");
     } else {
-      let message = `Hello ${customer.firstName}, this is ${user.firstName}
-      from Dodson Pest Control. This is a reminder of your appointment at
-      ${customer.toTime} - ${customer.fromTime} tomorrow. If you have any questions please contact me at
-      ${user.phoneNumber} Have a great day!`;
+      let message =
+      `Hello ${customer.firstName}, this is ${user.firstName} from Dodson Pest Control. This is a reminder of your appointment at ${customer.toTime} - ${customer.fromTime} tomorrow. If you have any questions please contact me at
+      ${user.phoneNumber} Have a great day!
+      `;
       await client.messages
         .create({
           body: message,
