@@ -25,7 +25,11 @@
             <%= foundCustomer.firstName.charAt(0).toUpperCase() + foundCustomer.firstName.slice(1) %> 
             <%= foundCustomer.lastName.charAt(0).toUpperCase() + foundCustomer.lastName.slice(1) %>
           <% } %>
-          <li class="list-group-item"><i class="fas fa-clock"></i> <%= foundCustomer.fromTime %> - <%= foundCustomer.toTime %></li>
+          <li class="list-group-item"><i class="fas fa-clock"></i>
+            <% if(foundCustomer.toTime && foundCustomer.fromTime === 'anytime') { %>
+              Anytime
+            <% } %>
+          </li>
           <li class="list-group-item"><i class="fas fa-phone"></i> <a href="tel:+1<%=foundCustomer.phoneNumber%>"><%=foundCustomer.phoneNumber%></a></li>
           <li class="list-group-item"><i class="fas fa-calendar-alt"></i>
             Week: <%= foundCustomer.week %> Day: <%= foundCustomer.day %> /
