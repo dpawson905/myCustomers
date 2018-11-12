@@ -105,28 +105,16 @@ module.exports = {
       }%20${req.body.lastName}`
     };
     
-    debug(req.user._id);
-    await Customer.create(newCustomer, err => {
-      if (err) {
-        req.flash("error", err.message);
-      }
-      req.flash("success", "Customer added successfully");
-      res.redirect("/customers/search");
-    });
+    await Customer.create(newCustomer);
+    req.flash("success", "Customer added successfully");
+    res.redirect("/customers/search");
   },
 
   async getEditCustomer(req, res) {
-    await Customer.findById(req.params.id, (err, editedCustomer) => {
-      if(err) {
-        req.flash('error', err);
-        res.redirect("back");
-        return;
-      }
-      console.log(editedCustomer)
-      res.render('customers/editCustomer', {
-        editedCustomer: editedCustomer
-      })
-    });
+    let editedCustomer = await Customer.findById(req.params.id)
+    res.render('customers/editCustomer', {
+      editedCustomer
+    })
   },
 
   async putEditCustomer(req, res) {
@@ -153,6 +141,17 @@ module.exports = {
         res.redirect('back');
         return;
       }
+    }
+    if (req.body.fromTime === req.body.toTime && req.body.toTime !== 'anytime') {
+      req.flash('error', 'To and from times cannot be the same.')
+      res.redirect('back');
+      return;
+    }
+    if (req.body.toTime.substring(req.body.toTime.length - 2 === 'PM') &&
+      req.body.fromTime.substring(req.body.fromTime.length - 2 === 'AM') && req.body.toTime !== 'anytime' && req.body.fromTime !== 'anytime') {
+      req.flash('error', 'To time cannot be greater than from time.');
+      res.redirect('back');
+      return;
     }
     let updateCustomer = await Customer.findByIdAndUpdate(req.params.id);
     let response = await geocodingClient
