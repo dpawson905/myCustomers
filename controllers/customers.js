@@ -286,9 +286,9 @@ module.exports = {
       return;
     }
 
-    if(customer.toTime && customer.fromTime === 'anytime') {
+    if (customer.fromTime !== 'anytime') {
       let message =
-      `Hello ${customer.firstName}, this is ${user.firstName} from Dodson Pest Control. This is a reminder of your appointment tomorrow. If you have any questions please contact me at ${user.phoneNumber} Have a great day!
+       `Hello ${customer.firstName}, this is ${user.firstName} from Dodson Pest Control. This is a reminder of your appointment. I will be there no later than ${customer.toTime} tomorrow. If you have any questions please contact me at ${user.phoneNumber} Have a great day!
       `;
       await client.messages
         .create({
@@ -300,9 +300,9 @@ module.exports = {
         .done();
       req.flash("success", "Text message sent successfully");
       return res.redirect("back");
-    } else if (customer.fromTime !== 'anytime') {
+    } else if (customer.toTime && customer.fromTime === 'anytime') {
       let message =
-      `Hello ${customer.firstName}, this is ${user.firstName} from Dodson Pest Control. This is a reminder of your appointment. I will be there no later than ${customer.toTime} tomorrow. If you have any questions please contact me at ${user.phoneNumber} Have a great day!
+      `Hello ${customer.firstName}, this is ${user.firstName} from Dodson Pest Control. This is a reminder of your appointment tomorrow. If you have any questions please contact me at ${user.phoneNumber} Have a great day!
       `;
       await client.messages
         .create({
