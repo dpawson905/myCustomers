@@ -173,7 +173,7 @@ module.exports = {
       var startOfMonth = moment()
         .utc()
         .add(i, "M");
-    await dates.push(getServiceDate(startOfMonth).toISOString());
+    let dates = await dates.push(getServiceDate(startOfMonth).toISOString());
     };
     updateCustomer.week = req.body.week;
     updateCustomer.day = req.body.day;
