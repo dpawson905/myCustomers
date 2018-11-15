@@ -63,12 +63,7 @@ module.exports = {
       res.redirect('back');
       return;
     }
-    if (req.body.toTime.substring(req.body.toTime.length - 2 === 'PM') &&
-      req.body.fromTime.substring(req.body.fromTime.length - 2 === 'AM') && req.body.toTime !== 'anytime' && req.body.fromTime !== 'anytime') {
-      req.flash('error', 'To time cannot be greater than from time.');
-      res.redirect('back');
-      return;
-    }
+    
     let response = await geocodingClient
       .forwardGeocode({
         query: req.body.address,
@@ -144,12 +139,6 @@ module.exports = {
     }
     if (req.body.fromTime === req.body.toTime && req.body.toTime !== 'anytime') {
       req.flash('error', 'To and from times cannot be the same.')
-      res.redirect('back');
-      return;
-    }
-    if (req.body.toTime.substring(req.body.toTime.length - 2 === 'PM') &&
-      req.body.fromTime.substring(req.body.fromTime.length - 2 === 'AM') && req.body.toTime !== 'anytime' && req.body.fromTime !== 'anytime') {
-      req.flash('error', 'To time cannot be greater than from time.');
       res.redirect('back');
       return;
     }

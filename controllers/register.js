@@ -88,7 +88,7 @@ module.exports = {
 
     if (userEmail) {
       req.flash('error', 'This email address is already in use.');
-      res, redirect('/register');
+      res.redirect('/register');
       return;
     }
 
