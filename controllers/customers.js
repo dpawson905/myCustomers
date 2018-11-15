@@ -161,7 +161,7 @@ module.exports = {
       res.redirect('back');
       return;
     }
-    let updateCustomer = await Customer.findByIdAndUpdate(req.params.id);
+    let updateCustomer = await Customer.findById(req.params.id);
     let response = await geocodingClient
       .forwardGeocode({
         query: req.body.address,
@@ -169,11 +169,13 @@ module.exports = {
       })
       .send();
     let coordinates = response.body.features[0].geometry.coordinates;
+    let dates = [];
+    let freq = req.body.frequency;
     for (var i = 0; i < 96; i += parseInt(freq)) {
       var startOfMonth = moment()
         .utc()
         .add(i, "M");
-    let dates = await dates.push(getServiceDate(startOfMonth).toISOString());
+    await dates.push(getServiceDate(startOfMonth).toISOString());
     };
     updateCustomer.week = req.body.week;
     updateCustomer.day = req.body.day;
