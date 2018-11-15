@@ -113,6 +113,25 @@ module.exports = {
   },
 
   async putEditCustomer(req, res) {
+    function getServiceDate(startDate) {
+      var startOfMonth = moment(startDate)
+        .utc()
+        .startOf("month")
+        .startOf("isoweek")
+        .startOf('hour');
+      var svcDate = moment(startDate)
+        .utc()
+        .startOf("month")
+        .startOf("isoweek")
+        .add(parseInt(req.body.week), "w")
+        .add(parseInt(req.body.day -1), "d")
+        .startOf('hour')
+
+      if (svcDate.month() == startOfMonth.month()) {
+        svcDate = svcDate.subtract(1, "w");
+      }
+      return svcDate;
+    }
     let checkCustTime = await Customer.find({
       $and: [
         {
@@ -150,6 +169,12 @@ module.exports = {
       })
       .send();
     let coordinates = response.body.features[0].geometry.coordinates;
+    for (var i = 0; i < 96; i += parseInt(freq)) {
+      var startOfMonth = moment()
+        .utc()
+        .add(i, "M");
+    await dates.push(getServiceDate(startOfMonth).toISOString());
+    };
     updateCustomer.week = req.body.week;
     updateCustomer.day = req.body.day;
     updateCustomer.firstName = req.body.firstName;
@@ -162,6 +187,7 @@ module.exports = {
     updateCustomer.fromTime = req.body.fromTime;
     updateCustomer.toTime = req.body.toTime;
     updateCustomer.coordinates = coordinates;
+    updateCustomer.serviceDates = dates;
     await updateCustomer.save()
     req.flash('success', 'Customer updated');
     res.redirect(`/customers/${updateCustomer.id}`)
