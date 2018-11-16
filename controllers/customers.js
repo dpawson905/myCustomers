@@ -253,7 +253,7 @@ module.exports = {
           return;
         }
 
-        res.render("customers", {
+        res.render("customers/customers", {
           foundCustomers
         });
       }
@@ -284,7 +284,7 @@ module.exports = {
           res.redirect("back");
           return;
         }
-        res.render("customers", {
+        res.render("customers/customers", {
           foundCustomers
         });
       }

@@ -33,13 +33,13 @@ const {
 // });
 
 router.get("/add", isNotAuthenticated, (req, res) => {
-  res.render("newCustomer", {
+  res.render("customers/newCustomer", {
     page: "add"
   });
 });
 
 router.get("/search", isNotAuthenticated, (req, res) => {
-  res.render("search", {
+  res.render("customers/search", {
     page: "search"
   });
 });
@@ -70,7 +70,7 @@ router.get("/:id", isNotAuthenticated, async (req, res) => {
     res.redirect("back");
     return;
   }
-  res.render("customer", {
+  res.render("customers/customer", {
     foundCustomer: foundCustomer
   });
 });
