@@ -16,6 +16,7 @@ const User = require('./models/user');
 const {db_url} = require('./config/db')
 
 const indexRouter = require('./routes/index');
+const adminRouter = require('./routes/admin');
 const authRouter = require('./routes/auth');
 const customerRouter = require('./routes/customers');
 const registerRouter = require('./routes/register');
@@ -80,6 +81,7 @@ app.use((req, res, next) => {
   next();
 });
 
+app.use('/admin', adminRouter);
 app.use('/auth', authRouter);
 app.use('/customers', customerRouter);
 app.use('/customers/:id/notes', noteRouter);

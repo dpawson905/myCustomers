@@ -35,6 +35,11 @@
         <li class="nav-item active">
           <a class="nav-link"><img class="small-nav-image" src="<%= currentUser.image %>"> Hello <%= currentUser.firstName.charAt(0).toUpperCase() + currentUser.firstName.slice(1)%></a>
         </li>
+        <% if(currentUser.isAdmin) { %>
+          <li class="nav-item active">
+            <a class="btn btn-outline-success custom my-2 my-sm-0 ml-1" href="/admin">ACP</a>
+          </li>
+        <% } %>
         <li class="nav-item active">
           <a class="btn btn-outline-success custom my-2 my-sm-0 ml-1" href="/auth/logout">Log Out</a>
         </li>

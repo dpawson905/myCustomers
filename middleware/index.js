@@ -24,4 +24,13 @@ module.exports = {
       res.redirect("/");
     }
   },
+
+  // isAdmin checker
+	isAdmin(req, res, next) {
+		if(req.isAuthenticated() && req.user.isAdmin) {
+			return next();
+		}
+		req.flash('error', 'You don\'t have the privileges to do that, now scram!');
+		res.redirect('/')
+  }
 };
