@@ -181,6 +181,7 @@ module.exports = {
     updateCustomer.day = req.body.day;
     updateCustomer.firstName = req.body.firstName;
     updateCustomer.lastName = req.body.lastName;
+    updateCustomer.tech = { id: req.user._id, username: req.user.username, route: req.user.route };
     updateCustomer.companyName = req.body.companyName;
     updateCustomer.phoneNumber = req.body.phoneNumber;
     updateCustomer.address = req.body.address;
