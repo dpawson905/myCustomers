@@ -49,6 +49,11 @@ const UserSchema = new Schema({
     type: String,
     required: true,
     trim: true
+  },
+  route: {
+    type: String,
+    required: true,
+    trim: true
   }
 }, {
   timestamps: true

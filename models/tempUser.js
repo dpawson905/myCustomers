@@ -42,6 +42,11 @@ const TempUserSchema = new Schema({
     required: true,
     trim: true,
     unique: true
+  },
+  route: {
+    type: String,
+    required: true,
+    trim: true
   }
 });
 

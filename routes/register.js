@@ -11,7 +11,7 @@ const {
 /* GET /register */
 router.get('/', isAuthenticated, (req, res) => {
   res.render('register', {
-    page: 'register'
+    level: 'register'
   });
 });
 

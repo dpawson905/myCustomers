@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
+const mongoosePaginate = require('mongoose-paginate');
 
 const CustomerSchema = new Schema({
   tech: {
@@ -7,7 +8,8 @@ const CustomerSchema = new Schema({
       type: Schema.Types.ObjectId,
       ref: "User"
     },
-    username: String
+    username: String,
+    route: String
   },
   firstName: {
     type: String,
@@ -73,5 +75,7 @@ CustomerSchema.index({
   email: "text",
   phoneNumber: "text"
 });
+
+CustomerSchema.plugin(mongoosePaginate);
 
 module.exports = mongoose.model("Customer", CustomerSchema);

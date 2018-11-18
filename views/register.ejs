@@ -13,11 +13,24 @@
         <div class="col">
           <form action="/register" method="POST">
             <div class="form-row">
-              <div class="col-md-6 mt-1">
+              <div class="col-md-4 mt-1">
+                <label for="route">Route</label>
+                <select class="form-control form-control" id="route" name="route" required>
+                  <option value="1">Route 1</option>
+                  <option value="2">Route 2</option>
+                  <option value="3">Route 3</option>
+                  <option value="4">Route 4</option>
+                  <option value="5">Route 5</option>
+                  <option value="6">Route 6</option>
+                  <option value="7">Route 7</option>
+                  <option value="other">Other</option>
+                </select>
+              </div>
+              <div class="col-md-4 mt-1">
                 <label class="float-left" for="firstName">First Name</label>
                 <input type="text" id="firstName" name="firstName" class="form-control" placeholder="First name">
               </div>
-              <div class="col-md-6 mt-1">
+              <div class="col-md-4 mt-1">
                 <label class="float-left" for="lastName">Last Name</label>
                 <input type="text" id="lastName" name="lastName" class="form-control" placeholder="Last Name">
               </div>

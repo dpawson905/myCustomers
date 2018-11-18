@@ -85,7 +85,7 @@ module.exports = {
       day: req.body.day,
       firstName: req.body.firstName,
       lastName: req.body.lastName,
-      tech: { id: req.user._id, username: req.user.username },
+      tech: { id: req.user._id, username: req.user.username, route: req.user.route },
       companyName: req.body.companyName,
       phoneNumber: req.body.phoneNumber,
       address: req.body.address,

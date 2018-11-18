@@ -23,6 +23,8 @@ const registerRouter = require('./routes/register');
 const resendRouter = require('./routes/resend');
 const validateRouter = require('./routes/validate');
 const noteRouter = require('./routes/notes');
+const seedPosts = require('./seedDB');
+//seedPosts();
 
 const app = express();
 
@@ -36,6 +38,8 @@ db.on('error', console.error.bind(console, 'connection error'));
 db.once('open', () => {
   debug('Connected to MongoDB');
 });
+
+
 
 // Only use this for debugging purposes
 // mongoose.set('debug', true);
@@ -76,6 +80,7 @@ app.use((req, res, next) => {
   res.locals.success = req.flash('success');
   res.locals.error = req.flash('error');
   res.locals.title = 'Tech Access';
+  res.locals.query = req.query;
   res.locals.currentUser = req.user;
   res.locals.isAuthenticated = req.user ? true : false;
   next();

@@ -3,7 +3,7 @@ const router = express.Router();
 
 /* GET home page. */
 router.get("/", (req, res) => {
-  res.render("index", { page: "home" });
+  res.render("index", { level: "home" });
 });
 
 router.get("*", (req, res) => {

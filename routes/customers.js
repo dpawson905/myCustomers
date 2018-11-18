@@ -34,13 +34,13 @@ const {
 
 router.get("/add", isNotAuthenticated, (req, res) => {
   res.render("customers/newCustomer", {
-    page: "add"
+    level: "add"
   });
 });
 
 router.get("/search", isNotAuthenticated, (req, res) => {
   res.render("customers/search", {
-    page: "search"
+    level: "search"
   });
 });
 
