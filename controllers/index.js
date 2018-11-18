@@ -31,7 +31,8 @@ module.exports = {
       passport.authenticate('local', {
         successRedirect: '/customers/search',
         failureRedirect: '/',
-        failureFlash: 'Sorry, but your username and or password is incorrect.'
+        failureFlash: true,
+        successFlash: true
       })(req, res, next);
     }
 

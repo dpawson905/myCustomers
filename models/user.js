@@ -59,6 +59,16 @@ const UserSchema = new Schema({
   timestamps: true
 });
 
-UserSchema.plugin(passportLocalMongoose);
+UserSchema.plugin(passportLocalMongoose, {
+  limitAttempts: true,
+  interval: 100,
+  // 300000ms is 5 min
+  maxInterval: 300000,
+  // This will completely lock out an account and requires user intervention.
+  maxAttempts: 10,
+  // unlockInterval: 300000
+});
+
+ 
 
 module.exports = mongoose.model('User', UserSchema);
