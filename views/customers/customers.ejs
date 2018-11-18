@@ -3,7 +3,7 @@
   <h1 class="text-center mt-4"><%= title %></h1>
   <h3 class="text-center">Customer Search Results</h3>
   <div class="row mt-4">
-    <% foundCustomers.forEach(function(customers) { %>
+    <% foundCustomers.docs.forEach(function(customers) { %>
     <% if(foundCustomers.length < 2) { %>
     <div class="col-md-6 offset-md-3">
       <% } else { %>

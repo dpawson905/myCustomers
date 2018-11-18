@@ -211,7 +211,7 @@ module.exports = {
   async getFindByWeek(req, res) {
     const week = new RegExp(escapeRegex(req.query.week), "gi");
     const day = new RegExp(escapeRegex(req.query.day), "gi");
-    await Customer.find(
+    await Customer.paginate(
       {
         serviceDates: {
           $eq: moment()
@@ -231,7 +231,12 @@ module.exports = {
         "tech.id": {
           $eq: req.user.id
         }
+      }, {sort: {
+        lastName: 1
       },
+      page: req.query.page || 1,
+      limit: 10
+    },
       (err, foundCustomers) => {
         if(err) {
           console.log(err);
@@ -257,14 +262,12 @@ module.exports = {
           foundCustomers
         });
       }
-    ).sort({
-      lastName: 1
-    });
+    )
   },
 
   async getFindAll(req, res) {
     const regex = new RegExp(escapeRegex(req.query.search), "gi");
-    await Customer.find(
+    await Customer.paginate(
       {
         "tech.id": {
           $eq: req.user.id
@@ -272,6 +275,12 @@ module.exports = {
         $text: {
           $search: regex
         }
+      }, {
+        sort: {
+          lastName: 1
+        },
+        page: req.query.page || 1,
+        limit: 10
       },
       (err, foundCustomers) => {
         if (req.query.search === "" || req.query.search === "undefined") {
@@ -288,9 +297,7 @@ module.exports = {
           foundCustomers
         });
       }
-    ).sort({
-      lastName: 1
-    });
+    )
   },
 
   async postSMS(req, res) {
