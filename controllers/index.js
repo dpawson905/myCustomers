@@ -38,6 +38,25 @@ module.exports = {
 
   },
 
+  async forgotPw(req, res) {
+    const user = await User.findOne({username: req.body.username});
+    if(!user) {
+      req.flash('error', 'That username does not exist');
+      res.redirect('/');
+      return;
+    }
+    user.changePassword(req.body.oldPassword, req.body.newPassword, (noMatch) => {
+      if(noMatch) {
+        req.flash(noMatch);
+        res.redirect('/');
+        return;
+      }
+      user.save();
+      req.flash('success', 'Password changed successfully!');
+      res.redirect('/');
+    })
+  },
+
   async putTwilio(req, res) {
     let user = await User.findById(req.params.id);
     if (!user) {

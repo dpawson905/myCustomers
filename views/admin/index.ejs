@@ -76,19 +76,36 @@
         <table class="table table-striped table-hover table-bordered">
           <thead>
             <tr>
+              <th scope="col">Route</th>
               <th scope="col">First</th>
               <th scope="col">Last</th>
               <th scope="col">Username</th>
               <th scope="col">Admin</th>
+              <th scope="col">Options</th>
             </tr>
           </thead>
           <tbody>
             <% users.forEach((usersList) => { %>
               <tr>
+                <td><%= usersList.route %></td>
                 <td><%= usersList.firstName %></td>
                 <td><%= usersList.lastName %></td>
                 <td><%= usersList.username %></td>
                 <td><%= usersList.isAdmin %></td>
+                <td>
+                  <div class="dropdown text-center">
+                    <button class="btn btn-secondary dropdown-toggle btn-sm" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      User Options
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                      <a class="dropdown-item" href="/admin/<%= usersList.id %>/edit">Edit User</a>
+                      <a class="dropdown-item" href="#">Delete User</a>
+                      <form action="/admin/<%= usersList.id %>/customer-update?_method=PUT" method="POST">
+                        <button class="dropdown-item" type="submit">Fix Customers</button>
+                      </form>
+                    </div>
+                  </div>
+                </td>
               </tr>
             <% }) %>
           </tbody>

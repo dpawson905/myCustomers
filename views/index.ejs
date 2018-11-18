@@ -1,4 +1,75 @@
-<% include partials/header %>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title><%= title %></title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon">
+    <link rel='stylesheet' href='/stylesheets/bootstrap.min.css' />
+    <link rel='stylesheet' href='/stylesheets/animate.css' />
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,700" rel="stylesheet"> 
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.49.0/mapbox-gl.css' rel='stylesheet' />
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.49.0/mapbox-gl.js'></script>
+    
+    
+  </head>
+  <body>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+    <a class="navbar-brand white"><%= title %></a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      
+      <% if(!isAuthenticated) { %>
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+          </li>
+        </ul>
+        <form class="form-inline my-auto mr-1" action="/auth/login" method="POST">
+          <input type="text" id="username" name="username" class="form-control mr-1 mobile" placeholder="Username" required autofocus>
+          <input type="password" id="password" name="password" class="form-control mr-1 mobile" placeholder="Password" required>
+          <button class="btn btn-outline-success my-sm-0 auth-btn-fix" type="submit">Login</button>
+        </form>
+        <% user.forEach((failedUser) => { %>
+          <% if(failedUser.attempts >= 3) { %>
+          <a href="/forgot-pw" class="btn btn-outline-success my-sm-0 auth-btn-fix mr-1">Forogt Password</a>
+          <% } %>
+        <% }) %>
+        <a href="/register" class="btn btn-outline-success my-sm-0 auth-btn-fix">Register</a>
+      <% } else { %>
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item <%= typeof level !== 'undefined' && level === 'home' ? 'active' : '' %>">
+            <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item <%= typeof level !== 'undefined' && level === 'search' ? 'active' : '' %>">
+            <a class="nav-link" href="/customers/search">Customer Search</a>
+          </li>
+          <li class="nav-item <%= typeof level !== 'undefined' && level === 'add' ? 'active' : '' %>">
+            <a class="nav-link" href="/customers/add">New Customer</a>
+          </li>
+        </ul>
+        <ul class="navbar-nav ml-auto">
+          
+          <li class="nav-item active">
+            <a class="nav-link"><img class="small-nav-image" src="<%= currentUser.image %>"> Hello <%= currentUser.firstName.charAt(0).toUpperCase() + currentUser.firstName.slice(1)%></a>
+          </li>
+          <% if(currentUser.isAdmin) { %>
+            <li class="nav-item active">
+              <a class="btn btn-outline-success custom my-2 my-sm-0 ml-1" href="/admin?route=1">ACP</a>
+            </li>
+          <% } %>
+          <li class="nav-item active">
+            <a class="btn btn-outline-success custom my-2 my-sm-0 ml-1" href="/auth/logout">Log Out</a>
+          </li>
+        </ul>
+      <% } %>
+    </div>
+  </nav>
+  <% include partials/messages %>
     <!-- Header -->
   <div class="container h-100">
     <div class="row h-100 d-flex align-items-center">

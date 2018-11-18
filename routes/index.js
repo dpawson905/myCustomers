@@ -1,9 +1,11 @@
 const express = require("express");
 const router = express.Router();
+const User = require('../models/user');
 
 /* GET home page. */
-router.get("/", (req, res) => {
-  res.render("index", { level: "home" });
+router.get("/", async (req, res) => {
+  let user = await User.find({});
+  res.render("index", { level: "home", user });
 });
 
 router.get("*", (req, res) => {
