@@ -21,6 +21,11 @@ const client = require('twilio')(accountSid, authToken);
 
 // Validation Schema - Register
 const registerSchema = Joi.object().keys({
+  route: Joi.string()
+    .alphanum()
+    .min(1)
+    .max(7)
+    .required(),
   email: Joi.string()
     .email({
       minDomainAtoms: 2
@@ -129,7 +134,8 @@ module.exports = {
         firstName: req.body.firstName,
         lastName: req.body.lastName,
         image: req.body.image,
-        phoneNumber: req.body.phoneNumber
+        phoneNumber: req.body.phoneNumber,
+        route: req.body.route
       });
       await newTempUser.save();
 

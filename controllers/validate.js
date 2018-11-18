@@ -114,7 +114,8 @@ module.exports = {
       lastName: tempUser.lastName,
       image: `https://ui-avatars.com/api/?rounded=true&size=35&name=${tempUser.firstName}%20${tempUser.lastName}`,
       isVerified: tempUser.isVerified,
-      phoneNumber: tempUser.phoneNumber
+      phoneNumber: tempUser.phoneNumber,
+      route: tempUser.route
     });
 
     const admin = await User.find({});
