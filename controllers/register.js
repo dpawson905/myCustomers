@@ -128,6 +128,7 @@ module.exports = {
         Save user to temp user collection 
       */
       debug('Registering User');
+      
       const newTempUser = await new TempUser({
         username: req.body.username,
         email: req.body.email,

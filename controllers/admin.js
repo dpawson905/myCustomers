@@ -18,7 +18,22 @@ module.exports = {
   },
 
   async editUserAdmin(req, res, next) {
-    let user = await User.findOneAndUpdate(req.params.id, req.body.user);
+    let user = await User.findById(req.params.id);
+    if(req.body.user.email !== user.email) {
+      user.email= req.body.user.email
+    }
+    if(req.body.user.phoneNumber !== user.phoneNumber) {
+      user.phoneNumber= req.body.user.phoneNumber
+    }
+    if(req.body.user.username !== user.username) {
+      user.username= req.body.user.username
+    }
+    if(req.body.user.route !== user.route) {
+      user.route= req.body.user.route
+    }
+    user.firstName = req.body.user.firstName;
+    user.lastName = req.body.user.lastName;
+    await user.save();
     req.flash('success', 'User updated!');
     res.redirect('/admin');
   },

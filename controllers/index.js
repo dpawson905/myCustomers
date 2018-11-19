@@ -1,7 +1,11 @@
 const passport = require('passport');
+const sgMail = require('@sendgrid/mail');
+sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+const randomstring = require('randomstring');
 
 // DB Model Files
 const User = require('../models/user');
+const Token = require('../models/token');
 const DeactivatedUser = require('../models/deactivatedUser');
 
 module.exports = {
@@ -38,21 +42,74 @@ module.exports = {
 
   },
 
+  async sendPwToken(req, res) {
+    let user = await User.findOne({email: req.body.email});
+    if(!user) {
+      req.flash('error', 'That email address does not exist!');
+      res.redirect('back');
+      return;
+    }
+    user.deactivated = true;
+    await user.save();
+    let newToken = new Token({
+      _userId: user._id,
+      token: randomstring.generate(),
+    });
+    await newToken.save();
+    const msg = {
+      to: req.body.email,
+      from: 'noreply@cportal.online',
+      subject: 'Password reset',
+      text: `Hello ${user.username}, please copy and paste this link into
+        your browser to verify your account. `,
+      html: `Hi there ${user.username},
+      <br>
+      To reset your password please click the link to begin.
+      <br>
+      <a href="http://${req.headers.host}/auth/validate-pw-token?token=${newToken.token}">Reset Password</a>
+      <br><br>
+      Have a plesant day!`,
+    };
+    sgMail.send(msg);
+    req.flash('success', 'An email with the reset link has been sent.');
+    res.redirect('/');
+  },
+
+  async validateResetToken(req, res) {
+    await Token.findOne(
+      { 
+        token: req.query.token
+      }, (err, foundToken) => {
+        if(err || !foundToken) {
+          req.flash('error', 'that token does not exist');
+          res.redirect('/');
+          return;
+        }
+        req.flash('success', 'Token validated, please change your password now!');
+        res.redirect('/auth/forgot-pw');
+      }
+    )
+  },
+
   async forgotPw(req, res) {
     const user = await User.findOne({username: req.body.username});
+    const token = await Token.findOne({_userId: user._id});
     if(!user) {
       req.flash('error', 'That username does not exist');
       res.redirect('/');
       return;
     }
-    user.changePassword(req.body.oldPassword, req.body.newPassword, (noMatch) => {
+    user.setPassword(req.body.password, async (noMatch) => {
       if(noMatch) {
-        req.flash(noMatch);
-        res.redirect('/');
+        req.flash('error', noMatch);
+        res.redirect('back');
         return;
       }
-      user.save();
-      req.flash('success', 'Password changed successfully!');
+      user.deactivated = false;
+      user.attempts = 0;
+      token.remove();
+      await user.save();
+      req.flash('success', 'Password updated!');
       res.redirect('/');
     })
   },

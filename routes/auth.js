@@ -1,11 +1,11 @@
 const express = require("express");
 const router = express.Router();
 const User = require("../models/user");
-const { postLogin, getLogout, putTwilio, forgotPw } = require("../controllers");
+const { postLogin, getLogout, putTwilio, forgotPw, sendPwToken, validateResetToken } = require("../controllers");
 const {
   isAuthenticated,
   isNotAuthenticated,
-  asyncErrorHandler
+  asyncErrorHandler,
 } = require("../middleware");
 
 /* POST /login */
@@ -17,6 +17,14 @@ router.get("/user/:id", isNotAuthenticated, async (req, res) => {
     user
   });
 });
+
+router.get('/send-pw-token', isAuthenticated, (req, res) => {
+  res.render("sendPwReset");
+});
+
+router.post('/send-pw-token', isAuthenticated, asyncErrorHandler(sendPwToken));
+
+router.get('/validate-pw-token', isAuthenticated, asyncErrorHandler(validateResetToken));
 
 router.get('/forgot-pw', isAuthenticated,  async (req, res) => {
   res.render("password");

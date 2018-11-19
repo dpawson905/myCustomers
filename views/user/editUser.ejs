@@ -7,8 +7,8 @@
       <form action="/admin/<%= editedUser._id %>?_method=PUT" method="POST">
         <div class="form-row">
           <div class="form-group col-md-4">
-            <label for="week">Route</label>
-            <select class="form-control form-control-sm" id="week" name="week" required>
+            <label for="route">Route</label>
+            <select class="form-control form-control-sm" id="route" name="user[route]" required>
               <option value="<%= editedUser.route %>" selected><%= editedUser.route %></option>
               <option value="1">Route 1</option>
               <option value="2">Route 2</option>

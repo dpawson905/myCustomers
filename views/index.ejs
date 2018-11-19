@@ -36,7 +36,7 @@
         </form>
         <% user.forEach((failedUser) => { %>
           <% if(failedUser.attempts >= 3) { %>
-          <a href="/forgot-pw" class="btn btn-outline-success my-sm-0 auth-btn-fix mr-1">Forogt Password</a>
+          <a href="/auth/send-pw-token" class="btn btn-outline-success my-sm-0 auth-btn-fix mr-1">Forogt Password</a>
           <% } %>
         <% }) %>
         <a href="/register" class="btn btn-outline-success my-sm-0 auth-btn-fix">Register</a>
