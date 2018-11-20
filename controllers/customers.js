@@ -1,5 +1,5 @@
 const debug = require("debug")("customers:newCustomer");
-const mailer = require("../misc/mailer");
+
 const User = require("../models/user");
 const Customer = require("../models/customers");
 const { MB_API } = require("../config/mapbox");

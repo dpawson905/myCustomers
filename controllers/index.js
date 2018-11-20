@@ -1,6 +1,7 @@
 const passport = require('passport');
+const mailer = require("../misc/mailer");
 const sgMail = require('@sendgrid/mail');
-sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+sgMail.setApiKey(mailer.SENDGRID_API_KEY || process.env.SENDGRID_API_KEY);
 const randomstring = require('randomstring');
 
 // DB Model Files
