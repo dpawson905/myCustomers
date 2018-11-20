@@ -13,7 +13,7 @@ a customer and also look at where the customer is located by their address.
    3) Last Name
    4) Company Name (if needed)
    5) Phone Number
-   6) Address
+   6) Address - with autocomplete
    7) Frequency (monthly, bi-monthly, quarterly)
    8) Contact preference (call or text)
    9) Schedule From and To times
