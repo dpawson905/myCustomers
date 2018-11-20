@@ -6,7 +6,7 @@
       <h3 class="text-center">New Customer</h3>
       <form action="/customers/add" method="POST">
         <div class="form-row">
-          <div class="form-group col-md-6">
+          <div class="form-group col-6">
             <label for="week">Week</label>
             <select class="form-control form-control-sm" id="week" name="week" required>
               <option value="1">1</option>
@@ -15,7 +15,7 @@
               <option value="4">4</option>
             </select>
           </div>
-          <div class="form-group col-md-6">
+          <div class="form-group col-6">
             <label for="day">Day</label>
             <select class="form-control form-control-sm" id="day" name="day" required>
               <option value="1">1</option>
@@ -25,27 +25,27 @@
               <option value="5">5</option>
             </select>
           </div>
-          <div class="form-group col-md-6">
+          <div class="form-group col-6">
             <label for="firstName">First Name</label>
             <input type="text" name="firstName" id="firstName" class="form-control form-control-sm">
           </div>
-          <div class="form-group col-md-6">
+          <div class="form-group col-6">
             <label for="lastName">Last Name</label>
             <input type="text" name="lastName" id="lastName" class="form-control form-control-sm">
           </div>
-          <div class="form-group col-md-6">
-            <label for="companyName">Company Name(optional)</label>
-            <input type="text" name="companyName" id="companyName" class="form-control form-control-sm">
+          <div class="form-group col-6">
+            <label for="companyName">Company Name</label>
+            <input type="text" name="companyName" id="companyName" class="form-control form-control-sm" placeholder="THIS IS OPTIONAL">
           </div>
-          <div class="form-group col-md-6">
+          <div class="form-group col-6">
             <label for="phoneNumber">Phone Number</label>
-            <input type="tel" name="phoneNumber" id="phoneNumber" class="form-control form-control-sm" required>
+            <input type="tel" name="phoneNumber" id="phoneNumber" class="form-control form-control-sm" placeholder="1234567890" required>
           </div>
-          <div class="form-group col-md-6">
-            <label for="address">Address</label>
-            <input type="text" name="address" id="address" class="form-control form-control-sm" required>
+          <div class="form-group col-12">
+            <label for="address-input">Address</label>
+            <input type="search" name="address" id="address-input" class="form-control form-control-sm" required>
           </div>
-          <div class="form-group col-md-6">
+          <div class="form-group col-6">
             <label for="frequency">Frequency</label>
             <select class="form-control form-control-sm" id="frequency" name="frequency" required>
               <option value=1>Monthly</option>
@@ -53,21 +53,21 @@
               <option value=3>Quarterly</option>
             </select>
           </div>
-          <div class="form-group col-md-4">
+          <div class="form-group col-6">
             <label for="preference">Contact Preference</label>
             <select class="form-control form-control-sm" id="preference" name="preference" required>
               <option value="Call">Call</option>
               <option value="Text">Text</option>
             </select>
           </div>
-          <div class="form-group col-md-4">
+          <div class="form-group col-6">
             <label for="timeSelect">From Time</label>
             <select class="form-control form-control-sm" id="timeSelect" name="fromTime" required>
               <option selected>From Time</option>
               <option value="anytime">Anytime</option>
             </select>
           </div>
-          <div class="form-group col-md-4">
+          <div class="form-group col-6">
             <label for="timeSelect1">To Time</label>
             <select class="form-control form-control-sm" id="timeSelect1" name="toTime" required>
               <option selected>To Time</option>
@@ -80,4 +80,33 @@
     </div>
   </div>
 </div>
-<% include ../partials/footer %>
+  
+  <script src="/javascripts/jquery.min.js"></script>
+  <script src="/javascripts/bootstrap.bundle.min.js"></script>
+  <script src="/javascripts/bootstrap-notify.js"></script>
+  <script src="/javascripts/main.js"></script>
+  <script defer src="https://use.fontawesome.com/releases/v5.4.2/js/all.js" integrity="sha384-wp96dIgDl5BLlOXb4VMinXPNiB32VYBSoXOoiARzSTXY+tsK8yDTYfvdTyqzdGGN" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/places.js@1.13.0"></script>
+  <script src="https://cdn.jsdelivr.net/npm/places.js@1.13.0"></script>
+  <script src="https://cdn.jsdelivr.net/npm/places.js@1.13.0"></script>
+  <script>
+  (function() {
+    var placesAutocomplete = places({
+      appId: 'plD22DDASM7B',
+      apiKey: 'ef5b094cf69df748d510f08c2e7a61a2',
+      container: document.querySelector('#address-input')
+    });
+  
+    var $address = document.querySelector('#address-value')
+    placesAutocomplete.on('change', function(e) {
+      $address.textContent = e.suggestion.value
+    });
+  
+    placesAutocomplete.on('clear', function() {
+      $address.textContent = 'none';
+    });
+  
+  })();
+</script>
+</body>
+</html>

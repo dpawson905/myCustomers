@@ -79,6 +79,8 @@ module.exports = {
         .add(i, "M");
     await dates.push(getServiceDate(startOfMonth).toISOString());
     };
+
+   
     
     let newCustomer = {
       week: req.body.week,
