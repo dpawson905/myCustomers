@@ -10,6 +10,7 @@ async function seedCustomers() {
       day: Math.floor(Math.random() * 5 + 1),
       firstName: faker.name.firstName(),
       lastName: faker.name.lastName(),
+      companyName: faker.company.companyName(),
       tech: { 
         id: '5bdb2117c21b0f0940e96b37', 
         username: 'darrellpawson', 

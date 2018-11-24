@@ -69,6 +69,13 @@ UserSchema.plugin(passportLocalMongoose, {
   // unlockInterval: 300000
 });
 
+// UserSchema.pre('validate', async function() {
+//   if(this.attempts >= 10) {
+//     this.deactivated = true;
+//     this.save();
+//   }
+// })
+
  
 
 module.exports = mongoose.model('User', UserSchema);

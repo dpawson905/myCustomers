@@ -7,15 +7,14 @@ const randomstring = require('randomstring');
 // DB Model Files
 const User = require('../models/user');
 const Token = require('../models/token');
-const DeactivatedUser = require('../models/deactivatedUser');
 
 module.exports = {
   async postLogin(req, res, next) {
-    /* 
-      Find the user by the supplied username
-      and check to see if the user has been deactivated by admin
-      If it has, inform the user that their account has been deactivated for 
-      24 hours and to try back later. */
+    /*
+      Find the user by the supplied username and see if it exists
+      and check to see if the user has been deactivated because
+      of a password reset request. If so then inform the user 
+    */
 
     const user = await User.findOne({
       username: req.body.username
@@ -25,22 +24,17 @@ module.exports = {
       res.redirect('back');
       return;
     }
-    const deactivatedUser = await DeactivatedUser.findOne({
-      _userId: user._id
-    });
-    if (deactivatedUser) {
-      req.flash('error', `Sorry, but your user account has been deactivated.`);
-      res.redirect('/');
+    if (user.deactivated) {
+      req.flash('error', 'Your account has been deactivated because a password reset has been issued. Please check your email or type your email into the box below and click submit to resend the email!');
+      res.redirect('/auth/send-pw-token');
       return;
-    } else {
-      passport.authenticate('local', {
-        successRedirect: '/customers/search',
-        failureRedirect: '/',
-        failureFlash: true,
-        successFlash: true
-      })(req, res, next);
     }
-
+    passport.authenticate('local', {
+      successRedirect: '/customers/search',
+      failureRedirect: '/',
+      failureFlash: true,
+      successFlash: true
+    })(req, res, next);
   },
 
   async sendPwToken(req, res) {

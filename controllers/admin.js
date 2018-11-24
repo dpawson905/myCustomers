@@ -40,7 +40,7 @@ module.exports = {
 
   async fixCustomers(req, res, next) {
     let setUser= await User.findById(req.params.id);
-    Customer.update({
+    await Customer.update({
       'tech.id': req.params.id
     }, {
       'tech.route': setUser.route,
@@ -53,7 +53,7 @@ module.exports = {
         res.redirect('back');
       }
       req.flash('success', 'All customers updated');
-      res.redirect('back');
+      res.redirect('/admin');
     })
   }
 }

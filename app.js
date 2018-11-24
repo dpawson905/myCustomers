@@ -24,7 +24,7 @@ const resendRouter = require('./routes/resend');
 const validateRouter = require('./routes/validate');
 const noteRouter = require('./routes/notes');
 const seedPosts = require('./seedDB');
-//seedPosts();
+// seedPosts();
 
 const app = express();
 
