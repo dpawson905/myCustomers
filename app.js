@@ -68,7 +68,7 @@ app.use(methodOverride('_method'));
 app.use(helmet());
 
 var sess = {
-  secret: 'its a secret',
+  secret: process.env.COOKIE_SECRET,
   resave: false,
   saveUninitialized: true,
   cookie: { httpOnly: true, expires: Date.now() + 1000 * 60 * 60 * 24 * 7, maxAge: 1000 * 60 * 60 * 24 * 7},
@@ -79,6 +79,7 @@ if (app.get('env') === 'production') {
   app.set('trust proxy', 1) // trust first proxy
   sess.cookie.secure = true // serve secure cookies
 }
+
 app.use(flash());
 app.use(session(sess));
 app.use(csrfProtection);
