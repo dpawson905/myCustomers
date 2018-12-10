@@ -67,13 +67,20 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(methodOverride('_method'));
 app.use(helmet());
 
-app.use(session({
+var sess = {
   secret: 'its a secret',
   resave: false,
   saveUninitialized: true,
-  cookie: { httpOnly: true},
+  cookie: { httpOnly: true, expires: Date.now() + 1000 * 60 * 60 * 24 * 7, maxAge: 1000 * 60 * 60 * 24 * 7},
   store: store
-}));
+}
+
+if (app.get('env') === 'production') {
+  app.set('trust proxy', 1) // trust first proxy
+  sess.cookie.secure = true // serve secure cookies
+}
+app.use(flash());
+app.use(session(sess));
 app.use(csrfProtection);
 
 app.use(passport.initialize());
@@ -83,7 +90,7 @@ passport.use(User.createStrategy());
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
-app.use(flash());
+
 
 app.use((req, res, next) => {
   res.locals.success = req.flash('success');
