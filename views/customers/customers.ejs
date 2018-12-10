@@ -32,6 +32,7 @@
               <% if (customers.preference !== "call") { %>
                 <div class="col move-to-bottom">
                   <form action="/customers/sms/<%= customers.id %>" method="POST">
+                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                     <button class="btn btn-success btn-block mb-2" type="submit">Send Text</button>
                   </form>
                 </div>

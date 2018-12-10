@@ -10,6 +10,8 @@ const passport = require('passport');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const mongoose = require('mongoose');
+const MongoDBStore = require('connect-mongodb-session')(session);
+const csrf = require('csurf');
 const methodOverride = require('method-override');
 const helmet = require('helmet');
 const User = require('./models/user');
@@ -27,6 +29,11 @@ const seedPosts = require('./seedDB');
 // seedPosts();
 
 const app = express();
+const store = new MongoDBStore({
+  uri: db_url || process.env.DB_URL,
+  collection: 'sessions'
+});
+const csrfProtection = csrf();
 
 // Connect to db
 mongoose.connect(db_url || process.env.DB_URL, {
@@ -64,8 +71,10 @@ app.use(session({
   secret: 'its a secret',
   resave: false,
   saveUninitialized: true,
-  cookie: { httpOnly: true}
+  cookie: { httpOnly: true},
+  store: store
 }));
+app.use(csrfProtection);
 
 app.use(passport.initialize());
 app.use(passport.session());
@@ -80,6 +89,7 @@ app.use((req, res, next) => {
   res.locals.success = req.flash('success');
   res.locals.error = req.flash('error');
   res.locals.title = 'Tech Access';
+  res.locals.csrfToken = req.csrfToken();
   res.locals.query = req.query;
   res.locals.currentUser = req.user;
   res.locals.isAuthenticated = req.user ? true : false;

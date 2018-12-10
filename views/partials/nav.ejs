@@ -15,6 +15,7 @@
       <form class="form-inline my-auto mr-1" action="/auth/login" method="POST">
         <input type="text" id="username" name="username" class="form-control mr-1 mobile" placeholder="Username" required autofocus>
         <input type="password" id="password" name="password" class="form-control mr-1 mobile" placeholder="Password" required>
+        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
         <button class="btn btn-outline-success my-sm-0 auth-btn-fix" type="submit">Login</button>
       </form>
       <a href="/register" class="btn btn-outline-success my-sm-0 auth-btn-fix">Register</a>

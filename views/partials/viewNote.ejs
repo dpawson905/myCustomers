@@ -26,6 +26,7 @@
                     <button type="submit" class="btn btn-danger btn-sm float-right" data-toggle="tooltip" data-placement="top" title="Tooltip on top">
                       <i class="fas fa-times"></i>
                     </button>
+                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                   </form>
                   <p class="d-block"><span class="create-time d-block"><span class="full">Created On:</span> <%= moment(customer.createdAt).format("dddd, MMMM Do YYYY, h:mm:ss A") %></span><i class="fas fa-spider fa-spin"></i> <%= customer.text %></p>
                 </div>

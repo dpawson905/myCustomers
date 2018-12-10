@@ -125,7 +125,8 @@ module.exports = {
   },
 
   getLogout(req, res) {
-    req.logout();
-    res.redirect('/');
+    req.session.destroy(err => {
+      res.redirect('/');
+    });
   }
 };

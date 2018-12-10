@@ -16,6 +16,7 @@
               <div class="col-md-6 offset-md-3 mt-1">
                 <label class="float-left" for="firstName">Token</label>
                 <input type="text" id="token" name="token" class="form-control" placeholder="Token">
+                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                 <button type="submit" class="btn btn-primary mt-3 btn-block">Validate</button>
               </div>
             </div>

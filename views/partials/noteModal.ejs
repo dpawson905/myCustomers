@@ -13,6 +13,7 @@
         <form action="/customers/<%=foundCustomer._id%>/notes" method="post">
           <textarea class="shadow form-control" name="text" id="text" placeholder="Enter note here..."></textarea>
           <div class="modal-footer">
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
             <button type="submit" class="btn btn-primary">Create Note</button>
           </div>
