@@ -10,7 +10,7 @@ const geocodingClient = mbxGeocoding({
   accessToken: MB_API || process.env.MB_API
 });
 
-const { twilioSid, twilioToken, twilioNumber } = require("../config/twilio");
+const { twilioSid, twilioToken, twilioNumber, messagesSid } = require("../config/twilio");
 
 const accountSid = twilioSid || process.env.TWILIO_SID;
 const authToken = twilioToken || process.env.TWILIO_TOKEN;
@@ -134,30 +134,30 @@ module.exports = {
       }
       return svcDate;
     }
-    let checkCustTime = await Customer.find({
-      $and: [
-        {
-          week: req.body.week
-        },
-        {
-          day: req.body.day
-        },
-        {
-          time: req.body.time
-        },
-      ],
-      "tech.id": {
-        $eq: req.user.id
-      }
-    });
-
-    for (var i = 0; i < checkCustTime.length; i++) {
-      if (checkCustTime[i].fromTime === req.body.fromTime && checkCustTime[i].toTime === req.body.toTime && req.body.fromTime !== "anytime" && checkCustTime[i].phoneNumber !== req.body.phoneNumber) {
-        req.flash('error', 'You already have a customer with that scheduled time.');
-        res.redirect('back');
-        return;
+    let findCustomer = await Customer.findById(req.params.id);
+    if(req.body.fromTime !== findCustomer.fromTime && req.body.toTime !== findCustomer.toTime){
+      let checkCustTime = Customer.find({
+        $and: [
+          {
+            week: req.body.week
+          },
+          {
+            day: req.body.day
+          }
+        ],
+        "tech.id": {
+          $eq: req.user.id
+        }
+      });
+      for (var i = 0; i < checkCustTime.length; i++) {
+        if (checkCustTime[i].fromTime === req.body.fromTime && checkCustTime[i].toTime === req.body.toTime && req.body.fromTime !== "anytime" && checkCustTime[i].phoneNumber !== req.body.phoneNumber) {
+          req.flash('error', 'You already have a customer with that scheduled time.');
+          res.redirect('back');
+          return;
+        }
       }
     }
+    
     if (req.body.fromTime === req.body.toTime && req.body.toTime !== 'anytime') {
       req.flash('error', 'To and from times cannot be the same.')
       res.redirect('back');
@@ -260,7 +260,7 @@ module.exports = {
           res.redirect("back");
           return;
         }
-
+        console.log(req.query)
         res.render("customers/customers", {
           foundCustomers
         });
@@ -299,8 +299,59 @@ module.exports = {
         res.render("customers/customers", {
           foundCustomers
         });
+        
       }
     )
+  },
+
+  async postSmsAll(req, res) {
+    let user = await User.findById(req.user.id);
+    await Customer.find({
+      serviceDates: {
+        $eq: moment()
+          .utc()
+          .startOf("month")
+          .startOf("isoweek")
+          .add(parseInt(req.body.week), "w")
+          .add(parseInt(req.body.day - 1), "d")
+          .toISOString()
+      },
+      $and: [
+        {
+          week: req.body.week,
+          day: req.body.day
+        }
+      ],
+      "tech.id": {
+        $eq: req.user.id
+      }
+    }, (err, foundCustomers) => {
+      let customers = [];
+      for(var i = 0; i < foundCustomers.length; i += 1) {
+        customers.push(foundCustomers[i]);
+      }
+      Promise.all(
+        customers.map(customer => {
+          let message = 
+          `Hello ${customer.firstName}, this is ${user.firstName} from Dodson Pest Control. This is a reminder of your appointment tomorrow. If you have any questions please contact me at ${user.phoneNumber} Have a great day!
+      `;
+
+          return client.messages.create({
+            to: customer.phoneNumber,
+            from: messagesSid,
+            body: message
+          });
+        })
+      )
+        .then(() => {
+          req.flash('success', 'Messages have been sent to all of your customers for the day!');
+          res.redirect('back');
+        })
+        .catch(err => {
+          res.flash('error', 'Something went wrong, please try again' + err);
+          res.redirect('back');
+        });
+    })
   },
 
   async postSMS(req, res) {
@@ -313,7 +364,7 @@ module.exports = {
       res.redirect("back");
       return;
     }
-
+    
     if(customer.fromTime === customer.toTime) {
       let message =
         `Hello ${customer.firstName}, this is ${user.firstName} from Dodson Pest Control. This is a reminder of your appointment tomorrow. If you have any questions please contact me at ${user.phoneNumber} Have a great day!

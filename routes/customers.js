@@ -3,10 +3,13 @@ const router = express.Router();
 
 const Customer = require("../models/customers");
 
+
+
 const {
   postCustomer,
   getCustomer,
   postSMS,
+  postSmsAll,
   getFindByWeek,
   getFindAll,
   getEditCustomer,
@@ -49,8 +52,10 @@ router.get(
   isNotAuthenticated,
   asyncErrorHandler(getFindByWeek)
 );
+router.post("/search/week", isNotAuthenticated, asyncErrorHandler(postSmsAll));
 
 router.get("/search/all", isNotAuthenticated, asyncErrorHandler(getFindAll));
+
 
 router.post("/add", isNotAuthenticated,  asyncErrorHandler(postCustomer));
 

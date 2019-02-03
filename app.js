@@ -99,6 +99,7 @@ app.use((req, res, next) => {
   res.locals.title = 'Tech Access';
   res.locals.csrfToken = req.csrfToken();
   res.locals.query = req.query;
+  res.locals.week = req.query.week;
   res.locals.currentUser = req.user;
   res.locals.isAuthenticated = req.user ? true : false;
   next();

@@ -1,8 +1,19 @@
 const User = require("../models/user");
 const Customer = require("../models/customers");
 
+const { twilioSid, twilioToken, twilioNumber, messagesSid } = require("../config/twilio");
+
+const accountSid = twilioSid || process.env.TWILIO_SID;
+const authToken = twilioToken || process.env.TWILIO_TOKEN;
+const twilioNumberVar = twilioNumber || process.env.TWILIO_NUMBER;
+const client = require("twilio")(accountSid, authToken);
+
 module.exports = {
   async getAllCustomers(req, res, next) {
+    // await client.api.accounts(twilioSid)
+    //   .fetch("https://api.twilio.com/2010-04-01/Accounts/AC2a98f443908c7c912d2f2b371a28c74f/subresourceUris['balance']")
+    //   .then(account => console.log(account))
+    //   .done()
     let page = req.query.page || 1;
     let customers = await Customer.paginate({'tech.route': req.query.route || 1}, {
       sort: {
@@ -13,6 +24,7 @@ module.exports = {
       page: req.query.page || 1,
       limit: 10
     });
+    
     let users = await User.find({}).sort({route: 1});
     res.render('admin/index', {customers, users, current: page});
   },
