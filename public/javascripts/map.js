@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", function() {
   var map = new mapboxgl.Map({
     container: "map",
     style: "mapbox://styles/mapbox/streets-v9",
-    center: foundCustomer.coordinates,
+    center: foundCustomer.geometry.coordinates,
     zoom: 14
   });
 
@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
   // make a marker for our location and add to the map
   new mapboxgl.Marker(el)
-    .setLngLat(foundCustomer.coordinates)
+    .setLngLat(foundCustomer.geometry.coordinates)
     .setPopup(
       new mapboxgl.Popup({
         offset: 25

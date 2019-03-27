@@ -31,7 +31,20 @@ const CustomerSchema = new Schema({
     type: String,
     required: true
   },
-  coordinates: Array,
+  geometry: {
+    type: {
+      type: String,
+      enum: ['Point'],
+      required: true
+    },
+    coordinates: {
+      type: [Number],
+      required: true
+    }
+  },
+  properties: {
+    description: String
+  },
   preference: {
     type: String,
     lowercase: true,

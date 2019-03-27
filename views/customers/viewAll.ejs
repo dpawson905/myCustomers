@@ -1,0 +1,23 @@
+<% include ../partials/header %>
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <div class="jumbotron">
+          <h1 class="text-center mb-2">All Customers</h1>
+          <div id="map"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    mapboxgl.accessToken = "<%= mapBoxToken %>";
+    var customers = {features: <%- JSON.stringify(customers) %>};
+  </script>
+  <script src="/javascripts/allCustomersMap.js"></script>
+  <script src="/javascripts/jquery.min.js"></script>
+  <script src="/javascripts/bootstrap.bundle.min.js"></script>
+  <script src="/javascripts/main.js"></script>
+  <script defer src="https://use.fontawesome.com/releases/v5.4.2/js/all.js" integrity="sha384-wp96dIgDl5BLlOXb4VMinXPNiB32VYBSoXOoiARzSTXY+tsK8yDTYfvdTyqzdGGN" crossorigin="anonymous"></script>
+  
+  </body>
+</html>

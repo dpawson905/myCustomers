@@ -2,13 +2,14 @@ const debug = require("debug")("customers:newCustomer");
 
 const User = require("../models/user");
 const Customer = require("../models/customers");
-const { MB_API } = require("../config/mapbox");
 const moment = require('moment');
 
 const mbxGeocoding = require("@mapbox/mapbox-sdk/services/geocoding");
 const geocodingClient = mbxGeocoding({
-  accessToken: MB_API || process.env.MB_API
+  accessToken: process.env.MB_API
 });
+
+const mapBoxToken = process.env.MB_API;
 
 const { twilioSid, twilioToken, twilioNumber, messagesSid } = require("../config/twilio");
 
@@ -70,7 +71,7 @@ module.exports = {
         limit: 1
       })
       .send();
-    let coordinates = response.body.features[0].geometry.coordinates;
+    let geometry = response.body.features[0].geometry;
     let dates = [];
     let freq = req.body.frequency;
     for (var i = 0; i < 96; i += parseInt(freq)) {
@@ -93,7 +94,7 @@ module.exports = {
       address: req.body.address,
       preference: req.body.preference,
       frequency: req.body.frequency,
-      coordinates: coordinates,
+      geometry: geometry,
       serviceDates: dates,
       fromTime: req.body.fromTime,
       toTime: req.body.toTime,
@@ -102,7 +103,9 @@ module.exports = {
       }%20${req.body.lastName}`
     };
     
-    await Customer.create(newCustomer);
+    let customer = await new Customer(newCustomer);
+    customer.properties.description = `<strong><a href="/customers/${customer._id}">${customer.firstName}</a></strong><p>${customer.address}</p>`;
+    await customer.save();
     req.flash("success", "Customer added successfully");
     res.redirect("/customers/search");
   },
@@ -170,7 +173,7 @@ module.exports = {
         limit: 1
       })
       .send();
-    let coordinates = response.body.features[0].geometry.coordinates;
+    let geometry = response.body.features[0].geometry;
     let dates = [];
     let freq = req.body.frequency;
     for (var i = 0; i < 96; i += parseInt(freq)) {
@@ -191,8 +194,9 @@ module.exports = {
     updateCustomer.preference = req.body.preference;
     updateCustomer.fromTime = req.body.fromTime;
     updateCustomer.toTime = req.body.toTime;
-    updateCustomer.coordinates = coordinates;
+    updateCustomer.geometry = geometry;
     updateCustomer.serviceDates = dates;
+    updateCustomer.properties.description = `<strong><a href="/customers/${customer._id}">${customer.firstName}</a></strong><p>${customer.address}</p>`;
     await updateCustomer.save()
     req.flash('success', 'Customer updated');
     res.redirect(`/customers/${updateCustomer.id}`)
@@ -408,6 +412,15 @@ module.exports = {
     req.flash("success", "Text message sent successfully");
     res.redirect("back");
   },
+
+  async viewAll(req, res, next) {
+    let customers = await Customer.find({'tech.id': req.user._id});
+    res.render('customers/viewAll', {
+      customers,
+      mapBoxToken,
+      level: 'viewAll'
+    });
+  }
 };
 
 function escapeRegex(text) {
