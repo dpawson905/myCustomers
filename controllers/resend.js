@@ -14,7 +14,8 @@ const validateSchema = Joi.object().keys({
       minDomainAtoms: 2
     })
     .required()
-    .error(new Error('This is not a valid email address'))
+    .error(new Error('This is not a valid email address')),
+  _csrf: Joi.any()
 });
 
 module.exports = {

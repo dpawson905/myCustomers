@@ -32,7 +32,8 @@ const passwordSchema = Joi.object().keys({
     .required()
     .error(
       new Error('Passwords must match')
-    )
+    ),
+  _csrf: Joi.any()
 });
 
 module.exports = {

@@ -66,7 +66,8 @@ const registerSchema = Joi.object().keys({
     .regex(/[0-9]{10}/)
     .required()
     .error(new Error(
-      'Phone number must contain only numbers and be 10 digits'))
+      'Phone number must contain only numbers and be 10 digits')),
+  _csrf: Joi.any()
 });
 
 module.exports = {
