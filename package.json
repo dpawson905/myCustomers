@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "node app.js",
-    "dev": "set DEBUG=customers:* && nodemon"
+    "dev": "DEBUG=customers:* nodemon"
   },
   "dependencies": {
     "@mapbox/mapbox-sdk": "^0.4.1",

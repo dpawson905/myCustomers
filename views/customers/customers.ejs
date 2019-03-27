@@ -3,12 +3,6 @@
   <h1 class="text-center mt-4"><%= title %></h1>
   <h3 class="text-center">Customer Search Results</h3>
   
-  <form action="/customers/search/week" method="POST">
-    <input type="hidden" name="week" value="<%= foundCustomers.docs[0].week %>">
-    <input type="hidden" name="day" value="<%= foundCustomers.docs[0].day %>">
-    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-    <button type="submit">Text All</button>
-  </form>
   <div class="row mt-4">
     <% foundCustomers.docs.forEach(function(customers) { %>
     <% if(foundCustomers.length < 2) { %>
