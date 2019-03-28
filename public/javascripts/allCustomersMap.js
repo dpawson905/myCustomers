@@ -73,7 +73,7 @@ map.on('load', function() {
 
   map.on('click', 'unclustered-point', function(e) {
     var coordinates = e.features[0].geometry.coordinates.slice();
-    var name = e.features[0].properties.name;
+    var name = e.features[0].properties.description;
     // Ensure that if the map is zoomed out such that multiple
     // copies of the feature are visible, the popup appears
     // over the copy being pointed to.

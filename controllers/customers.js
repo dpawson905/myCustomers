@@ -196,7 +196,7 @@ module.exports = {
     updateCustomer.toTime = req.body.toTime;
     updateCustomer.geometry = geometry;
     updateCustomer.serviceDates = dates;
-    updateCustomer.properties.description = `<strong><a href="/customers/${customer._id}">${customer.firstName}</a></strong><p>${customer.address}</p>`;
+    updateCustomer.properties.description = `<strong><a href="/customers/${updateCustomer._id}">${updateCustomer.firstName}</a></strong><p>${updateCustomer.address}</p>`;
     await updateCustomer.save()
     req.flash('success', 'Customer updated');
     res.redirect(`/customers/${updateCustomer.id}`)

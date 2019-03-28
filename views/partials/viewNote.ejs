@@ -23,7 +23,7 @@
               <div class="card-body">
                 <div class="card-text">
                   <form action="/customers/<%=foundCustomer._id%>/notes/<%=customer.id%>?_method=DELETE" method="post">
-                    <button type="submit" class="btn btn-danger btn-sm float-right" data-toggle="tooltip" data-placement="top" title="Tooltip on top">
+                    <button type="submit" class="btn btn-danger btn-sm float-right" data-toggle="tooltip" data-placement="top" title="Delete Customer Note">
                       <i class="fas fa-times"></i>
                     </button>
                     <input type="hidden" name="_csrf" value="<%= csrfToken %>">
