@@ -54,6 +54,15 @@ const CustomerSchema = new Schema({
     type: Number,
     required: true
   },
+  price: {
+    type: Number,
+    required: true
+  },
+  servicePrefs: {
+    type: String,
+    required: true,
+    lowercase: true
+  },
   week: {
     type: String,
     required: true,

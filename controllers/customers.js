@@ -93,6 +93,8 @@ module.exports = {
       phoneNumber: req.body.phoneNumber,
       address: req.body.address,
       preference: req.body.preference,
+      servicePrefs: req.body.servicePrefs,
+      price: req.body.price,
       frequency: req.body.frequency,
       geometry: geometry,
       serviceDates: dates,
@@ -192,6 +194,8 @@ module.exports = {
     updateCustomer.address = req.body.address;
     updateCustomer.frequency = req.body.frequency;
     updateCustomer.preference = req.body.preference;
+    updateCustomer.servicePrefs = req.body.servicePrefs,
+    updateCustomer.price = req.body.price,
     updateCustomer.fromTime = req.body.fromTime;
     updateCustomer.toTime = req.body.toTime;
     updateCustomer.geometry = geometry;
