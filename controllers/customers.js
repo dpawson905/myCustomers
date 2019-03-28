@@ -424,6 +424,25 @@ module.exports = {
       mapBoxToken,
       level: 'viewAll'
     });
+  },
+
+  async searchAll(req, res, next) {
+    let customers = await Customer.find({
+      $and: [
+        {
+          week: req.query.week,
+          day: req.query.day
+        }
+      ],
+      "tech.id": {
+        $eq: req.user.id
+      }
+    });
+    res.render('customers/viewAll', {
+      customers,
+      mapBoxToken,
+      level: 'viewAll'
+    });
   }
 };
 

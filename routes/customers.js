@@ -15,7 +15,8 @@ const {
   getEditCustomer,
   putEditCustomer,
   deleteCustomer,
-  viewAll
+  viewAll,
+  searchAll
 } = require("../controllers/customers");
 
 const {
@@ -58,6 +59,8 @@ router.post("/search/week", isNotAuthenticated, asyncErrorHandler(postSmsAll));
 router.get("/search/all", isNotAuthenticated, asyncErrorHandler(getFindAll));
 
 router.get('/view-all', isNotAuthenticated, asyncErrorHandler(viewAll));
+
+router.get('/map-search', isNotAuthenticated, asyncErrorHandler(searchAll));
 
 router.post("/add", isNotAuthenticated,  asyncErrorHandler(postCustomer));
 
