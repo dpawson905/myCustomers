@@ -95,7 +95,8 @@ CustomerSchema.index({
   firstName: "text",
   lastName: "text",
   email: "text",
-  phoneNumber: "text"
+  phoneNumber: "text",
+  address: "text"
 });
 
 CustomerSchema.plugin(mongoosePaginate);

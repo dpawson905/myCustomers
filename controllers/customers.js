@@ -84,8 +84,8 @@ module.exports = {
    
     
     let newCustomer = {
-      week: req.body.week,
-      day: req.body.day,
+      week: '4',
+      day: '5',
       firstName: req.body.firstName,
       lastName: req.body.lastName,
       tech: { id: req.user._id, username: req.user.username, route: req.user.route },
@@ -106,10 +106,13 @@ module.exports = {
     };
     
     let customer = await new Customer(newCustomer);
-    customer.properties.description = `<strong><a href="/customers/${customer._id}">${customer.firstName}</a></strong><p>${customer.address}</p>`;
+    customer.properties.description = `
+    <p>Week: ${customer.week} Day: ${customer.day}</p>
+    <strong><a href="/customers/${customer._id}">${customer.firstName} ${customer.lastName}</a></strong>
+    <p>${customer.address.substring(0, 20)}...</p>`;
     await customer.save();
     req.flash("success", "Customer added successfully");
-    res.redirect("/customers/search");
+    res.redirect("/customers/add");
   },
 
   async getEditCustomer(req, res) {
@@ -200,7 +203,10 @@ module.exports = {
     updateCustomer.toTime = req.body.toTime;
     updateCustomer.geometry = geometry;
     updateCustomer.serviceDates = dates;
-    updateCustomer.properties.description = `<strong><a href="/customers/${updateCustomer._id}">${updateCustomer.firstName}</a></strong><p>${updateCustomer.address}</p>`;
+    updateCustomer.properties.description = `
+    <p>Week: ${updateCustomer.week} Day: ${updateCustomer.day}</p>
+    <strong><a href="/customers/${updateCustomer._id}">${updateCustomer.firstName} ${updateCustomer.lastName}</a></strong>
+    <p>${updateCustomer.address.substring(0, 20)}</p>`;
     await updateCustomer.save()
     req.flash('success', 'Customer updated');
     res.redirect(`/customers/${updateCustomer.id}`)
@@ -222,7 +228,15 @@ module.exports = {
   async getFindByWeek(req, res) {
     const week = new RegExp(escapeRegex(req.query.week), "gi");
     const day = new RegExp(escapeRegex(req.query.day), "gi");
-    await Customer.paginate(
+    let time = moment()
+    .utc()
+    .startOf("month")
+    .startOf("isoweek")
+    .add(parseInt(req.query.week), "w")
+    .add(parseInt(req.query.day - 1), "d").subtract(1, "w")
+    .toISOString();
+    console.log(time)
+    let foundCustomers = await Customer.paginate(
       {
         serviceDates: {
           $eq: moment()
@@ -230,7 +244,7 @@ module.exports = {
             .startOf("month")
             .startOf("isoweek")
             .add(parseInt(req.query.week), "w")
-            .add(parseInt(req.query.day - 1), "d")
+            .add(parseInt(req.query.day - 1), "d").subtract(1, "w")
             .toISOString()
         },
         $and: [
@@ -247,33 +261,11 @@ module.exports = {
       },
       page: req.query.page || 1,
       limit: 10
-    },
-      (err, foundCustomers) => {
-        if(err) {
-          console.log(err);
-          return;
-        }
-        if (!req.query.week) {
-          req.flash("error", "Week cannot be blank");
-          res.redirect("back");
-          return;
-        }
-        if (!req.query.day) {
-          req.flash("error", "Day cannot be blank");
-          res.redirect("back");
-          return;
-        }
-        if (foundCustomers.length < 1) {
-          req.flash("error", "No customer found");
-          res.redirect("back");
-          return;
-        }
-        console.log(req.query)
-        res.render("customers/customers", {
-          foundCustomers
-        });
       }
-    )
+    );
+    res.render("customers/customers", {
+      foundCustomers
+    });
   },
 
   async getFindAll(req, res) {
