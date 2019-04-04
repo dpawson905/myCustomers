@@ -84,8 +84,8 @@ module.exports = {
    
     
     let newCustomer = {
-      week: '4',
-      day: '5',
+      week: req.body.week,
+      day: req.body.day,
       firstName: req.body.firstName,
       lastName: req.body.lastName,
       tech: { id: req.user._id, username: req.user.username, route: req.user.route },
@@ -260,7 +260,7 @@ module.exports = {
         lastName: 1
       },
       page: req.query.page || 1,
-      limit: 10
+      limit: 15
       }
     );
     res.render("customers/customers", {
